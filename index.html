@@ -1,568 +1,912 @@
-<!-- ========== PAGINA 75: TESIFLASH LIBRETTO UNIVERSITARIO ========== -->
-<div class="page" data-page="75">
-    <div class="max-w-2xl mx-auto px-4 py-8">
-        <span class="heading-font text-amber-400 text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i data-lucide="calculator" style="width:16px;height:16px;"></i> Modulo Extra & Toolkit
-        </span>
-        <div class="time-badge mb-3">⏱️ Tempo di utilizzo: libero</div>
-        <h2 class="heading-font font-bold text-2xl md:text-3xl text-white mb-4 flex items-center gap-2">
-            <i data-lucide="graduation-cap" style="width:28px;height:28px;color:#f59e0b;"></i> 📊 TesiFlash Libretto Universitario
-        </h2>
-        
-        <p class="text-neutral-300 text-sm leading-relaxed mb-4">
-            Il tuo hub universitario personale: configura la carriera, inserisci gli esami, monitora la media e simula il voto di laurea.
-        </p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Libretto Universitario · Tesi Flash Toolkit</title>
+    <style>
+        :root {
+            --bg-dark: #0f0332;
+            --bg-card: #1a0f3d;
+            --bg-card-hover: #241555;
+            --border-color: #2d1b6b;
+            --accent: #ff0055;
+            --accent-hover: #ff3377;
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            --text-primary: #ffffff;
+            --text-secondary: #c4b5d4;
+            --text-muted: #8b7ba8;
+            --success: #22c55e;
+            --blue: #3b82f6;
+            --red: #ef4444;
+        }
 
-        <!-- BADGE TRUST -->
-        <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mb-6 flex items-center gap-3">
-            <i data-lucide="shield-check" style="width:24px;height:24px;color:#22c55e;"></i>
-            <div>
-                <p class="text-green-400 font-bold text-sm">🔒 Privacy Totale Garantita</p>
-                <p class="text-neutral-400 text-xs">Nessun account, nessuna email, nessuna pubblicità, nessun server che possa leggere i tuoi voti. I dati restano salvati sul tuo browser e non sono sincronizzati tra dispositivi diversi.</p>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0332 0%, #1a0f3d 30%, #0d0225 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 0 40px;
+        }
+
+        /* HEADER */
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: rgba(255, 0, 85, 0.05);
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .app-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .app-logo .logo-icon {
+            background: var(--accent);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 24px rgba(255, 0, 85, 0.3);
+        }
+
+        .app-logo .logo-text {
+            background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .badge-trust {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 0, 85, 0.3);
+            background: var(--bg-card-hover);
+        }
+
+        .card-highlight {
+            border-color: rgba(255, 0, 85, 0.4);
+            background: rgba(255, 0, 85, 0.03);
+        }
+
+        .card-gold {
+            border-color: rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.03);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .icon {
+            font-size: 1.2rem;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        /* FORM ELEMENTS */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--red);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: rgba(255, 0, 85, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .stat-value.blue {
+            color: var(--blue);
+        }
+
+        .stat-value.green {
+            color: var(--success);
+        }
+
+        /* ESAMI LIST */
+        .esame-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .esame-item:hover {
+            border-color: rgba(255, 0, 85, 0.3);
+        }
+
+        .esame-info .esame-nome {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .esame-info .esame-dettagli {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .esame-delete {
+            background: none;
+            border: none;
+            color: var(--red);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .esame-delete:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* SIMULATOR BOX */
+        .simulator-result {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .simulator-result .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1.2;
+        }
+
+        .simulator-result .result-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* CHECKLIST */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .checklist-item:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        .app-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .app-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .app-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px 0 30px;
+            }
+            
+            .app-header {
+                padding: 20px 15px;
+            }
+            
+            .app-logo {
+                font-size: 1.4rem;
+            }
+            
+            .card {
+                padding: 18px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .stat-value {
+                font-size: 1.4rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn-group .btn {
+                min-width: 100%;
+            }
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.4s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="app-header">
+            <div class="app-logo">
+                <div class="logo-icon">📊</div>
+                <span class="logo-text">Libretto Universitario</span>
             </div>
+            <p class="app-subtitle">Il tuo hub accademico personale · by Tesi Flash Toolkit</p>
+            <div class="badge-trust">🔒 100% privacy · dati solo sul tuo browser</div>
         </div>
 
-        <div class="flash-strategy">
-            <p class="text-amber-200 font-semibold">⚡ FLASH STRATEGY: "Conosci i tuoi numeri. Controlli il tuo futuro."</p>
-        </div>
-
-        <!-- PANORAMICA RAPIDA -->
-        <div class="bg-neutral-800 border border-neutral-700 rounded-xl p-5 mb-6">
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="info" style="width:20px;height:20px;"></i> 📖 Come Funziona
-            </h3>
-            <p class="text-neutral-300 text-sm mb-4">
-                In 3 semplici passi hai il controllo completo della tua carriera universitaria:
+        <!-- TRUST BADGE -->
+        <div class="card" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.03);">
+            <p style="color: var(--success); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
+                ✅ <span>Nessun account, nessuna email, nessun server. I tuoi voti restano solo su questo dispositivo.</span>
             </p>
-            <div class="space-y-2">
-                <div class="bg-neutral-900/60 p-3 rounded-lg border border-neutral-800">
-                    <p class="font-bold text-white mb-1 text-xs">1️⃣ CREA LA TUA CARRIERA</p>
-                    <p class="text-neutral-400 text-xs">Inserisci corso, tipo di laurea e anno di immatricolazione. Il resto è precompilato con i valori standard italiani.</p>
-                </div>
-                <div class="bg-neutral-900/60 p-3 rounded-lg border border-neutral-800">
-                    <p class="font-bold text-white mb-1 text-xs">2️⃣ INSERISCI GLI ESAMI</p>
-                    <p class="text-neutral-400 text-xs">Aggiungi ogni esame con voto e CFU. La media si aggiorna in tempo reale mentre digiti.</p>
-                </div>
-                <div class="bg-neutral-900/60 p-3 rounded-lg border border-neutral-800">
-                    <p class="font-bold text-white mb-1 text-xs">3️⃣ MONITORA E SIMULA</p>
-                    <p class="text-neutral-400 text-xs">Controlla la media, il voto di partenza e simula il voto finale con i punti tesi e i bonus.</p>
-                </div>
+        </div>
+
+        <!-- SEZIONE 1: CONFIGURA CARRIERA -->
+        <div class="card card-highlight">
+            <div class="card-title"><span class="icon">🎓</span> 1. Configura la tua carriera</div>
+            <p class="card-desc">Bastano corso e anno di immatricolazione. Il resto è precompilato con i valori standard.</p>
+
+            <div class="form-group">
+                <label class="form-label">👤 Il tuo nome (facoltativo)</label>
+                <input type="text" id="carriera-nome" placeholder="es. Giulia" oninput="aggiornaAnteprima()" class="form-input">
             </div>
-        </div>
 
-        <!-- ============================================================
-             SEZIONE 1: CONFIGURAZIONE CARRIERA
-             ============================================================ -->
-        <div class="bg-neutral-800 border border-neutral-700 rounded-xl p-5 mb-6">
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="settings" style="width:20px;height:20px;"></i> 1. Crea la Tua Carriera
-            </h3>
-            <p class="text-neutral-300 text-sm mb-4">
-                Bastano il corso e l'anno di immatricolazione. Tutto il resto è già precompilato con i valori più comuni in Italia — puoi modificarli in qualsiasi momento.
-            </p>
+            <div class="form-group">
+                <label class="form-label">🎓 Corso di laurea *</label>
+                <input type="text" id="carriera-corso" placeholder="es. Ingegneria Informatica" oninput="aggiornaAnteprima()" class="form-input">
+            </div>
 
-            <div class="space-y-4">
-                <!-- Nome studente -->
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">👤 Il tuo Nome</label>
-                    <input type="text" id="carriera-nome" placeholder="es. Giulia" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    <p class="text-neutral-500 text-xs mt-1">Facoltativo — resta solo su questo dispositivo</p>
-                </div>
+            <div class="form-group">
+                <label class="form-label">📚 Tipo di laurea</label>
+                <select id="carriera-tipo" onchange="aggiornaValoriPredefiniti(); aggiornaAnteprima()" class="form-select">
+                    <option value="triennale">Triennale</option>
+                    <option value="magistrale">Magistrale</option>
+                    <option value="ciclo-unico">Ciclo Unico</option>
+                </select>
+            </div>
 
-                <!-- Corso -->
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">🎓 Corso di Laurea</label>
-                    <input type="text" id="carriera-corso" placeholder="es. Ingegneria Informatica" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    <p class="text-neutral-500 text-xs mt-1">L'unico campo obbligatorio — compare nell'intestazione</p>
-                </div>
+            <div class="form-group">
+                <label class="form-label">📅 Anno di immatricolazione</label>
+                <input type="number" id="carriera-anno" placeholder="es. 2026" min="2000" max="2035" oninput="aggiornaAnteprima()" class="form-input">
+            </div>
 
-                <!-- Tipo di laurea -->
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">📚 Tipo di Laurea</label>
-                    <select id="carriera-tipo" onchange="aggiornaValoriPredefiniti(); aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                        <option value="triennale">Triennale</option>
-                        <option value="magistrale">Magistrale</option>
-                        <option value="ciclo-unico">Ciclo Unico</option>
+            <div class="form-group">
+                <label class="form-label">🏛️ Ateneo</label>
+                <input type="text" id="carriera-ateneo" placeholder="es. Università di Bologna" oninput="aggiornaAnteprima()" class="form-input">
+            </div>
+
+            <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+                <p style="font-weight: 600; font-size: 0.8rem; color: var(--gold); margin-bottom: 10px;">⚙️ Valori predefiniti (modificabili)</p>
+                
+                <div class="form-group">
+                    <label class="form-label">⏳ Durata legale</label>
+                    <select id="carriera-durata" onchange="aggiornaAnteprima()" class="form-select">
+                        <option value="2">2 anni</option>
+                        <option value="3" selected>3 anni</option>
+                        <option value="4">4 anni</option>
+                        <option value="5">5 anni</option>
+                        <option value="6">6 anni</option>
                     </select>
-                    <p class="text-neutral-500 text-xs mt-1">Determina la durata predefinita</p>
                 </div>
 
-                <!-- Anno immatricolazione -->
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">📅 Anno di Immatricolazione</label>
-                    <input type="number" id="carriera-anno" placeholder="es. 2026" min="2000" max="2035" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    <p class="text-neutral-500 text-xs mt-1">L'anno accademico in cui hai iniziato</p>
+                <div class="form-group">
+                    <label class="form-label">📊 CFU totali</label>
+                    <input type="number" id="carriera-cfu" value="180" min="60" max="360" oninput="aggiornaAnteprima()" class="form-input">
                 </div>
 
-                <!-- Ateneo -->
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">🏛️ Ateneo</label>
-                    <input type="text" id="carriera-ateneo" placeholder="es. Università di Bologna" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    <p class="text-neutral-500 text-xs mt-1">Non lo usiamo per nulla se non mostrarlo qui</p>
-                </div>
-
-                <!-- Valori proposti - modificabili -->
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 mt-4">
-                    <p class="font-bold text-white text-sm mb-3">⚙️ Valori proposti — modificabili anche dopo</p>
-
-                    <!-- Durata legale -->
-                    <div class="mb-3">
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">⏳ Durata Legale</label>
-                        <select id="carriera-durata" onchange="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                            <option value="2">2 anni</option>
-                            <option value="3" selected>3 anni</option>
-                            <option value="4">4 anni</option>
-                            <option value="5">5 anni</option>
-                            <option value="6">6 anni</option>
-                        </select>
-                        <p class="text-neutral-500 text-xs mt-1">Anni previsti dall'ordinamento</p>
-                    </div>
-
-                    <!-- CFU totali -->
-                    <div class="mb-3">
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">📊 CFU Totali</label>
-                        <input type="number" id="carriera-cfu" value="180" min="60" max="360" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                        <p class="text-neutral-500 text-xs mt-1">180 per triennale, 120 per magistrale, 300 per ciclo unico</p>
-                    </div>
-
-                    <!-- Base voto -->
-                    <div class="mb-3">
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">🎯 Base Voto di Laurea</label>
-                        <input type="number" id="carriera-base" value="110" min="100" max="110" oninput="aggiornaAnteprima()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                        <p class="text-neutral-500 text-xs mt-1">Il massimo raggiungibile</p>
-                    </div>
-
-                    <!-- Tema -->
-                    <div>
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">🎨 Tema</label>
-                        <select id="carriera-tema" onchange="cambiaTema()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                            <option value="auto">Auto (segue il sistema)</option>
-                            <option value="chiaro">Chiaro</option>
-                            <option value="scuro">Scuro</option>
-                        </select>
-                        <p class="text-neutral-500 text-xs mt-1">Lo cambi quando vuoi</p>
-                    </div>
-                </div>
-
-                <button onclick="salvaCarriera()" class="w-full bg-amber-500 text-black font-bold px-4 py-3 rounded-lg hover:bg-amber-400 transition text-sm">
-                    💾 Salva Carriera
-                </button>
-                <p class="text-neutral-500 text-xs text-center mt-2">🔒 Nessun account, nessuna email. I dati restano sul tuo browser e non sono sincronizzati tra dispositivi diversi.</p>
-            </div>
-
-            <!-- ANTEPRIMA CARRIERA -->
-            <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 mt-4">
-                <p class="font-bold text-white text-sm mb-3">👁️ La carriera che stai creando</p>
-                <div id="anteprima-carriera" class="space-y-2 text-sm">
-                    <p class="text-neutral-400"><strong class="text-white">Corso:</strong> <span id="anteprima-corso">non indicato</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">Ateneo:</strong> <span id="anteprima-ateneo">non indicato</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">Tipo:</strong> <span id="anteprima-tipo">Triennale</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">Durata legale:</strong> <span id="anteprima-durata">3 anni</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">CFU totali:</strong> <span id="anteprima-cfu">180</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">Voto di laurea:</strong> su <span id="anteprima-base">110</span></p>
-                    <p class="text-neutral-400"><strong class="text-white">Immatricolazione:</strong> <span id="anteprima-anno">—</span></p>
+                <div class="form-group">
+                    <label class="form-label">🎯 Voto base di laurea</label>
+                    <input type="number" id="carriera-base" value="110" min="100" max="110" oninput="aggiornaAnteprima()" class="form-input">
                 </div>
             </div>
 
-            <!-- ARRIVANO INSIEME ALLA CARRIERA -->
-            <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 mt-4">
-                <p class="font-bold text-white text-sm mb-3">📦 Arrivano insieme alla carriera</p>
-                <div class="space-y-2 text-xs text-neutral-400">
-                    <p>📅 <strong class="text-white">Tre sessioni d'esame</strong> — invernale, estiva, autunnale.</p>
-                    <p>⚙️ <strong class="text-white">Le regole di calcolo standard</strong> — media ponderata sui CFU e i bonus di laurea più diffusi.</p>
-                    <p>📄 <strong class="text-white">Nessun dato di esempio</strong> — il libretto parte vuoto, poi lo riempi con i tuoi esami.</p>
+            <button onclick="salvaCarriera()" class="btn btn-primary">💾 Salva carriera</button>
+        </div>
+
+        <!-- ANTEPRIMA CARRIERA -->
+        <div class="card" id="anteprima-card" style="display: none;">
+            <div class="card-title"><span class="icon">👁️</span> La tua carriera</div>
+            <div id="anteprima-carriera" style="display: grid; gap: 6px; font-size: 0.85rem;">
+                <p><strong>Corso:</strong> <span id="anteprima-corso"></span></p>
+                <p><strong>Ateneo:</strong> <span id="anteprima-ateneo"></span></p>
+                <p><strong>Tipo:</strong> <span id="anteprima-tipo"></span></p>
+                <p><strong>Durata legale:</strong> <span id="anteprima-durata"></span></p>
+                <p><strong>CFU totali:</strong> <span id="anteprima-cfu"></span></p>
+                <p><strong>Voto di laurea:</strong> su <span id="anteprima-base"></span></p>
+                <p><strong>Immatricolazione:</strong> <span id="anteprima-anno"></span></p>
+            </div>
+        </div>
+
+        <!-- SEZIONE 2: INSERISCI ESAMI -->
+        <div class="card card-gold">
+            <div class="card-title"><span class="icon">📝</span> 2. Inserisci i tuoi esami</div>
+            <p class="card-desc">Aggiungi ogni esame superato. La media si aggiorna in tempo reale.</p>
+
+            <div class="form-group">
+                <label class="form-label">📚 Nome esame</label>
+                <input type="text" id="esame-nome" placeholder="es. Analisi Matematica" class="form-input">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-group">
+                    <label class="form-label">🔢 Voto</label>
+                    <input type="number" id="esame-voto" placeholder="es. 28" min="18" max="33" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📊 CFU</label>
+                    <input type="number" id="esame-cfu" placeholder="es. 12" min="1" max="30" class="form-input">
                 </div>
             </div>
 
-            <!-- FATTO QUESTO, L'APP CALCOLA -->
-            <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 mt-4">
-                <p class="font-bold text-white text-sm mb-3">✅ Fatto questo, l'app calcola</p>
-                <div class="space-y-2 text-xs text-neutral-400">
-                    <p>📊 <strong class="text-white">Media ponderata</strong> — calcolata sui CFU, sempre aggiornata</p>
-                    <p>🎯 <strong class="text-white">Proiezione /110</strong> — il voto di laurea stimato dai tuoi voti</p>
-                    <p>🔮 <strong class="text-white">Simulatore</strong> — "e se prendo…", "cosa mi serve per…"</p>
+            <div class="form-group">
+                <label class="form-label">📅 Data esame (facoltativa)</label>
+                <input type="date" id="esame-data" class="form-input">
+            </div>
+
+            <button onclick="aggiungiEsame()" class="btn btn-gold">➕ Aggiungi esame</button>
+
+            <div id="lista-esami" style="margin-top: 16px;"></div>
+        </div>
+
+        <!-- SEZIONE 3: STATISTICHE -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📊</span> 3. Le tue statistiche</div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Media ponderata</div>
+                    <div class="stat-value" id="stat-media">—</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Media aritmetica</div>
+                    <div class="stat-value blue" id="stat-aritmetica">—</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">CFU accumulati</div>
+                    <div class="stat-value" id="stat-cfu">—</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Esami sostenuti</div>
+                    <div class="stat-value" id="stat-esami" style="color: var(--text-primary);">0</div>
+                </div>
+            </div>
+
+            <div class="stat-box" style="margin-top: 8px; border-color: rgba(34, 197, 94, 0.3);">
+                <div class="stat-label">Voto di partenza (su 110)</div>
+                <div class="stat-value green" id="stat-partenza" style="font-size: 2.2rem;">—</div>
+            </div>
+        </div>
+
+        <!-- SEZIONE 4: SIMULATORE -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🎯</span> 4. Simulatore voto di laurea</div>
+            <p class="card-desc">Inserisci i punti tesi e i bonus per stimare il voto finale.</p>
+
+            <div class="form-group">
+                <label class="form-label">🎯 Punti tesi (0-8)</label>
+                <input type="number" id="sim-tesi" value="5" min="0" max="8" oninput="calcolaStatistiche()" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">🏆 Bonus (lodi, Erasmus, laurea in corso)</label>
+                <input type="number" id="sim-bonus" value="0" min="0" max="10" oninput="calcolaStatistiche()" class="form-input">
+            </div>
+
+            <div class="simulator-result">
+                <div class="result-label">Voto finale stimato</div>
+                <div class="result-value" id="sim-finale">—</div>
+            </div>
+
+            <!-- SIMULATORE INVERSO -->
+            <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 16px; margin-top: 16px;">
+                <p style="font-weight: 600; font-size: 0.8rem; color: var(--gold); margin-bottom: 10px;">🔮 "Cosa mi serve per...?"</p>
+                <div class="form-group">
+                    <label class="form-label">🎯 Voto desiderato (100-110)</label>
+                    <input type="number" id="sim-desiderato" value="110" min="100" max="110" oninput="calcolaCosaServe()" class="form-input">
+                </div>
+                <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 10px; text-align: center;">
+                    <span style="font-size: 0.7rem; color: var(--text-muted);">Punti necessari (tesi + bonus)</span>
+                    <div id="sim-necessari" style="font-size: 1.5rem; font-weight: 800; color: var(--success);">—</div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================================================
-             SEZIONE 2: INSERIMENTO ESAMI
-             ============================================================ -->
-        <div class="bg-neutral-800 border border-neutral-700 rounded-xl p-5 mb-6">
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="book-open" style="width:20px;height:20px;"></i> 2. Inserisci i Tuoi Esami
-            </h3>
-            <p class="text-neutral-300 text-sm mb-4">
-                Aggiungi ogni esame con voto e CFU. La media si aggiorna in tempo reale.
-            </p>
-
-            <div class="space-y-3">
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">📝 Nome Esame</label>
-                    <input type="text" id="esame-nome" placeholder="es. Analisi Matematica" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">🔢 Voto</label>
-                        <input type="number" id="esame-voto" placeholder="es. 28" min="18" max="33" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">📊 CFU</label>
-                        <input type="number" id="esame-cfu" placeholder="es. 12" min="1" max="30" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">📅 Data Esame (facoltativa)</label>
-                    <input type="date" id="esame-data" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                </div>
-                <button onclick="aggiungiEsame()" class="w-full bg-amber-500 text-black font-bold px-4 py-3 rounded-lg hover:bg-amber-400 transition text-sm">
-                    ➕ Aggiungi Esame
-                </button>
+        <!-- SEZIONE 5: ESPORTA -->
+        <div class="card">
+            <div class="card-title"><span class="icon">💾</span> 5. Esporta o stampa</div>
+            <div class="btn-group">
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Stampa / PDF</button>
+                <button onclick="exportJSON()" class="btn btn-outline">📥 Backup JSON</button>
+                <button onclick="resetLibretto()" class="btn btn-danger">🗑️ Azzera</button>
             </div>
-
-            <!-- Lista esami -->
-            <div id="lista-esami" class="mt-4 space-y-2"></div>
-        </div>
-
-        <!-- ============================================================
-             SEZIONE 3: DASHBOARD STATISTICHE
-             ============================================================ -->
-        <div class="bg-neutral-800 border border-amber-500/40 rounded-xl p-5 mb-6 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-bl-lg">📊 LIVE</div>
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="bar-chart" style="width:20px;height:20px;"></i> 3. Le Tue Statistiche
-            </h3>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 text-center">
-                    <p class="text-neutral-400 text-xs mb-1">Media Ponderata</p>
-                    <p id="stat-media" class="text-2xl font-bold text-amber-400">—</p>
-                </div>
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 text-center">
-                    <p class="text-neutral-400 text-xs mb-1">Media Aritmetica</p>
-                    <p id="stat-aritmetica" class="text-2xl font-bold text-blue-400">—</p>
-                </div>
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 text-center">
-                    <p class="text-neutral-400 text-xs mb-1">CFU Accumulati</p>
-                    <p id="stat-cfu" class="text-2xl font-bold text-amber-400">—</p>
-                </div>
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 text-center">
-                    <p class="text-neutral-400 text-xs mb-1">Esami Sostenuti</p>
-                    <p id="stat-esami" class="text-2xl font-bold text-white">0</p>
-                </div>
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 text-center col-span-2">
-                    <p class="text-neutral-400 text-xs mb-1">Voto di Partenza (su 110)</p>
-                    <p id="stat-partenza" class="text-3xl font-bold text-green-400">—</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================================
-             SEZIONE 4: SIMULATORE VOTO FINALE
-             ============================================================ -->
-        <div class="bg-neutral-800 border border-neutral-700 rounded-xl p-5 mb-6">
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="target" style="width:20px;height:20px;"></i> 4. Simulatore Voto di Laurea
-            </h3>
-            <p class="text-neutral-300 text-sm mb-4">
-                Inserisci i punti tesi e i bonus per vedere il voto finale stimato. Oppure usa il simulatore "cosa mi serve per...".
-            </p>
-
-            <div class="space-y-3">
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">🎯 Punti Tesi (0-8)</label>
-                    <input type="number" id="sim-tesi" value="5" min="0" max="8" oninput="calcolaStatistiche()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="text-neutral-300 text-xs font-bold mb-1 block">🏆 Bonus (lodi, laurea in corso, Erasmus)</label>
-                    <input type="number" id="sim-bonus" value="0" min="0" max="10" oninput="calcolaStatistiche()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                </div>
-                <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-center">
-                    <p class="text-neutral-400 text-xs mb-1">Voto Finale Stimato</p>
-                    <p id="sim-finale" class="text-3xl font-bold text-amber-400">—</p>
-                </div>
-
-                <!-- SIMULATORE "COSA MI SERVE PER..." -->
-                <div class="bg-neutral-900/60 p-4 rounded-lg border border-neutral-800 mt-4">
-                    <p class="font-bold text-white text-sm mb-3">🔮 "Cosa mi serve per...?"</p>
-                    <p class="text-neutral-400 text-xs mb-3">Inserisci il voto di laurea desiderato e scopri quanti punti ti servono tra tesi e bonus.</p>
-                    <div>
-                        <label class="text-neutral-300 text-xs font-bold mb-1 block">🎯 Voto di Laurea Desiderato (100-110)</label>
-                        <input type="number" id="sim-desiderato" value="110" min="100" max="110" oninput="calcolaCosaServe()" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white text-sm focus:border-amber-500 focus:outline-none">
-                    </div>
-                    <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-3 mt-3 text-center">
-                        <p class="text-neutral-400 text-xs mb-1">Punti necessari (tesi + bonus)</p>
-                        <p id="sim-necessari" class="text-2xl font-bold text-green-400">—</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================================
-             SEZIONE 5: AZIONI
-             ============================================================ -->
-        <div class="bg-neutral-800 border border-neutral-700 rounded-xl p-5 mb-6">
-            <h3 class="text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
-                <i data-lucide="download" style="width:20px;height:20px;"></i> 5. Esporta o Stampa
-            </h3>
-            <div class="flex gap-3 flex-wrap">
-                <button onclick="window.print()" class="flex-1 min-w-[140px] bg-amber-500 text-black font-bold px-4 py-3 rounded-lg hover:bg-amber-400 transition text-sm">
-                    🖨️ Stampa / Salva PDF
-                </button>
-                <button onclick="exportJSON()" class="flex-1 min-w-[140px] bg-blue-600 text-white font-bold px-4 py-3 rounded-lg hover:bg-blue-500 transition text-sm">
-                    📥 Export JSON
-                </button>
-                <button onclick="resetLibretto()" class="flex-1 min-w-[140px] bg-red-600 text-white font-bold px-4 py-3 rounded-lg hover:bg-red-500 transition text-sm">
-                    🗑️ Azzera Tutto
-                </button>
-            </div>
-            <p class="text-neutral-400 text-xs mt-3">
-                💡 <strong class="text-white">Export JSON:</strong> Scarica un file di backup con tutti i tuoi dati. <strong class="text-white">Stampa/Salva PDF:</strong> Apre la finestra di stampa del browser.
+            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px;">
+                💡 <strong>Backup JSON:</strong> scarica un file con tutti i dati. <strong>Stampa:</strong> apre la finestra di stampa del browser.
             </p>
         </div>
 
         <!-- CHECKLIST -->
-        <h3 class="heading-font font-bold text-lg text-white mb-3 mt-6">✅ Checklist Libretto</h3>
-        <div class="bg-neutral-800 rounded-lg p-4 space-y-2">
-            <label class="checklist-item flex items-start gap-3 cursor-pointer"><input type="checkbox" class="mt-1 accent-amber-500"><span class="text-neutral-200 text-sm">Ho configurato la mia carriera universitaria</span></label>
-            <label class="checklist-item flex items-start gap-3 cursor-pointer"><input type="checkbox" class="mt-1 accent-amber-500"><span class="text-neutral-200 text-sm">Ho inserito almeno 5 esami con voti e CFU</span></label>
-            <label class="checklist-item flex items-start gap-3 cursor-pointer"><input type="checkbox" class="mt-1 accent-amber-500"><span class="text-neutral-200 text-sm">Ho controllato la media ponderata e aritmetica</span></label>
-            <label class="checklist-item flex items-start gap-3 cursor-pointer"><input type="checkbox" class="mt-1 accent-amber-500"><span class="text-neutral-200 text-sm">Ho simulato il voto finale con i punti tesi</span></label>
-            <label class="checklist-item flex items-start gap-3 cursor-pointer"><input type="checkbox" class="mt-1 accent-amber-500"><span class="text-neutral-200 text-sm">Ho esportato il backup JSON</span></label>
+        <div class="card">
+            <div class="card-title"><span class="icon">✅</span> Checklist rapida</div>
+            <label class="checklist-item">
+                <input type="checkbox" class="accent"> <span>Ho configurato la mia carriera</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="accent"> <span>Ho inserito almeno 5 esami</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="accent"> <span>Ho controllato media ponderata e aritmetica</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="accent"> <span>Ho simulato il voto finale</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="accent"> <span>Ho esportato il backup JSON</span>
+            </label>
         </div>
 
+        <!-- FOOTER -->
+        <div class="app-footer">
+            <p>📊 Libretto Universitario · Tool gratuito by <a href="https://tesiflash.help" target="_blank">Tesi Flash</a></p>
+            <p style="margin-top: 4px;">🔒 I tuoi dati restano solo sul tuo browser · Nessun invio a server</p>
+            <p style="margin-top: 4px; font-size: 0.65rem;">© 2026 Tesi Flash · Roemap di Mattina Giuseppe</p>
+        </div>
     </div>
-</div>
 
-<script>
-    // ============================================================
-    // JAVASCRIPT: TESIFLASH LIBRETTO UNIVERSITARIO
-    // ============================================================
-    
-    let esami = JSON.parse(localStorage.getItem('tesiflash_esami') || '[]');
-    let carriera = JSON.parse(localStorage.getItem('tesiflash_carriera') || 'null');
+    <script>
+        // ============================================================
+        // LIBRETTO UNIVERSITARIO · Tesi Flash Toolkit
+        // ============================================================
+        
+        let esami = JSON.parse(localStorage.getItem('libretto_esami') || '[]');
+        let carriera = JSON.parse(localStorage.getItem('libretto_carriera') || 'null');
 
-    // Carica carriera salvata
-    if (carriera) {
-        document.getElementById('carriera-nome').value = carriera.nome || '';
-        document.getElementById('carriera-corso').value = carriera.corso || '';
-        document.getElementById('carriera-tipo').value = carriera.tipo || 'triennale';
-        document.getElementById('carriera-anno').value = carriera.anno || '';
-        document.getElementById('carriera-ateneo').value = carriera.ateneo || '';
-        document.getElementById('carriera-durata').value = carriera.durata || '3';
-        document.getElementById('carriera-cfu').value = carriera.cfu || 180;
-        document.getElementById('carriera-base').value = carriera.base || 110;
-        if (carriera.tema) {
-            document.getElementById('carriera-tema').value = carriera.tema;
+        // Carica carriera salvata
+        if (carriera) {
+            document.getElementById('carriera-nome').value = carriera.nome || '';
+            document.getElementById('carriera-corso').value = carriera.corso || '';
+            document.getElementById('carriera-tipo').value = carriera.tipo || 'triennale';
+            document.getElementById('carriera-anno').value = carriera.anno || '';
+            document.getElementById('carriera-ateneo').value = carriera.ateneo || '';
+            document.getElementById('carriera-durata').value = carriera.durata || '3';
+            document.getElementById('carriera-cfu').value = carriera.cfu || 180;
+            document.getElementById('carriera-base').value = carriera.base || 110;
+            aggiornaAnteprima();
+            document.getElementById('anteprima-card').style.display = 'block';
         }
-        aggiornaAnteprima();
-    }
 
-    function aggiornaValoriPredefiniti() {
-        const tipo = document.getElementById('carriera-tipo').value;
-        if (tipo === 'triennale') {
-            document.getElementById('carriera-durata').value = '3';
-            document.getElementById('carriera-cfu').value = '180';
-        } else if (tipo === 'magistrale') {
-            document.getElementById('carriera-durata').value = '2';
-            document.getElementById('carriera-cfu').value = '120';
-        } else if (tipo === 'ciclo-unico') {
-            document.getElementById('carriera-durata').value = '5';
-            document.getElementById('carriera-cfu').value = '300';
+        function aggiornaValoriPredefiniti() {
+            const tipo = document.getElementById('carriera-tipo').value;
+            if (tipo === 'triennale') {
+                document.getElementById('carriera-durata').value = '3';
+                document.getElementById('carriera-cfu').value = '180';
+            } else if (tipo === 'magistrale') {
+                document.getElementById('carriera-durata').value = '2';
+                document.getElementById('carriera-cfu').value = '120';
+            } else if (tipo === 'ciclo-unico') {
+                document.getElementById('carriera-durata').value = '5';
+                document.getElementById('carriera-cfu').value = '300';
+            }
+            aggiornaAnteprima();
         }
-        aggiornaAnteprima();
-    }
 
-    function aggiornaAnteprima() {
-        const corso = document.getElementById('carriera-corso').value || 'non indicato';
-        const ateneo = document.getElementById('carriera-ateneo').value || 'non indicato';
-        const tipo = document.getElementById('carriera-tipo').value;
-        const durata = document.getElementById('carriera-durata').value;
-        const cfu = document.getElementById('carriera-cfu').value;
-        const base = document.getElementById('carriera-base').value;
-        const anno = document.getElementById('carriera-anno').value;
-        
-        document.getElementById('anteprima-corso').textContent = corso;
-        document.getElementById('anteprima-ateneo').textContent = ateneo;
-        document.getElementById('anteprima-tipo').textContent = tipo === 'triennale' ? 'Triennale' : tipo === 'magistrale' ? 'Magistrale' : 'Ciclo Unico';
-        document.getElementById('anteprima-durata').textContent = durata + ' anni';
-        document.getElementById('anteprima-cfu').textContent = cfu;
-        document.getElementById('anteprima-base').textContent = base;
-        document.getElementById('anteprima-anno').textContent = anno ? anno + '/' + (parseInt(anno) + 1) : '—';
-    }
-
-    function cambiaTema() {
-        const tema = document.getElementById('carriera-tema').value;
-        if (tema === 'chiaro') {
-            document.body.style.backgroundColor = '#ffffff';
-            document.body.style.color = '#000000';
-        } else if (tema === 'scuro') {
-            document.body.style.backgroundColor = '#0f0332';
-            document.body.style.color = '#ffffff';
-        } else {
-            document.body.style.backgroundColor = '';
-            document.body.style.color = '';
+        function aggiornaAnteprima() {
+            const corso = document.getElementById('carriera-corso').value || 'non indicato';
+            const ateneo = document.getElementById('carriera-ateneo').value || 'non indicato';
+            const tipo = document.getElementById('carriera-tipo').value;
+            const durata = document.getElementById('carriera-durata').value;
+            const cfu = document.getElementById('carriera-cfu').value;
+            const base = document.getElementById('carriera-base').value;
+            const anno = document.getElementById('carriera-anno').value;
+            
+            document.getElementById('anteprima-corso').textContent = corso;
+            document.getElementById('anteprima-ateneo').textContent = ateneo;
+            document.getElementById('anteprima-tipo').textContent = tipo === 'triennale' ? 'Triennale' : tipo === 'magistrale' ? 'Magistrale' : 'Ciclo Unico';
+            document.getElementById('anteprima-durata').textContent = durata + ' anni';
+            document.getElementById('anteprima-cfu').textContent = cfu;
+            document.getElementById('anteprima-base').textContent = base;
+            document.getElementById('anteprima-anno').textContent = anno ? anno + '/' + (parseInt(anno) + 1) : '—';
         }
-    }
 
-    function salvaCarriera() {
-        carriera = {
-            nome: document.getElementById('carriera-nome').value.trim(),
-            corso: document.getElementById('carriera-corso').value.trim(),
-            tipo: document.getElementById('carriera-tipo').value,
-            anno: document.getElementById('carriera-anno').value,
-            ateneo: document.getElementById('carriera-ateneo').value.trim(),
-            durata: document.getElementById('carriera-durata').value,
-            cfu: parseInt(document.getElementById('carriera-cfu').value) || 180,
-            base: parseInt(document.getElementById('carriera-base').value) || 110,
-            tema: document.getElementById('carriera-tema').value
-        };
-        localStorage.setItem('tesiflash_carriera', JSON.stringify(carriera));
-        alert('✅ Carriera salvata!');
-    }
-
-    function aggiungiEsame() {
-        const nome = document.getElementById('esame-nome').value.trim();
-        const voto = parseInt(document.getElementById('esame-voto').value);
-        const cfu = parseInt(document.getElementById('esame-cfu').value);
-        const data = document.getElementById('esame-data').value;
-        
-        if (!nome || !voto || !cfu) {
-            alert('Compila i campi: nome, voto e CFU');
-            return;
+        function salvaCarriera() {
+            carriera = {
+                nome: document.getElementById('carriera-nome').value.trim(),
+                corso: document.getElementById('carriera-corso').value.trim(),
+                tipo: document.getElementById('carriera-tipo').value,
+                anno: document.getElementById('carriera-anno').value,
+                ateneo: document.getElementById('carriera-ateneo').value.trim(),
+                durata: document.getElementById('carriera-durata').value,
+                cfu: parseInt(document.getElementById('carriera-cfu').value) || 180,
+                base: parseInt(document.getElementById('carriera-base').value) || 110
+            };
+            localStorage.setItem('libretto_carriera', JSON.stringify(carriera));
+            document.getElementById('anteprima-card').style.display = 'block';
+            aggiornaAnteprima();
+            alert('✅ Carriera salvata con successo!');
         }
-        
-        if (voto < 18 || voto > 33) {
-            alert('Il voto deve essere tra 18 e 33 (33 = 30 e lode con bonus)');
-            return;
-        }
-        
-        esami.push({ nome, voto, cfu, data });
-        localStorage.setItem('tesiflash_esami', JSON.stringify(esami));
-        
-        document.getElementById('esame-nome').value = '';
-        document.getElementById('esame-voto').value = '';
-        document.getElementById('esame-cfu').value = '';
-        document.getElementById('esame-data').value = '';
-        
-        renderEsami();
-        calcolaStatistiche();
-        calcolaCosaServe();
-    }
 
-    function rimuoviEsame(index) {
-        esami.splice(index, 1);
-        localStorage.setItem('tesiflash_esami', JSON.stringify(esami));
-        renderEsami();
-        calcolaStatistiche();
-        calcolaCosaServe();
-    }
-
-    function renderEsami() {
-        const lista = document.getElementById('lista-esami');
-        if (esami.length === 0) {
-            lista.innerHTML = '<p class="text-neutral-500 text-xs text-center">Nessun esame inserito</p>';
-            return;
+        function aggiungiEsame() {
+            const nome = document.getElementById('esame-nome').value.trim();
+            const voto = parseInt(document.getElementById('esame-voto').value);
+            const cfu = parseInt(document.getElementById('esame-cfu').value);
+            const data = document.getElementById('esame-data').value;
+            
+            if (!nome || !voto || !cfu) {
+                alert('⚠️ Compila tutti i campi: nome, voto e CFU');
+                return;
+            }
+            
+            if (voto < 18 || voto > 33) {
+                alert('⚠️ Il voto deve essere tra 18 e 33 (33 = 30 e lode)');
+                return;
+            }
+            
+            esami.push({ nome, voto, cfu, data });
+            localStorage.setItem('libretto_esami', JSON.stringify(esami));
+            
+            document.getElementById('esame-nome').value = '';
+            document.getElementById('esame-voto').value = '';
+            document.getElementById('esame-cfu').value = '';
+            document.getElementById('esame-data').value = '';
+            
+            renderEsami();
+            calcolaStatistiche();
+            calcolaCosaServe();
         }
-        
-        lista.innerHTML = esami.map((e, i) => `
-            <div class="bg-neutral-900/60 p-3 rounded-lg border border-neutral-800 flex justify-between items-center">
-                <div>
-                    <p class="text-white text-sm font-bold">${e.nome}</p>
-                    <p class="text-neutral-400 text-xs">Voto: ${e.voto === 31 ? '30 e lode' : e.voto === 32 ? '30 e lode (32)' : e.voto === 33 ? '30 e lode (33)' : e.voto} · CFU: ${e.cfu}${e.data ? ' · ' + e.data : ''}</p>
+
+        function rimuoviEsame(index) {
+            esami.splice(index, 1);
+            localStorage.setItem('libretto_esami', JSON.stringify(esami));
+            renderEsami();
+            calcolaStatistiche();
+            calcolaCosaServe();
+        }
+
+        function renderEsami() {
+            const lista = document.getElementById('lista-esami');
+            if (esami.length === 0) {
+                lista.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">Nessun esame inserito</p>';
+                return;
+            }
+            
+            lista.innerHTML = esami.map((e, i) => `
+                <div class="esame-item">
+                    <div class="esame-info">
+                        <div class="esame-nome">${e.nome}</div>
+                        <div class="esame-dettagli">Voto: ${e.voto === 31 ? '30 e lode' : e.voto === 32 ? '30 e lode (32)' : e.voto === 33 ? '30 e lode (33)' : e.voto} · CFU: ${e.cfu}${e.data ? ' · ' + e.data : ''}</div>
+                    </div>
+                    <button onclick="rimuoviEsame(${i})" class="esame-delete" title="Rimuovi esame">🗑️</button>
                 </div>
-                <button onclick="rimuoviEsame(${i})" class="text-red-400 hover:text-red-300 text-xs font-bold">🗑️</button>
-            </div>
-        `).join('');
-    }
-
-    function calcolaStatistiche() {
-        const numEsami = esami.length;
-        const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
-        
-        if (numEsami === 0) {
-            document.getElementById('stat-media').textContent = '—';
-            document.getElementById('stat-aritmetica').textContent = '—';
-            document.getElementById('stat-cfu').textContent = '—';
-            document.getElementById('stat-partenza').textContent = '—';
-            document.getElementById('stat-esami').textContent = '0';
-            document.getElementById('sim-finale').textContent = '—';
-            return;
+            `).join('');
         }
-        
-        // Media ponderata
-        const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
-        
-        // Media aritmetica
-        const mediaAritmetica = esami.reduce((sum, e) => sum + e.voto, 0) / numEsami;
-        
-        // Voto di partenza (base 110)
-        const votoPartenza = (mediaPonderata * 110) / 30;
-        
-        document.getElementById('stat-media').textContent = mediaPonderata.toFixed(2);
-        document.getElementById('stat-aritmetica').textContent = mediaAritmetica.toFixed(2);
-        document.getElementById('stat-cfu').textContent = cfuTotali;
-        document.getElementById('stat-partenza').textContent = votoPartenza.toFixed(1);
-        document.getElementById('stat-esami').textContent = numEsami;
-        
-        // Simulatore
-        const puntiTesi = parseInt(document.getElementById('sim-tesi').value) || 0;
-        const bonus = parseInt(document.getElementById('sim-bonus').value) || 0;
-        const votoFinale = votoPartenza + puntiTesi + bonus;
-        document.getElementById('sim-finale').textContent = Math.min(votoFinale, 110).toFixed(1);
-    }
 
-    function calcolaCosaServe() {
-        const desiderato = parseInt(document.getElementById('sim-desiderato').value) || 110;
-        const numEsami = esami.length;
-        
-        if (numEsami === 0) {
-            document.getElementById('sim-necessari').textContent = '—';
-            return;
+        function calcolaStatistiche() {
+            const numEsami = esami.length;
+            const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
+            
+            if (numEsami === 0) {
+                document.getElementById('stat-media').textContent = '—';
+                document.getElementById('stat-aritmetica').textContent = '—';
+                document.getElementById('stat-cfu').textContent = '—';
+                document.getElementById('stat-partenza').textContent = '—';
+                document.getElementById('stat-esami').textContent = '0';
+                document.getElementById('sim-finale').textContent = '—';
+                return;
+            }
+            
+            // Media ponderata
+            const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
+            
+            // Media aritmetica
+            const mediaAritmetica = esami.reduce((sum, e) => sum + e.voto, 0) / numEsami;
+            
+            // Voto di partenza (base 110)
+            const votoPartenza = (mediaPonderata * 110) / 30;
+            
+            document.getElementById('stat-media').textContent = mediaPonderata.toFixed(2);
+            document.getElementById('stat-aritmetica').textContent = mediaAritmetica.toFixed(2);
+            document.getElementById('stat-cfu').textContent = cfuTotali;
+            document.getElementById('stat-partenza').textContent = votoPartenza.toFixed(1);
+            document.getElementById('stat-esami').textContent = numEsami;
+            
+            // Simulatore
+            const puntiTesi = parseInt(document.getElementById('sim-tesi').value) || 0;
+            const bonus = parseInt(document.getElementById('sim-bonus').value) || 0;
+            const votoFinale = votoPartenza + puntiTesi + bonus;
+            document.getElementById('sim-finale').textContent = Math.min(votoFinale, 110).toFixed(1);
         }
-        
-        const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
-        const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
-        const votoPartenza = (mediaPonderata * 110) / 30;
-        const puntiNecessari = desiderato - votoPartenza;
-        
-        if (puntiNecessari <= 0) {
-            document.getElementById('sim-necessari').textContent = 'Già raggiunto! 🎉';
-        } else if (puntiNecessari > 18) {
-            document.getElementById('sim-necessari').textContent = 'Non raggiungibile (max 18 punti)';
-        } else {
-            document.getElementById('sim-necessari').textContent = puntiNecessari.toFixed(1) + ' punti';
+
+        function calcolaCosaServe() {
+            const desiderato = parseInt(document.getElementById('sim-desiderato').value) || 110;
+            const numEsami = esami.length;
+            
+            if (numEsami === 0) {
+                document.getElementById('sim-necessari').textContent = '—';
+                return;
+            }
+            
+            const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
+            const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
+            const votoPartenza = (mediaPonderata * 110) / 30;
+            const puntiNecessari = desiderato - votoPartenza;
+            
+            if (puntiNecessari <= 0) {
+                document.getElementById('sim-necessari').textContent = '✅ Già raggiunto!';
+            } else if (puntiNecessari > 18) {
+                document.getElementById('sim-necessari').textContent = '❌ Non raggiungibile';
+            } else {
+                document.getElementById('sim-necessari').textContent = puntiNecessari.toFixed(1) + ' punti';
+            }
         }
-    }
 
-    function exportJSON() {
-        const dati = {
-            carriera: carriera,
-            esami: esami,
-            esportato: new Date().toISOString()
-        };
-        const blob = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'tesiflash-libretto-' + new Date().toISOString().split('T')[0] + '.json';
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function resetLibretto() {
-        if (confirm('Sei sicuro di voler cancellare tutti i dati? Questa operazione non è reversibile.')) {
-            esami = [];
-            localStorage.setItem('tesiflash_esami', JSON.stringify(esami));
-            carriera = null;
-            localStorage.removeItem('tesiflash_carriera');
-            location.reload();
+        function exportJSON() {
+            const dati = {
+                carriera: carriera,
+                esami: esami,
+                esportato: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'libretto-universitario-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
         }
-    }
 
-    // Carica dati iniziali
-    renderEsami();
-    calcolaStatistiche();
-    calcolaCosaServe();
-    aggiornaAnteprima();
-</script>
+        function resetLibretto() {
+            if (confirm('⚠️ Sei sicuro di voler cancellare tutti i dati? Questa operazione non è reversibile.')) {
+                esami = [];
+                localStorage.setItem('libretto_esami', JSON.stringify(esami));
+                carriera = null;
+                localStorage.removeItem('libretto_carriera');
+                location.reload();
+            }
+        }
+
+        // Carica dati iniziali
+        renderEsami();
+        calcolaStatistiche();
+        calcolaCosaServe();
+        aggiornaAnteprima();
+    </script>
+</body>
+</html>
