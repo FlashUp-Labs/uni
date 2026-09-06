@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Libretto Universitario · Tesi Flash Toolkit</title>
+    <title>📊 UniHub · Il tuo Libretto Universitario Completo</title>
     <style>
         :root {
             --bg-dark: #0f0332;
@@ -20,6 +20,7 @@
             --success: #22c55e;
             --blue: #3b82f6;
             --red: #ef4444;
+            --purple: #8b5cf6;
         }
 
         * {
@@ -29,7 +30,7 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
             background: linear-gradient(135deg, #0f0332 0%, #1a0f3d 30%, #0d0225 100%);
             min-height: 100vh;
             color: var(--text-primary);
@@ -38,7 +39,7 @@
         }
 
         .container {
-            max-width: 720px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px 0 40px;
         }
@@ -51,57 +52,50 @@
             background: rgba(255, 0, 85, 0.05);
             border: 1px solid rgba(255, 0, 85, 0.2);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
         }
 
         .app-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             margin-bottom: 8px;
-        }
-
-        .app-logo .logo-icon {
-            background: var(--accent);
-            color: white;
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            box-shadow: 0 8px 24px rgba(255, 0, 85, 0.3);
-        }
-
-        .app-logo .logo-text {
-            background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .app-subtitle {
             color: var(--text-secondary);
             font-size: 0.95rem;
-            font-weight: 400;
         }
 
-        .badge-trust {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 20px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            color: var(--success);
+        /* NAVIGATION TABS */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .nav-tab {
+            padding: 10px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-top: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
         }
 
         /* CARDS */
@@ -112,21 +106,12 @@
             padding: 24px;
             margin-bottom: 20px;
             transition: all 0.3s ease;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .card:hover {
             border-color: rgba(255, 0, 85, 0.3);
             background: var(--bg-card-hover);
-        }
-
-        .card-highlight {
-            border-color: rgba(255, 0, 85, 0.4);
-            background: rgba(255, 0, 85, 0.03);
-        }
-
-        .card-gold {
-            border-color: rgba(245, 158, 11, 0.4);
-            background: rgba(245, 158, 11, 0.03);
         }
 
         .card-title {
@@ -139,17 +124,13 @@
             gap: 8px;
         }
 
-        .card-title .icon {
-            font-size: 1.2rem;
-        }
-
         .card-desc {
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 16px;
         }
 
-        /* FORM ELEMENTS */
+        /* FORM */
         .form-group {
             margin-bottom: 14px;
         }
@@ -160,7 +141,6 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 5px;
-            letter-spacing: 0.3px;
         }
 
         .form-input, .form-select {
@@ -180,16 +160,6 @@
             box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.1);
         }
 
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .form-hint {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
         /* BUTTONS */
         .btn {
             display: inline-flex;
@@ -204,7 +174,6 @@
             transition: all 0.3s ease;
             border: none;
             width: 100%;
-            letter-spacing: 0.3px;
         }
 
         .btn-primary {
@@ -215,7 +184,6 @@
         .btn-primary:hover {
             background: var(--accent-hover);
             transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(255, 0, 85, 0.3);
         }
 
         .btn-gold {
@@ -225,46 +193,12 @@
 
         .btn-gold:hover {
             background: var(--gold-light);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
-
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--red);
-        }
-
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-group .btn {
-            flex: 1;
-            min-width: 130px;
-        }
-
-        /* STATS GRID */
+        /* STATS */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-bottom: 16px;
         }
@@ -275,33 +209,42 @@
             border-radius: 12px;
             padding: 16px;
             text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-box:hover {
-            border-color: rgba(255, 0, 85, 0.3);
         }
 
         .stat-label {
             font-size: 0.7rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 6px;
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--gold);
         }
 
-        .stat-value.blue {
-            color: var(--blue);
+        /* GRAFICI (semplificati) */
+        .chart-bar {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 120px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
         }
 
-        .stat-value.green {
-            color: var(--success);
+        .chart-bar-item {
+            flex: 1;
+            background: var(--accent);
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar-item:hover {
+            background: var(--gold);
         }
 
         /* ESAMI LIST */
@@ -310,108 +253,39 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 8px;
-            transition: all 0.3s ease;
         }
 
-        .esame-item:hover {
-            border-color: rgba(255, 0, 85, 0.3);
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
         }
 
-        .esame-info .esame-nome {
-            font-weight: 600;
-            font-size: 0.9rem;
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
         }
 
-        .esame-info .esame-dettagli {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        .timeline-item {
+            position: relative;
+            margin-bottom: 16px;
         }
 
-        .esame-delete {
-            background: none;
-            border: none;
-            color: var(--red);
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .esame-delete:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        /* SIMULATOR BOX */
-        .simulator-result {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 16px;
-        }
-
-        .simulator-result .result-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--gold);
-            line-height: 1.2;
-        }
-
-        .simulator-result .result-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* CHECKLIST */
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .checklist-item:hover {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .checklist-item input[type="checkbox"] {
-            margin-top: 3px;
-            accent-color: var(--accent);
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        /* FOOTER */
-        .app-footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .app-footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .app-footer a:hover {
-            text-decoration: underline;
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
         }
 
         /* RESPONSIVE */
@@ -420,12 +294,8 @@
                 padding: 10px 0 30px;
             }
             
-            .app-header {
-                padding: 20px 15px;
-            }
-            
             .app-logo {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             
             .card {
@@ -434,30 +304,21 @@
             
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 8px;
             }
             
-            .stat-value {
-                font-size: 1.4rem;
+            .nav-tabs {
+                gap: 6px;
             }
             
-            .btn-group {
-                flex-direction: column;
-            }
-            
-            .btn-group .btn {
-                min-width: 100%;
+            .nav-tab {
+                padding: 8px 12px;
+                font-size: 0.7rem;
             }
         }
 
-        /* ANIMATION */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            animation: fadeIn 0.4s ease-out;
         }
     </style>
 </head>
@@ -465,304 +326,237 @@
     <div class="container">
         <!-- HEADER -->
         <div class="app-header">
-            <div class="app-logo">
-                <div class="logo-icon">📊</div>
-                <span class="logo-text">Libretto Universitario</span>
-            </div>
-            <p class="app-subtitle">Il tuo hub accademico personale · by Tesi Flash Toolkit</p>
-            <div class="badge-trust">🔒 100% privacy · dati solo sul tuo browser</div>
+            <div class="app-logo">📊 UniHub Universitario</div>
+            <p class="app-subtitle">Il tuo hub accademico completo · by Tesi Flash</p>
         </div>
 
-        <!-- TRUST BADGE -->
-        <div class="card" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.03);">
-            <p style="color: var(--success); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
-                ✅ <span>Nessun account, nessuna email, nessun server. I tuoi voti restano solo su questo dispositivo.</span>
-            </p>
+        <!-- NAVIGATION TABS -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="showTab('esami')">📝 Esami</button>
+            <button class="nav-tab" onclick="showTab('andamento')">📈 Andamento</button>
+            <button class="nav-tab" onclick="showTab('previsioni')">🔮 Previsioni</button>
+            <button class="nav-tab" onclick="showTab('tasse')">💰 Tasse</button>
+            <button class="nav-tab" onclick="showTab('orario')">📅 Orario</button>
+            <button class="nav-tab" onclick="showTab('domande')">❓ Domande</button>
+            <button class="nav-tab" onclick="showTab('export')">💾 Export</button>
         </div>
 
-        <!-- SEZIONE 1: CONFIGURA CARRIERA -->
-        <div class="card card-highlight">
-            <div class="card-title"><span class="icon">🎓</span> 1. Configura la tua carriera</div>
-            <p class="card-desc">Bastano corso e anno di immatricolazione. Il resto è precompilato con i valori standard.</p>
-
-            <div class="form-group">
-                <label class="form-label">👤 Il tuo nome (facoltativo)</label>
-                <input type="text" id="carriera-nome" placeholder="es. Giulia" oninput="aggiornaAnteprima()" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">🎓 Corso di laurea *</label>
-                <input type="text" id="carriera-corso" placeholder="es. Ingegneria Informatica" oninput="aggiornaAnteprima()" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">📚 Tipo di laurea</label>
-                <select id="carriera-tipo" onchange="aggiornaValoriPredefiniti(); aggiornaAnteprima()" class="form-select">
-                    <option value="triennale">Triennale</option>
-                    <option value="magistrale">Magistrale</option>
-                    <option value="ciclo-unico">Ciclo Unico</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">📅 Anno di immatricolazione</label>
-                <input type="number" id="carriera-anno" placeholder="es. 2026" min="2000" max="2035" oninput="aggiornaAnteprima()" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">🏛️ Ateneo</label>
-                <input type="text" id="carriera-ateneo" placeholder="es. Università di Bologna" oninput="aggiornaAnteprima()" class="form-input">
-            </div>
-
-            <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
-                <p style="font-weight: 600; font-size: 0.8rem; color: var(--gold); margin-bottom: 10px;">⚙️ Valori predefiniti (modificabili)</p>
+        <!-- DASHBOARD -->
+        <div id="tab-dashboard" class="tab-content">
+            <div class="card">
+                <div class="card-title">📊 Panoramica Generale</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Media Ponderata</div>
+                        <div class="stat-value" id="dash-media">—</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">CFU Totali</div>
+                        <div class="stat-value" id="dash-cfu">—</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Esami Sostenuti</div>
+                        <div class="stat-value" id="dash-esami" style="color: var(--text-primary);">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Voto Partenza</div>
+                        <div class="stat-value" id="dash-partenza" style="color: var(--success);">—</div>
+                    </div>
+                </div>
                 
+                <div class="card-desc">
+                    <strong>🎯 Obiettivo consigliato:</strong> Mantieni la media sopra il <span id="obiettivo-media">27</span> per puntare al 110.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📈 Ultimi Esami</div>
+                <div id="ultimi-esami" style="font-size: 0.85rem; color: var(--text-secondary);">
+                    <p>Nessun esame inserito. Aggiungi i tuoi esami nella sezione "Esami".</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESAMI -->
+        <div id="tab-esami" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">📝 Gestione Esami</div>
                 <div class="form-group">
-                    <label class="form-label">⏳ Durata legale</label>
-                    <select id="carriera-durata" onchange="aggiornaAnteprima()" class="form-select">
-                        <option value="2">2 anni</option>
-                        <option value="3" selected>3 anni</option>
-                        <option value="4">4 anni</option>
-                        <option value="5">5 anni</option>
-                        <option value="6">6 anni</option>
+                    <label class="form-label">📚 Nome esame</label>
+                    <input type="text" id="esame-nome" placeholder="es. Analisi Matematica" class="form-input">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="form-group">
+                        <label class="form-label">🔢 Voto</label>
+                        <input type="number" id="esame-voto" placeholder="28" min="18" max="33" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📊 CFU</label>
+                        <input type="number" id="esame-cfu" placeholder="12" min="1" max="30" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📅 Data esame</label>
+                    <input type="date" id="esame-data" class="form-input">
+                </div>
+                <button onclick="aggiungiEsame()" class="btn btn-gold">➕ Aggiungi esame</button>
+                <div id="lista-esami" style="margin-top:16px;"></div>
+            </div>
+        </div>
+
+        <!-- ANDAMENTO -->
+        <div id="tab-andamento" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">📈 Andamento Carriera</div>
+                <p class="card-desc">Visualizza come ogni esame ha influenzato la tua media.</p>
+                <div class="chart-bar" id="chart-andamento">
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin:auto;">Aggiungi esami per vedere il grafico</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">📊 Analisi Dettagliata</div>
+                <div id="analisi-andamento" style="font-size:0.85rem; color:var(--text-secondary);">
+                    <p>Nessun dato disponibile.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREVISIONI -->
+        <div id="tab-previsioni" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">🔮 Previsioni Media Futura</div>
+                <p class="card-desc">Scopri come cambierà la tua media in base ai prossimi esami.</p>
+                <div class="form-group">
+                    <label class="form-label">🎯 Voto previsto prossimo esame</label>
+                    <input type="number" id="prev-voto" placeholder="es. 28" min="18" max="33" class="form-input" oninput="calcolaPrevisione()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📊 CFU prossimo esame</label>
+                    <input type="number" id="prev-cfu" placeholder="es. 12" min="1" max="30" class="form-input" oninput="calcolaPrevisione()">
+                </div>
+                <div id="risultato-previsione" style="background:rgba(0,0,0,0.3); border-radius:8px; padding:16px; text-align:center;">
+                    <p style="color:var(--text-muted); font-size:0.8rem;">Media futura stimata</p>
+                    <p id="prev-risultato" style="font-size:2rem; font-weight:800; color:var(--gold);">—</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TASSE -->
+        <div id="tab-tasse" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">💰 Gestione Tasse</div>
+                <p class="card-desc">Tieni traccia delle tasse pagate e delle scadenze.</p>
+                <div class="form-group">
+                    <label class="form-label">💶 Importo tassa</label>
+                    <input type="number" id="tassa-importo" placeholder="es. 500" min="0" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📅 Data scadenza</label>
+                    <input type="date" id="tassa-scadenza" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📝 Descrizione</label>
+                    <input type="text" id="tassa-descrizione" placeholder="es. Seconda rata" class="form-input">
+                </div>
+                <button onclick="aggiungiTassa()" class="btn btn-gold">➕ Aggiungi tassa</button>
+                <div id="lista-tasse" style="margin-top:16px;"></div>
+            </div>
+        </div>
+
+        <!-- ORARIO -->
+        <div id="tab-orario" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">📅 Orario Settimanale</div>
+                <p class="card-desc">Organizza le tue lezioni e impegni universitari.</p>
+                <div class="form-group">
+                    <label class="form-label">📚 Materia</label>
+                    <input type="text" id="orario-materia" placeholder="es. Fisica" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📅 Giorno</label>
+                    <select id="orario-giorno" class="form-select">
+                        <option value="Lunedì">Lunedì</option>
+                        <option value="Martedì">Martedì</option>
+                        <option value="Mercoledì">Mercoledì</option>
+                        <option value="Giovedì">Giovedì</option>
+                        <option value="Venerdì">Venerdì</option>
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label class="form-label">📊 CFU totali</label>
-                    <input type="number" id="carriera-cfu" value="180" min="60" max="360" oninput="aggiornaAnteprima()" class="form-input">
+                    <label class="form-label">🕐 Ora inizio</label>
+                    <input type="time" id="orario-inizio" class="form-input">
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">🎯 Voto base di laurea</label>
-                    <input type="number" id="carriera-base" value="110" min="100" max="110" oninput="aggiornaAnteprima()" class="form-input">
-                </div>
-            </div>
-
-            <button onclick="salvaCarriera()" class="btn btn-primary">💾 Salva carriera</button>
-        </div>
-
-        <!-- ANTEPRIMA CARRIERA -->
-        <div class="card" id="anteprima-card" style="display: none;">
-            <div class="card-title"><span class="icon">👁️</span> La tua carriera</div>
-            <div id="anteprima-carriera" style="display: grid; gap: 6px; font-size: 0.85rem;">
-                <p><strong>Corso:</strong> <span id="anteprima-corso"></span></p>
-                <p><strong>Ateneo:</strong> <span id="anteprima-ateneo"></span></p>
-                <p><strong>Tipo:</strong> <span id="anteprima-tipo"></span></p>
-                <p><strong>Durata legale:</strong> <span id="anteprima-durata"></span></p>
-                <p><strong>CFU totali:</strong> <span id="anteprima-cfu"></span></p>
-                <p><strong>Voto di laurea:</strong> su <span id="anteprima-base"></span></p>
-                <p><strong>Immatricolazione:</strong> <span id="anteprima-anno"></span></p>
+                <button onclick="aggiungiOrario()" class="btn btn-gold">➕ Aggiungi lezione</button>
+                <div id="lista-orario" style="margin-top:16px;"></div>
             </div>
         </div>
 
-        <!-- SEZIONE 2: INSERISCI ESAMI -->
-        <div class="card card-gold">
-            <div class="card-title"><span class="icon">📝</span> 2. Inserisci i tuoi esami</div>
-            <p class="card-desc">Aggiungi ogni esame superato. La media si aggiorna in tempo reale.</p>
-
-            <div class="form-group">
-                <label class="form-label">📚 Nome esame</label>
-                <input type="text" id="esame-nome" placeholder="es. Analisi Matematica" class="form-input">
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <!-- DOMANDE -->
+        <div id="tab-domande" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">❓ Domande d'Esame</div>
+                <p class="card-desc">Condividi e consulta domande d'esame con altri studenti.</p>
                 <div class="form-group">
-                    <label class="form-label">🔢 Voto</label>
-                    <input type="number" id="esame-voto" placeholder="es. 28" min="18" max="33" class="form-input">
+                    <label class="form-label">📚 Materia</label>
+                    <input type="text" id="domanda-materia" placeholder="es. Storia" class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">📊 CFU</label>
-                    <input type="number" id="esame-cfu" placeholder="es. 12" min="1" max="30" class="form-input">
+                    <label class="form-label">❓ La tua domanda</label>
+                    <textarea id="domanda-testo" placeholder="Scrivi qui la domanda..." class="form-input" rows="3"></textarea>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">📅 Data esame (facoltativa)</label>
-                <input type="date" id="esame-data" class="form-input">
-            </div>
-
-            <button onclick="aggiungiEsame()" class="btn btn-gold">➕ Aggiungi esame</button>
-
-            <div id="lista-esami" style="margin-top: 16px;"></div>
-        </div>
-
-        <!-- SEZIONE 3: STATISTICHE -->
-        <div class="card">
-            <div class="card-title"><span class="icon">📊</span> 3. Le tue statistiche</div>
-            
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-label">Media ponderata</div>
-                    <div class="stat-value" id="stat-media">—</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Media aritmetica</div>
-                    <div class="stat-value blue" id="stat-aritmetica">—</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">CFU accumulati</div>
-                    <div class="stat-value" id="stat-cfu">—</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Esami sostenuti</div>
-                    <div class="stat-value" id="stat-esami" style="color: var(--text-primary);">0</div>
-                </div>
-            </div>
-
-            <div class="stat-box" style="margin-top: 8px; border-color: rgba(34, 197, 94, 0.3);">
-                <div class="stat-label">Voto di partenza (su 110)</div>
-                <div class="stat-value green" id="stat-partenza" style="font-size: 2.2rem;">—</div>
+                <button onclick="aggiungiDomanda()" class="btn btn-gold">➕ Aggiungi domanda</button>
+                <div id="lista-domande" style="margin-top:16px;"></div>
             </div>
         </div>
 
-        <!-- SEZIONE 4: SIMULATORE -->
-        <div class="card">
-            <div class="card-title"><span class="icon">🎯</span> 4. Simulatore voto di laurea</div>
-            <p class="card-desc">Inserisci i punti tesi e i bonus per stimare il voto finale.</p>
-
-            <div class="form-group">
-                <label class="form-label">🎯 Punti tesi (0-8)</label>
-                <input type="number" id="sim-tesi" value="5" min="0" max="8" oninput="calcolaStatistiche()" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">🏆 Bonus (lodi, Erasmus, laurea in corso)</label>
-                <input type="number" id="sim-bonus" value="0" min="0" max="10" oninput="calcolaStatistiche()" class="form-input">
-            </div>
-
-            <div class="simulator-result">
-                <div class="result-label">Voto finale stimato</div>
-                <div class="result-value" id="sim-finale">—</div>
-            </div>
-
-            <!-- SIMULATORE INVERSO -->
-            <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 16px; margin-top: 16px;">
-                <p style="font-weight: 600; font-size: 0.8rem; color: var(--gold); margin-bottom: 10px;">🔮 "Cosa mi serve per...?"</p>
-                <div class="form-group">
-                    <label class="form-label">🎯 Voto desiderato (100-110)</label>
-                    <input type="number" id="sim-desiderato" value="110" min="100" max="110" oninput="calcolaCosaServe()" class="form-input">
-                </div>
-                <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 10px; text-align: center;">
-                    <span style="font-size: 0.7rem; color: var(--text-muted);">Punti necessari (tesi + bonus)</span>
-                    <div id="sim-necessari" style="font-size: 1.5rem; font-weight: 800; color: var(--success);">—</div>
+        <!-- EXPORT -->
+        <div id="tab-export" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="card-title">💾 Backup e Export</div>
+                <div class="btn-group" style="display:grid; gap:10px;">
+                    <button onclick="exportJSON()" class="btn btn-primary">📥 Backup JSON completo</button>
+                    <button onclick="window.print()" class="btn btn-gold">🖨️ Stampa / PDF</button>
+                    <button onclick="resetTutto()" class="btn btn-danger" style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:var(--red);">🗑️ Azzera tutto</button>
                 </div>
             </div>
-        </div>
-
-        <!-- SEZIONE 5: ESPORTA -->
-        <div class="card">
-            <div class="card-title"><span class="icon">💾</span> 5. Esporta o stampa</div>
-            <div class="btn-group">
-                <button onclick="window.print()" class="btn btn-primary">🖨️ Stampa / PDF</button>
-                <button onclick="exportJSON()" class="btn btn-outline">📥 Backup JSON</button>
-                <button onclick="resetLibretto()" class="btn btn-danger">🗑️ Azzera</button>
-            </div>
-            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px;">
-                💡 <strong>Backup JSON:</strong> scarica un file con tutti i dati. <strong>Stampa:</strong> apre la finestra di stampa del browser.
-            </p>
-        </div>
-
-        <!-- CHECKLIST -->
-        <div class="card">
-            <div class="card-title"><span class="icon">✅</span> Checklist rapida</div>
-            <label class="checklist-item">
-                <input type="checkbox" class="accent"> <span>Ho configurato la mia carriera</span>
-            </label>
-            <label class="checklist-item">
-                <input type="checkbox" class="accent"> <span>Ho inserito almeno 5 esami</span>
-            </label>
-            <label class="checklist-item">
-                <input type="checkbox" class="accent"> <span>Ho controllato media ponderata e aritmetica</span>
-            </label>
-            <label class="checklist-item">
-                <input type="checkbox" class="accent"> <span>Ho simulato il voto finale</span>
-            </label>
-            <label class="checklist-item">
-                <input type="checkbox" class="accent"> <span>Ho esportato il backup JSON</span>
-            </label>
         </div>
 
         <!-- FOOTER -->
-        <div class="app-footer">
-            <p>📊 Libretto Universitario · Tool gratuito by <a href="https://tesiflash.help" target="_blank">Tesi Flash</a></p>
-            <p style="margin-top: 4px;">🔒 I tuoi dati restano solo sul tuo browser · Nessun invio a server</p>
-            <p style="margin-top: 4px; font-size: 0.65rem;">© 2026 Tesi Flash · Roemap di Mattina Giuseppe</p>
+        <div style="text-align:center; margin-top:30px; padding:20px; color:var(--text-muted); font-size:0.75rem;">
+            <p>📊 UniHub Universitario · Tool gratuito by <a href="https://tesiflash.help" style="color:var(--accent);">Tesi Flash</a></p>
+            <p>🔒 I tuoi dati restano solo sul tuo browser</p>
+            <p>© 2026 Tesi Flash · Roemap di Mattina Giuseppe</p>
         </div>
     </div>
 
     <script>
         // ============================================================
-        // LIBRETTO UNIVERSITARIO · Tesi Flash Toolkit
+        // UNIHUB UNIVERSITARIO - APP COMPLETA
         // ============================================================
         
-        let esami = JSON.parse(localStorage.getItem('libretto_esami') || '[]');
-        let carriera = JSON.parse(localStorage.getItem('libretto_carriera') || 'null');
-
-        // Carica carriera salvata
-        if (carriera) {
-            document.getElementById('carriera-nome').value = carriera.nome || '';
-            document.getElementById('carriera-corso').value = carriera.corso || '';
-            document.getElementById('carriera-tipo').value = carriera.tipo || 'triennale';
-            document.getElementById('carriera-anno').value = carriera.anno || '';
-            document.getElementById('carriera-ateneo').value = carriera.ateneo || '';
-            document.getElementById('carriera-durata').value = carriera.durata || '3';
-            document.getElementById('carriera-cfu').value = carriera.cfu || 180;
-            document.getElementById('carriera-base').value = carriera.base || 110;
-            aggiornaAnteprima();
-            document.getElementById('anteprima-card').style.display = 'block';
-        }
-
-        function aggiornaValoriPredefiniti() {
-            const tipo = document.getElementById('carriera-tipo').value;
-            if (tipo === 'triennale') {
-                document.getElementById('carriera-durata').value = '3';
-                document.getElementById('carriera-cfu').value = '180';
-            } else if (tipo === 'magistrale') {
-                document.getElementById('carriera-durata').value = '2';
-                document.getElementById('carriera-cfu').value = '120';
-            } else if (tipo === 'ciclo-unico') {
-                document.getElementById('carriera-durata').value = '5';
-                document.getElementById('carriera-cfu').value = '300';
-            }
-            aggiornaAnteprima();
-        }
-
-        function aggiornaAnteprima() {
-            const corso = document.getElementById('carriera-corso').value || 'non indicato';
-            const ateneo = document.getElementById('carriera-ateneo').value || 'non indicato';
-            const tipo = document.getElementById('carriera-tipo').value;
-            const durata = document.getElementById('carriera-durata').value;
-            const cfu = document.getElementById('carriera-cfu').value;
-            const base = document.getElementById('carriera-base').value;
-            const anno = document.getElementById('carriera-anno').value;
+        let esami = JSON.parse(localStorage.getItem('unihub_esami') || '[]');
+        let tasse = JSON.parse(localStorage.getItem('unihub_tasse') || '[]');
+        let orario = JSON.parse(localStorage.getItem('unihub_orario') || '[]');
+        let domande = JSON.parse(localStorage.getItem('unihub_domande') || '[]');
+        
+        function showTab(tabName) {
+            // Nascondi tutti i tab
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
             
-            document.getElementById('anteprima-corso').textContent = corso;
-            document.getElementById('anteprima-ateneo').textContent = ateneo;
-            document.getElementById('anteprima-tipo').textContent = tipo === 'triennale' ? 'Triennale' : tipo === 'magistrale' ? 'Magistrale' : 'Ciclo Unico';
-            document.getElementById('anteprima-durata').textContent = durata + ' anni';
-            document.getElementById('anteprima-cfu').textContent = cfu;
-            document.getElementById('anteprima-base').textContent = base;
-            document.getElementById('anteprima-anno').textContent = anno ? anno + '/' + (parseInt(anno) + 1) : '—';
+            // Mostra il tab selezionato
+            document.getElementById('tab-' + tabName).style.display = 'block';
+            
+            // Aggiorna i bottoni
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
-
-        function salvaCarriera() {
-            carriera = {
-                nome: document.getElementById('carriera-nome').value.trim(),
-                corso: document.getElementById('carriera-corso').value.trim(),
-                tipo: document.getElementById('carriera-tipo').value,
-                anno: document.getElementById('carriera-anno').value,
-                ateneo: document.getElementById('carriera-ateneo').value.trim(),
-                durata: document.getElementById('carriera-durata').value,
-                cfu: parseInt(document.getElementById('carriera-cfu').value) || 180,
-                base: parseInt(document.getElementById('carriera-base').value) || 110
-            };
-            localStorage.setItem('libretto_carriera', JSON.stringify(carriera));
-            document.getElementById('anteprima-card').style.display = 'block';
-            aggiornaAnteprima();
-            alert('✅ Carriera salvata con successo!');
-        }
-
+        
         function aggiungiEsame() {
             const nome = document.getElementById('esame-nome').value.trim();
             const voto = parseInt(document.getElementById('esame-voto').value);
@@ -770,143 +564,195 @@
             const data = document.getElementById('esame-data').value;
             
             if (!nome || !voto || !cfu) {
-                alert('⚠️ Compila tutti i campi: nome, voto e CFU');
-                return;
-            }
-            
-            if (voto < 18 || voto > 33) {
-                alert('⚠️ Il voto deve essere tra 18 e 33 (33 = 30 e lode)');
+                alert('⚠️ Compila tutti i campi');
                 return;
             }
             
             esami.push({ nome, voto, cfu, data });
-            localStorage.setItem('libretto_esami', JSON.stringify(esami));
+            localStorage.setItem('unihub_esami', JSON.stringify(esami));
             
             document.getElementById('esame-nome').value = '';
             document.getElementById('esame-voto').value = '';
             document.getElementById('esame-cfu').value = '';
             document.getElementById('esame-data').value = '';
             
+            aggiornaDashboard();
             renderEsami();
-            calcolaStatistiche();
-            calcolaCosaServe();
         }
-
-        function rimuoviEsame(index) {
-            esami.splice(index, 1);
-            localStorage.setItem('libretto_esami', JSON.stringify(esami));
-            renderEsami();
-            calcolaStatistiche();
-            calcolaCosaServe();
-        }
-
+        
         function renderEsami() {
             const lista = document.getElementById('lista-esami');
             if (esami.length === 0) {
-                lista.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">Nessun esame inserito</p>';
+                lista.innerHTML = '<p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Nessun esame inserito</p>';
                 return;
             }
             
             lista.innerHTML = esami.map((e, i) => `
                 <div class="esame-item">
-                    <div class="esame-info">
-                        <div class="esame-nome">${e.nome}</div>
-                        <div class="esame-dettagli">Voto: ${e.voto === 31 ? '30 e lode' : e.voto === 32 ? '30 e lode (32)' : e.voto === 33 ? '30 e lode (33)' : e.voto} · CFU: ${e.cfu}${e.data ? ' · ' + e.data : ''}</div>
-                    </div>
-                    <button onclick="rimuoviEsame(${i})" class="esame-delete" title="Rimuovi esame">🗑️</button>
+                    <strong>${e.nome}</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">Voto: ${e.voto} · CFU: ${e.cfu}${e.data ? ' · ' + e.data : ''}</p>
+                    <button onclick="rimuoviEsame(${i})" style="background:none; border:none; color:var(--red); cursor:pointer;">🗑️</button>
                 </div>
             `).join('');
         }
-
-        function calcolaStatistiche() {
+        
+        function rimuoviEsame(index) {
+            esami.splice(index, 1);
+            localStorage.setItem('unihub_esami', JSON.stringify(esami));
+            aggiornaDashboard();
+            renderEsami();
+        }
+        
+        function aggiornaDashboard() {
             const numEsami = esami.length;
             const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
             
-            if (numEsami === 0) {
-                document.getElementById('stat-media').textContent = '—';
-                document.getElementById('stat-aritmetica').textContent = '—';
-                document.getElementById('stat-cfu').textContent = '—';
-                document.getElementById('stat-partenza').textContent = '—';
-                document.getElementById('stat-esami').textContent = '0';
-                document.getElementById('sim-finale').textContent = '—';
+            if (numEsami === 0) return;
+            
+            const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
+            const votoPartenza = (mediaPonderata * 110) / 30;
+            
+            document.getElementById('dash-media').textContent = mediaPonderata.toFixed(2);
+            document.getElementById('dash-cfu').textContent = cfuTotali;
+            document.getElementById('dash-esami').textContent = numEsami;
+            document.getElementById('dash-partenza').textContent = votoPartenza.toFixed(1);
+            
+            // Ultimi esami
+            const ultimi = esami.slice(-3).reverse();
+            document.getElementById('ultimi-esami').innerHTML = ultimi.map(e => 
+                `<p>📚 ${e.nome} · Voto: ${e.voto} · CFU: ${e.cfu}</p>`
+            ).join('') || '<p>Nessun esame inserito.</p>';
+        }
+        
+        function aggiungiTassa() {
+            const importo = document.getElementById('tassa-importo').value;
+            const scadenza = document.getElementById('tassa-scadenza').value;
+            const descrizione = document.getElementById('tassa-descrizione').value.trim();
+            
+            if (!importo || !scadenza) {
+                alert('⚠️ Inserisci importo e scadenza');
                 return;
             }
             
-            // Media ponderata
-            const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
+            tasse.push({ importo, scadenza, descrizione, pagata: false });
+            localStorage.setItem('unihub_tasse', JSON.stringify(tasse));
             
-            // Media aritmetica
-            const mediaAritmetica = esami.reduce((sum, e) => sum + e.voto, 0) / numEsami;
+            document.getElementById('tassa-importo').value = '';
+            document.getElementById('tassa-scadenza').value = '';
+            document.getElementById('tassa-descrizione').value = '';
             
-            // Voto di partenza (base 110)
-            const votoPartenza = (mediaPonderata * 110) / 30;
-            
-            document.getElementById('stat-media').textContent = mediaPonderata.toFixed(2);
-            document.getElementById('stat-aritmetica').textContent = mediaAritmetica.toFixed(2);
-            document.getElementById('stat-cfu').textContent = cfuTotali;
-            document.getElementById('stat-partenza').textContent = votoPartenza.toFixed(1);
-            document.getElementById('stat-esami').textContent = numEsami;
-            
-            // Simulatore
-            const puntiTesi = parseInt(document.getElementById('sim-tesi').value) || 0;
-            const bonus = parseInt(document.getElementById('sim-bonus').value) || 0;
-            const votoFinale = votoPartenza + puntiTesi + bonus;
-            document.getElementById('sim-finale').textContent = Math.min(votoFinale, 110).toFixed(1);
+            renderTasse();
         }
-
-        function calcolaCosaServe() {
-            const desiderato = parseInt(document.getElementById('sim-desiderato').value) || 110;
-            const numEsami = esami.length;
-            
-            if (numEsami === 0) {
-                document.getElementById('sim-necessari').textContent = '—';
+        
+        function renderTasse() {
+            const lista = document.getElementById('lista-tasse');
+            if (tasse.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Nessuna tassa registrata</p>';
                 return;
             }
             
-            const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
-            const mediaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0) / cfuTotali;
-            const votoPartenza = (mediaPonderata * 110) / 30;
-            const puntiNecessari = desiderato - votoPartenza;
-            
-            if (puntiNecessari <= 0) {
-                document.getElementById('sim-necessari').textContent = '✅ Già raggiunto!';
-            } else if (puntiNecessari > 18) {
-                document.getElementById('sim-necessari').textContent = '❌ Non raggiungibile';
-            } else {
-                document.getElementById('sim-necessari').textContent = puntiNecessari.toFixed(1) + ' punti';
-            }
+            lista.innerHTML = tasse.map((t, i) => `
+                <div class="esame-item">
+                    <strong>${t.descrizione || 'Tassa'}</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">€${t.importo} · Scadenza: ${t.scadenza} ${t.pagata ? '✅' : '⚠️'}</p>
+                </div>
+            `).join('');
         }
-
+        
+        function aggiungiOrario() {
+            const materia = document.getElementById('orario-materia').value.trim();
+            const giorno = document.getElementById('orario-giorno').value;
+            const inizio = document.getElementById('orario-inizio').value;
+            
+            if (!materia || !inizio) {
+                alert('⚠️ Inserisci materia e ora');
+                return;
+            }
+            
+            orario.push({ materia, giorno, inizio });
+            localStorage.setItem('unihub_orario', JSON.stringify(orario));
+            
+            document.getElementById('orario-materia').value = '';
+            document.getElementById('orario-inizio').value = '';
+            
+            renderOrario();
+        }
+        
+        function renderOrario() {
+            const lista = document.getElementById('lista-orario');
+            if (orario.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Nessuna lezione inserita</p>';
+                return;
+            }
+            
+            lista.innerHTML = orario.map((o, i) => `
+                <div class="esame-item">
+                    <strong>${o.materia}</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">${o.giorno} · ${o.inizio}</p>
+                </div>
+            `).join('');
+        }
+        
+        function aggiungiDomanda() {
+            const materia = document.getElementById('domanda-materia').value.trim();
+            const testo = document.getElementById('domanda-testo').value.trim();
+            
+            if (!materia || !testo) {
+                alert('⚠️ Inserisci materia e domanda');
+                return;
+            }
+            
+            domande.push({ materia, testo, data: new Date().toISOString() });
+            localStorage.setItem('unihub_domande', JSON.stringify(domande));
+            
+            document.getElementById('domanda-materia').value = '';
+            document.getElementById('domanda-testo').value = '';
+            
+            renderDomande();
+        }
+        
+        function renderDomande() {
+            const lista = document.getElementById('lista-domande');
+            if (domande.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Nessuna domanda inserita</p>';
+                return;
+            }
+            
+            lista.innerHTML = domande.map((d, i) => `
+                <div class="esame-item">
+                    <strong>${d.materia}</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">${d.testo}</p>
+                </div>
+            `).join('');
+        }
+        
         function exportJSON() {
-            const dati = {
-                carriera: carriera,
-                esami: esami,
-                esportato: new Date().toISOString()
-            };
+            const dati = { esami, tasse, orario, domande };
             const blob = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'libretto-universitario-' + new Date().toISOString().split('T')[0] + '.json';
+            a.download = 'unihub-backup-' + new Date().toISOString().split('T')[0] + '.json';
             a.click();
             URL.revokeObjectURL(url);
         }
-
-        function resetLibretto() {
-            if (confirm('⚠️ Sei sicuro di voler cancellare tutti i dati? Questa operazione non è reversibile.')) {
-                esami = [];
-                localStorage.setItem('libretto_esami', JSON.stringify(esami));
-                carriera = null;
-                localStorage.removeItem('libretto_carriera');
+        
+        function resetTutto() {
+            if (confirm('⚠️ Sicuro di voler cancellare tutti i dati?')) {
+                localStorage.removeItem('unihub_esami');
+                localStorage.removeItem('unihub_tasse');
+                localStorage.removeItem('unihub_orario');
+                localStorage.removeItem('unihub_domande');
                 location.reload();
             }
         }
-
-        // Carica dati iniziali
+        
+        // Init
         renderEsami();
-        calcolaStatistiche();
-        calcolaCosaServe();
-        aggiornaAnteprima();
+        renderTasse();
+        renderOrario();
+        renderDomande();
+        aggiornaDashboard();
     </script>
 </body>
 </html>
