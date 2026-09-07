@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Flash Lab Uni · Libretto Universitario</title>
+
+    <!-- ============ PWA META TAGS ============ -->
+<!-- Colore tema browser mobile -->
+<meta name="theme-color" content="#004a99">
+
+<!-- Manifest PWA -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Apple iOS PWA -->
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FlashLab">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/icon-192.png">
     
     <style>
         /* ============================================================
@@ -1558,5 +1574,71 @@
         // Avvia l'app quando il DOM è pronto
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
+
+<!-- ============================================================
+     PWA - REGISTRAZIONE SERVICE WORKER
+     ============================================================ -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('✅ Service Worker registrato:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('❌ Service Worker fallito:', error);
+                });
+        });
+    }
+    
+    // ============================================================
+    // PWA - PROMPT INSTALLAZIONE
+    // ============================================================
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallButton();
+    });
+    
+    function showInstallButton() {
+        const btn = document.createElement('button');
+        btn.textContent = '📱 Installa App';
+        btn.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #004a99;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 74, 153, 0.4);
+            z-index: 2000;
+        `;
+        
+        btn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const result = await deferredPrompt.userChoice;
+                console.log('📱 Scelta:', result.outcome);
+                deferredPrompt = null;
+                btn.remove();
+            }
+        });
+        
+        document.body.appendChild(btn);
+        
+        setTimeout(() => {
+            if (btn.parentNode) btn.remove();
+        }, 10000);
+    }
+</script>
+    
 </body>
 </html>
