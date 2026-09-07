@@ -1365,7 +1365,7 @@
         document.body.appendChild(btn);
     }
 
-    // ============ ISTRUZIONI iOS ============
+    // ============ ISTRUZIONI iOS (CORRETTE) ============
     function showIOSInstructions() {
         const isIPad = /ipad/.test(navigator.userAgent.toLowerCase());
         const deviceName = isIPad ? 'iPad' : 'iPhone';
@@ -1391,20 +1391,20 @@
                 <h3 style="color: #004a99; font-weight: 700; margin-bottom: 16px; font-size: 1.2rem;">Installa su ${deviceName}</h3>
                 
                 <div style="text-align: left; margin-bottom: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">1</span>
-                        <span style="font-size: 0.9rem;">Tocca il pulsante <strong>Condividi</strong> (📤) in basso</span>
+                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px;">1</span>
+                        <span style="font-size: 0.9rem;">Tocca il pulsante <strong>Condividi</strong> (📤) <strong>in alto a destra</strong> nella barra di Safari</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">2</span>
-                        <span style="font-size: 0.9rem;">Scorri verso il basso nel menu</span>
+                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px;">2</span>
+                        <span style="font-size: 0.9rem;">Scorri verso il basso nel menu che appare</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">3</span>
+                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px;">3</span>
                         <span style="font-size: 0.9rem;">Tocca <strong>"Aggiungi a Home"</strong> (🏠)</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">4</span>
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px;">4</span>
                         <span style="font-size: 0.9rem;">Tocca <strong>"Aggiungi"</strong> in alto a destra</span>
                     </div>
                 </div>
