@@ -5,11 +5,9 @@
 
 const CACHE_NAME = 'flashlab-uni-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/icon-192.png',
-    '/icon-512.png'
+    './',
+    './index.html',
+    './manifest.json'
 ];
 
 // ============ INSTALLAZIONE ============
@@ -71,23 +69,10 @@ self.addEventListener('fetch', (event) => {
                     .catch(() => {
                         // Offline - restituisci la home se è una navigazione
                         if (event.request.mode === 'navigate') {
-                            return caches.match('/index.html');
+                            return caches.match('./index.html');
                         }
                         return new Response('Offline', { status: 503 });
                     });
             })
-    );
-});
-
-// ============ PUSH NOTIFICATIONS (opzionale) ============
-self.addEventListener('push', (event) => {
-    const options = {
-        body: event.data ? event.data.text() : 'Nuova notifica',
-        icon: '/icon-192.png',
-        badge: '/icon-192.png'
-    };
-    
-    event.waitUntil(
-        self.registration.showNotification('Flash Lab Uni', options)
     );
 });
