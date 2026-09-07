@@ -27,26 +27,25 @@
             --accent-purple: #8b5cf6;
             --border-light: #e5e7eb;
             --shadow-sm: 0 2px 8px rgba(0,74,153,0.08);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --tab-height: 70px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --tab-height: 80px;
             --font-sans: 'Segoe UI', -apple-system, sans-serif;
         }
         
-        /* TEMA SCURO */
         body.dark-mode {
             --bg-main: #1a1a2e;
             --bg-card: #2d2d44;
             --text-primary: #ffffff;
             --text-secondary: #c4b5d4;
-            --text-muted: #8b8ba7;
+            --text-muted: #a0a0c0;
             --border-light: #3d3d5c;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
         }
         
         * { margin:0; padding:0; box-sizing:border-box; }
-        html { font-size:16px; -webkit-tap-highlight-color:transparent; }
+        html { font-size:18px; -webkit-tap-highlight-color:transparent; }
         body {
             font-family: var(--font-sans);
             background: var(--bg-main);
@@ -56,120 +55,111 @@
             margin:0 auto;
             min-height:100vh;
             padding-bottom: calc(var(--tab-height) + 20px);
-            transition: background 0.3s, color 0.3s;
         }
         .app-header {
             position:sticky; top:0; z-index:100;
             background:var(--primary); color:white;
-            padding:12px 16px;
+            padding:14px 18px;
             display:flex; align-items:center; justify-content:space-between;
-            min-height:56px;
+            min-height:60px;
         }
-        .app-header .logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:1.1rem; }
-        .header-actions { display:flex; gap:8px; }
-        .header-btn {
-            width:40px; height:40px; border-radius:50%;
-            background:rgba(255,255,255,0.15);
-            border:none; cursor:pointer;
-            display:flex; align-items:center; justify-content:center;
-            color:white; font-size:1.2rem;
-        }
+        .app-header .logo { font-size:1.3rem; font-weight:800; }
+        .header-btn { width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; cursor:pointer; font-size:1.3rem; color:white; }
+        
         .main-content { padding:16px; }
         
-        /* TAB BAR PIÙ GRANDE */
+        /* TAB BAR GRANDE */
         .tab-bar {
             position:fixed; bottom:0; left:50%; transform:translateX(-50%);
             width:100%; max-width:480px; height:var(--tab-height);
-            background:var(--bg-card); border-top:1px solid var(--border-light);
+            background:var(--bg-card); border-top:2px solid var(--border-light);
             display:flex; align-items:center; justify-content:space-around;
-            z-index:1000; padding:0 4px;
+            z-index:1000; padding:0 2px;
         }
         .tab-item {
             display:flex; flex-direction:column; align-items:center; gap:4px;
-            padding:8px 6px; border:none; background:none; cursor:pointer;
-            color:var(--text-muted); font-size:0.75rem; font-weight:700;
-            min-width:52px;
+            padding:10px 4px; border:none; background:none; cursor:pointer;
+            color:var(--text-muted); font-size:0.8rem; font-weight:700;
+            min-width:56px;
         }
-        .tab-item .tab-icon { font-size:1.5rem; }
+        .tab-item .tab-icon { font-size:1.8rem; }
         .tab-item.active { color:var(--primary); }
         
         .card {
             background:var(--bg-card); border-radius:var(--radius-lg);
-            padding:16px; margin-bottom:12px; box-shadow:var(--shadow-sm);
+            padding:18px; margin-bottom:14px; box-shadow:var(--shadow-sm);
         }
-        .card-title { font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:10px; }
-        .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+        .card-title { font-size:1.15rem; font-weight:800; color:var(--primary); margin-bottom:12px; }
+        .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
         .stat-card {
             background:var(--bg-card); border-radius:var(--radius-md);
-            padding:14px; text-align:center; border:1px solid var(--border-light);
+            padding:16px; text-align:center; border:1px solid var(--border-light);
         }
-        .stat-value { font-size:1.8rem; font-weight:800; color:var(--primary); }
-        .stat-label { font-size:0.7rem; color:var(--text-muted); font-weight:600; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--primary); }
+        .stat-label { font-size:0.75rem; color:var(--text-muted); font-weight:600; }
         
         .btn {
-            display:flex; align-items:center; justify-content:center; gap:6px;
-            padding:12px 16px; border-radius:var(--radius-sm);
-            font-weight:700; font-size:0.9rem; cursor:pointer; border:none; width:100%;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            padding:14px 18px; border-radius:var(--radius-sm);
+            font-weight:700; font-size:0.95rem; cursor:pointer; border:none; width:100%;
         }
         .btn-primary { background:var(--primary); color:white; }
         .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
-        .form-group { margin-bottom:12px; }
-        .form-label { display:block; font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:4px; }
+        
+        .form-group { margin-bottom:14px; }
+        .form-label { display:block; font-size:0.9rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
         .form-input, .form-select {
-            width:100%; padding:12px 14px;
+            width:100%; padding:14px 16px;
             border:2px solid var(--border-light); border-radius:var(--radius-sm);
-            font-size:0.9rem; font-family:var(--font-sans);
+            font-size:1rem; font-family:var(--font-sans);
             background:var(--bg-card); color:var(--text-primary);
         }
-        .form-input:focus { border-color:var(--primary); outline:none; }
-        .form-hint { font-size:0.7rem; color:var(--text-muted); margin-top:2px; }
+        .form-input::placeholder { color:var(--text-muted); }
+        .form-hint { font-size:0.75rem; color:var(--text-muted); margin-top:4px; }
+        
         .hidden { display:none !important; }
         .text-center { text-align:center; }
         .mt-16 { margin-top:16px; }
         .mb-16 { margin-bottom:16px; }
-        .empty-state { text-align:center; padding:30px 16px; color:var(--text-muted); font-size:0.9rem; }
-        .progress-bar { background:#e5e7eb; border-radius:10px; height:10px; overflow:hidden; margin:8px 0; }
+        .empty-state { text-align:center; padding:30px 16px; color:var(--text-muted); font-size:1rem; }
+        .progress-bar { background:#e5e7eb; border-radius:10px; height:12px; overflow:hidden; margin:8px 0; }
         .progress-fill { background:var(--primary); height:100%; border-radius:10px; transition:width 0.5s; }
-        .badge { display:inline-block; background:var(--primary); color:white; padding:4px 10px; border-radius:12px; font-size:0.7rem; font-weight:700; margin:2px; }
-        .goal-card { background:rgba(0,74,153,0.05); border:1px solid var(--primary); border-radius:var(--radius-md); padding:12px; margin-bottom:10px; }
-        .ai-card { background:rgba(139,92,246,0.1); border:1px solid var(--accent-purple); border-radius:var(--radius-md); padding:12px; margin-bottom:10px; }
+        .badge { display:inline-block; background:var(--primary); color:white; padding:5px 12px; border-radius:14px; font-size:0.75rem; font-weight:700; margin:2px; }
+        .goal-card { background:rgba(0,74,153,0.05); border:1px solid var(--primary); border-radius:var(--radius-md); padding:14px; margin-bottom:12px; }
+        .ai-card { background:rgba(139,92,246,0.1); border:1px solid var(--accent-purple); border-radius:var(--radius-md); padding:14px; margin-bottom:12px; }
+        
         .list-item {
             display:flex; justify-content:space-between; align-items:center;
-            padding:12px 14px; background:var(--bg-card); border-radius:var(--radius-sm);
-            margin-bottom:6px; border-left:4px solid var(--primary);
+            padding:14px 16px; background:var(--bg-card); border-radius:var(--radius-sm);
+            margin-bottom:8px; border-left:4px solid var(--primary);
         }
-        .list-item.green { border-left-color:var(--accent-green); }
-        .list-item.yellow { border-left-color:var(--accent-yellow); }
-        .list-item.red { border-left-color:var(--accent-red); }
-        .list-item.purple { border-left-color:var(--accent-purple); }
-        .list-item .item-nome { font-weight:700; font-size:0.9rem; }
-        .list-item .item-info { font-size:0.8rem; color:var(--text-secondary); }
-        .btn-icon { background:none; border:none; cursor:pointer; font-size:1.2rem; }
+        .list-item .item-nome { font-weight:700; font-size:1rem; }
+        .list-item .item-info { font-size:0.85rem; color:var(--text-secondary); }
+        .btn-icon { background:none; border:none; cursor:pointer; font-size:1.4rem; }
         
         /* ORARIO VISIBILE */
         .orario-card {
             background:var(--bg-card); border-radius:var(--radius-sm);
-            padding:12px; margin-bottom:8px; border-left:4px solid var(--primary);
+            padding:14px; margin-bottom:8px; border-left:4px solid var(--primary);
         }
         .orario-card.extra { border-left-color:var(--accent-purple); }
-        .orario-card .orario-nome { font-weight:700; font-size:0.9rem; }
-        .orario-card .orario-dettagli { font-size:0.85rem; color:var(--text-primary); font-weight:600; }
+        .orario-card .orario-nome { font-weight:700; font-size:1rem; }
+        .orario-card .orario-dettagli { font-size:0.9rem; font-weight:600; margin-top:4px; }
         
-        /* FOTO PROFILO */
-        .profile-pic {
-            width:60px; height:60px; border-radius:50%;
-            background:var(--primary); color:white;
-            display:flex; align-items:center; justify-content:center;
-            font-size:1.8rem; font-weight:800; cursor:pointer;
-            margin:0 auto 10px; border:3px solid var(--primary);
-            overflow:hidden;
+        /* INPUT DATE/TIME VISIBILI */
+        .form-input[type="date"], .form-input[type="time"] {
+            color-scheme: light;
+            min-height: 50px;
         }
-        .profile-pic img { width:100%; height:100%; object-fit:cover; }
+        body.dark-mode .form-input[type="date"], 
+        body.dark-mode .form-input[type="time"] {
+            color-scheme: dark;
+        }
         
         @media print {
-            .tab-bar, .app-header, .btn, .header-btn, .install-btn { display:none !important; }
+            .tab-bar, .app-header, .btn, .header-btn { display:none !important; }
             body { background:white; max-width:100%; padding:0; }
-            .card { box-shadow:none; border:1px solid #ddd; break-inside:avoid; }
+            .card { box-shadow:none; border:1px solid #ddd; }
         }
     </style>
 </head>
@@ -178,9 +168,9 @@
     <!-- HEADER -->
     <header class="app-header">
         <div class="logo">📊 Flash Lab Uni</div>
-        <div class="header-actions">
-            <button class="header-btn" onclick="resetTutto()" title="Reset">🔄</button>
-            <button class="header-btn" onclick="openSettings()" title="Impostazioni">⚙️</button>
+        <div class="header-actions" style="display:flex; gap:8px;">
+            <button class="header-btn" onclick="resetTutto()">🔄</button>
+            <button class="header-btn" onclick="openSettings()">⚙️</button>
         </div>
     </header>
     
@@ -197,23 +187,23 @@
                 </div>
                 
                 <div class="goal-card">
-                    <strong style="font-size:0.9rem;">🎓 Progresso Laurea</strong>
+                    <strong style="font-size:1rem;">🎓 Progresso Laurea</strong>
                     <div class="progress-bar"><div class="progress-fill" id="progresso-laurea" style="width:0%;"></div></div>
-                    <p style="font-size:0.8rem; color:var(--text-muted);" id="progresso-testo">Configura CFU totali nelle impostazioni (⚙️)</p>
+                    <p style="font-size:0.85rem;" id="progresso-testo">Configura CFU in ⚙️</p>
                 </div>
                 
                 <div class="goal-card">
                     <div style="display:flex; justify-content:space-between;">
-                        <strong style="font-size:0.9rem;">🎯 Obiettivo: <span id="obiettivo-valore">28</span></strong>
-                        <button onclick="cambiaObiettivo()" style="background:none; border:none; cursor:pointer; font-size:1rem;">✏️</button>
+                        <strong style="font-size:1rem;">🎯 Obiettivo: <span id="obiettivo-valore">28</span></strong>
+                        <button onclick="cambiaObiettivo()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✏️</button>
                     </div>
                     <div class="progress-bar"><div class="progress-fill" id="obiettivo-progresso" style="width:0%;"></div></div>
-                    <p style="font-size:0.8rem; color:var(--text-muted);" id="obiettivo-messaggio">Inserisci esami per vedere il progresso</p>
+                    <p style="font-size:0.85rem;" id="obiettivo-messaggio">Inserisci esami</p>
                 </div>
                 
                 <div class="ai-card">
-                    <strong style="font-size:0.9rem;">🤖 AI Tutor</strong>
-                    <p style="font-size:0.85rem; margin-top:4px;" id="ai-tutor">Inserisci esami per ricevere consigli!</p>
+                    <strong style="font-size:1rem;">🤖 AI Tutor</strong>
+                    <p style="font-size:0.9rem; margin-top:4px;" id="ai-tutor">Inserisci esami!</p>
                 </div>
                 
                 <div id="stats-motivazionali" style="margin-top:10px;"></div>
@@ -230,7 +220,7 @@
         <div id="page-andamento" class="page hidden">
             <div class="card">
                 <div class="card-title">📈 Andamento Carriera</div>
-                <div id="chart-andamento" style="display:flex; gap:6px; overflow-x:auto; padding:16px 0; align-items:flex-end;"></div>
+                <div id="chart-andamento" style="display:flex; gap:8px; overflow-x:auto; padding:16px 0; align-items:flex-end;"></div>
             </div>
         </div>
         
@@ -241,44 +231,36 @@
                 <div class="form-group">
                     <label class="form-label">Voto previsto</label>
                     <input type="number" id="prev-voto" class="form-input" placeholder="es. 28" min="18" max="33">
-                    <p class="form-hint">Inserisci il voto che pensi di prendere</p>
+                    <p class="form-hint">Es: 28</p>
                 </div>
                 <div class="form-group">
                     <label class="form-label">CFU prossimo esame</label>
                     <input type="number" id="prev-cfu" class="form-input" placeholder="es. 12" min="1" max="30">
-                    <p class="form-hint">Quanti CFU vale l'esame</p>
+                    <p class="form-hint">Es: 12</p>
                 </div>
-                <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola Previsione</button>
-                <div id="previsione-risultato" class="mt-16 text-center" style="font-size:1.1rem; font-weight:700;"></div>
+                <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola</button>
+                <div id="previsione-risultato" class="mt-16 text-center" style="font-size:1.2rem; font-weight:700;"></div>
             </div>
             
             <div class="card">
-                <div class="card-title">🎓 Calcolo Voto Laurea</div>
-                <div class="form-group">
-                    <label class="form-label">Punti tesi (0-8)</label>
-                    <input type="number" id="laurea-tesi" class="form-input" value="5" min="0" max="8">
-                    <p class="form-hint">Di solito da 0 a 8 punti</p>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Bonus (lodi, Erasmus, ecc.)</label>
-                    <input type="number" id="laurea-bonus" class="form-input" value="0" min="0" max="10">
-                    <p class="form-hint">Bonus extra fino a 10 punti</p>
-                </div>
-                <button class="btn btn-primary" onclick="calcolaVotoLaurea()">Calcola Voto Laurea</button>
-                <div id="laurea-risultato" class="mt-16 text-center" style="font-size:1.8rem; font-weight:800;"></div>
+                <div class="card-title">🎓 Voto Laurea</div>
+                <div class="form-group"><label class="form-label">Punti tesi (0-8)</label><input type="number" id="laurea-tesi" class="form-input" value="5" min="0" max="8"></div>
+                <div class="form-group"><label class="form-label">Bonus (0-10)</label><input type="number" id="laurea-bonus" class="form-input" value="0" min="0" max="10"></div>
+                <button class="btn btn-primary" onclick="calcolaVotoLaurea()">Calcola</button>
+                <div id="laurea-risultato" class="mt-16 text-center" style="font-size:2rem; font-weight:800;"></div>
             </div>
             
             <div class="card">
-                <div class="card-title">🔮 Cosa mi serve per il 110?</div>
+                <div class="card-title">🔮 Per il 110?</div>
                 <button class="btn btn-primary" onclick="calcolaPer110()">Scopri</button>
-                <div id="per110-risultato" class="mt-16 text-center" style="font-size:0.95rem;"></div>
+                <div id="per110-risultato" class="mt-16 text-center" style="font-size:1rem;"></div>
             </div>
         </div>
         
         <!-- TASSE -->
         <div id="page-tasse" class="page hidden">
             <div class="card">
-                <div class="card-title">💰 Gestione Tasse</div>
+                <div class="card-title">💰 Tasse</div>
                 <div id="prossima-scadenza" class="mb-16"></div>
                 <div id="lista-tasse"></div>
                 <button class="btn btn-primary" onclick="showAddTassa()">➕ Aggiungi Tassa</button>
@@ -289,7 +271,7 @@
         <div id="page-orario" class="page hidden">
             <div class="card">
                 <div class="card-title">📅 Orario Settimanale</div>
-                <div id="filtri-giorni" style="display:flex; gap:4px; overflow-x:auto; margin-bottom:12px;"></div>
+                <div id="filtri-giorni" style="display:flex; gap:6px; overflow-x:auto; margin-bottom:14px;"></div>
                 <div id="lista-orario"></div>
                 <button class="btn btn-primary" onclick="showAddOrario()">➕ Aggiungi Impegno</button>
             </div>
@@ -298,16 +280,10 @@
         <!-- DOMANDE -->
         <div id="page-domande" class="page hidden">
             <div class="card">
-                <div class="card-title">❓ Domande d'Esame</div>
-                <div class="form-group">
-                    <label class="form-label">Materia</label>
-                    <input type="text" id="domanda-materia" class="form-input" placeholder="es. Storia">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">La tua domanda</label>
-                    <textarea id="domanda-testo" class="form-input" rows="3" placeholder="Scrivi qui la domanda..."></textarea>
-                </div>
-                <button class="btn btn-primary" onclick="aggiungiDomanda()">Condividi Domanda</button>
+                <div class="card-title">❓ Domande</div>
+                <div class="form-group"><label class="form-label">Materia</label><input type="text" id="domanda-materia" class="form-input" placeholder="es. Storia"></div>
+                <div class="form-group"><label class="form-label">Domanda</label><textarea id="domanda-testo" class="form-input" rows="3" placeholder="Scrivi..."></textarea></div>
+                <button class="btn btn-primary" onclick="aggiungiDomanda()">Condividi</button>
                 <div id="lista-domande" class="mt-16"></div>
             </div>
         </div>
@@ -315,24 +291,12 @@
     
     <!-- TAB BAR -->
     <nav class="tab-bar">
-        <button class="tab-item active" onclick="navigateTo('dashboard')" data-tab="dashboard">
-            <span class="tab-icon">🏠</span>Home
-        </button>
-        <button class="tab-item" onclick="navigateTo('andamento')" data-tab="andamento">
-            <span class="tab-icon">📈</span>Trend
-        </button>
-        <button class="tab-item" onclick="navigateTo('previsioni')" data-tab="previsioni">
-            <span class="tab-icon">🔮</span>Previsioni
-        </button>
-        <button class="tab-item" onclick="navigateTo('tasse')" data-tab="tasse">
-            <span class="tab-icon">💰</span>Tasse
-        </button>
-        <button class="tab-item" onclick="navigateTo('orario')" data-tab="orario">
-            <span class="tab-icon">📅</span>Orario
-        </button>
-        <button class="tab-item" onclick="navigateTo('domande')" data-tab="domande">
-            <span class="tab-icon">❓</span>FAQ
-        </button>
+        <button class="tab-item active" onclick="navigateTo('dashboard')" data-tab="dashboard"><span class="tab-icon">🏠</span>Home</button>
+        <button class="tab-item" onclick="navigateTo('andamento')" data-tab="andamento"><span class="tab-icon">📈</span>Trend</button>
+        <button class="tab-item" onclick="navigateTo('previsioni')" data-tab="previsioni"><span class="tab-icon">🔮</span>Previsioni</button>
+        <button class="tab-item" onclick="navigateTo('tasse')" data-tab="tasse"><span class="tab-icon">💰</span>Tasse</button>
+        <button class="tab-item" onclick="navigateTo('orario')" data-tab="orario"><span class="tab-icon">📅</span>Orario</button>
+        <button class="tab-item" onclick="navigateTo('domande')" data-tab="domande"><span class="tab-icon">❓</span>FAQ</button>
     </nav>
     
     <script>
@@ -350,41 +314,16 @@
         let giornoSel = 'Lunedì';
         const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
         
-        // ============ TEMA ============
-        function applicaTema() {
-            if (temaScuro) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-        }
-        
-        function toggleTema() {
-            temaScuro = !temaScuro;
-            localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light');
-            applicaTema();
-        }
-        
-        // ============ FOTO PROFILO ============
+        function applicaTema() { if (temaScuro) document.body.classList.add('dark-mode'); else document.body.classList.remove('dark-mode'); }
+        function toggleTema() { temaScuro = !temaScuro; localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light'); applicaTema(); }
         function cambiaFoto() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    fotoProfilo = event.target.result;
-                    localStorage.setItem('flashlab_foto', fotoProfilo);
-                    alert('✅ Foto aggiornata!');
-                };
-                reader.readAsDataURL(file);
-            };
+            const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+            input.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader();
+                r.onload = (ev) => { fotoProfilo = ev.target.result; localStorage.setItem('flashlab_foto', fotoProfilo); alert('✅ Foto aggiornata!'); };
+                r.readAsDataURL(f); };
             input.click();
         }
         
-        // ============ NAVIGAZIONE ============
         function navigateTo(page) {
             PAGES.forEach(p => document.getElementById('page-' + p).classList.add('hidden'));
             document.getElementById('page-' + page).classList.remove('hidden');
@@ -392,382 +331,136 @@
             document.querySelector(`[data-tab="${page}"]`).classList.add('active');
             updatePage(page);
         }
+        function updatePage(p) { if (p === 'dashboard') renderDashboard(); if (p === 'andamento') renderChart(); if (p === 'tasse') renderTasse(); if (p === 'orario') renderOrario(); if (p === 'domande') renderDomande(); }
         
-        function updatePage(page) {
-            if (page === 'dashboard') renderDashboard();
-            if (page === 'andamento') renderChart();
-            if (page === 'tasse') renderTasse();
-            if (page === 'orario') renderOrario();
-            if (page === 'domande') renderDomande();
-        }
-        
-        // ============ CALCOLI ============
-        function calcolaMediaPonderata() {
-            if (esami.length === 0) return 0;
-            const cfu = esami.reduce((s,e) => s + e.cfu, 0);
-            const somma = esami.reduce((s,e) => s + (e.voto * e.cfu), 0);
-            return cfu > 0 ? somma / cfu : 0;
-        }
+        function calcolaMediaPonderata() { if (!esami.length) return 0; const c = esami.reduce((s,e) => s + e.cfu, 0); const s = esami.reduce((x,e) => x + (e.voto * e.cfu), 0); return c ? s/c : 0; }
         function calcolaCFU() { return esami.reduce((s,e) => s + e.cfu, 0); }
-        function calcolaVotoBase() { const m = calcolaMediaPonderata(); return m > 0 ? (m * 110) / 30 : 0; }
+        function calcolaVotoBase() { const m = calcolaMediaPonderata(); return m ? (m * 110) / 30 : 0; }
+        function getAITutor() { const m = calcolaMediaPonderata(); if (!m) return 'Inserisci esami! 📚'; if (m < 24) return '📚 Basi da consolidare.'; if (m < 26) return '🎯 Buon lavoro!'; if (m < 28) return '🔥 Puoi puntare al 110!'; if (m < 29.5) return '🏆 Eccellente!'; return '👑 Straordinario!'; }
         
-        // ============ AI ============
-        function getAITutor() {
-            const m = calcolaMediaPonderata();
-            if (m === 0) return 'Inserisci esami per ricevere consigli! 📚';
-            if (m < 24) return '📚 Concentrati sulle basi.';
-            if (m < 26) return '🎯 Buon lavoro! Migliora i CFU pesanti.';
-            if (m < 28) return '🔥 Ottimo! Puoi puntare al 110!';
-            if (m < 29.5) return '🏆 Eccellente!';
-            return '👑 Straordinario!';
-        }
-        
-        // ============ DASHBOARD ============
         function renderDashboard() {
-            const media = calcolaMediaPonderata();
-            const cfu = calcolaCFU();
-            const votoBase = calcolaVotoBase();
-            
-            document.getElementById('stat-media').textContent = media > 0 ? media.toFixed(2) : '—';
-            document.getElementById('stat-cfu').textContent = cfu;
+            const m = calcolaMediaPonderata(), c = calcolaCFU(), vb = calcolaVotoBase();
+            document.getElementById('stat-media').textContent = m ? m.toFixed(2) : '—';
+            document.getElementById('stat-cfu').textContent = c;
             document.getElementById('stat-esami').textContent = esami.length;
-            document.getElementById('stat-voto-base').textContent = votoBase > 0 ? votoBase.toFixed(1) : '—';
-            
-            const progressoLaurea = cfuTotaliCorso > 0 ? (cfu / cfuTotaliCorso) * 100 : 0;
-            document.getElementById('progresso-laurea').style.width = Math.min(progressoLaurea, 100) + '%';
-            document.getElementById('progresso-testo').textContent = 
-                esami.length > 0 ? `${progressoLaurea.toFixed(0)}% completato (${cfu}/${cfuTotaliCorso} CFU)` : 'Configura CFU totali in ⚙️';
-            
+            document.getElementById('stat-voto-base').textContent = vb ? vb.toFixed(1) : '—';
+            const prog = cfuTotaliCorso ? (c / cfuTotaliCorso) * 100 : 0;
+            document.getElementById('progresso-laurea').style.width = Math.min(prog, 100) + '%';
+            document.getElementById('progresso-testo').textContent = esami.length ? `${prog.toFixed(0)}% (${c}/${cfuTotaliCorso} CFU)` : 'Configura in ⚙️';
             document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
-            const prog = media > 0 ? Math.min((media / obiettivoMedia) * 100, 100) : 0;
-            document.getElementById('obiettivo-progresso').style.width = prog + '%';
-            document.getElementById('obiettivo-messaggio').textContent = media > 0 ? `${prog.toFixed(0)}% verso obiettivo` : 'Inserisci esami';
-            
+            const po = m ? Math.min((m / obiettivoMedia) * 100, 100) : 0;
+            document.getElementById('obiettivo-progresso').style.width = po + '%';
+            document.getElementById('obiettivo-messaggio').textContent = m ? `${po.toFixed(0)}% verso obiettivo` : 'Inserisci esami';
             document.getElementById('ai-tutor').textContent = getAITutor();
-            
-            const max = esami.length > 0 ? Math.max(...esami.map(e => e.voto)) : 0;
-            const min = esami.length > 0 ? Math.min(...esami.map(e => e.voto)) : 0;
+            const max = esami.length ? Math.max(...esami.map(e => e.voto)) : 0;
+            const min = esami.length ? Math.min(...esami.map(e => e.voto)) : 0;
             const lodi = esami.filter(e => e.voto >= 30).length;
-            document.getElementById('stats-motivazionali').innerHTML = 
-                `${max > 0 ? `<span class="badge">🏆 Max: ${max}</span>` : ''}
-                 ${min > 0 ? `<span class="badge">📉 Min: ${min}</span>` : ''}
-                 ${lodi > 0 ? `<span class="badge">🌟 Lodi: ${lodi}</span>` : ''}`;
-            
+            document.getElementById('stats-motivazionali').innerHTML = `${max ? `<span class="badge">🏆 ${max}</span>` : ''}${min ? `<span class="badge">📉 ${min}</span>` : ''}${lodi ? `<span class="badge">🌟 ${lodi} lodi</span>` : ''}`;
             const lista = document.getElementById('lista-esami-dashboard');
-            if (esami.length === 0) { lista.innerHTML = '<div class="empty-state">Nessun esame inserito</div>'; return; }
+            if (!esami.length) { lista.innerHTML = '<div class="empty-state">Nessun esame</div>'; return; }
             lista.innerHTML = [...esami].sort((a,b) => b.data.localeCompare(a.data)).map(e => {
                 const cls = e.voto >= 28 ? 'green' : e.voto >= 24 ? 'yellow' : 'red';
-                return `<div class="list-item ${cls}">
-                    <div><div class="item-nome">${e.nome}</div><div class="item-info">CFU: ${e.cfu} · ${e.data}</div></div>
-                    <div style="display:flex; align-items:center; gap:8px;"><strong>${e.voto}</strong>
-                    <button class="btn-icon" onclick="rimuoviEsame(${e.id})">🗑️</button></div>
-                </div>`;
+                return `<div class="list-item ${cls}"><div><div class="item-nome">${e.nome}</div><div class="item-info">CFU: ${e.cfu} · ${e.data}</div></div><div style="display:flex; align-items:center; gap:8px;"><strong>${e.voto}</strong><button class="btn-icon" onclick="rimuoviEsame(${e.id})">🗑️</button></div></div>`;
             }).join('');
         }
         
-        // ============ CHART ============
         function renderChart() {
             const c = document.getElementById('chart-andamento');
-            if (esami.length === 0) { c.innerHTML = '<div class="empty-state">Inserisci esami</div>'; return; }
-            const sorted = [...esami].sort((a,b) => a.data.localeCompare(b.data));
-            c.innerHTML = sorted.map(e => {
+            if (!esami.length) { c.innerHTML = '<div class="empty-state">Inserisci esami</div>'; return; }
+            c.innerHTML = [...esami].sort((a,b) => a.data.localeCompare(b.data)).map(e => {
                 const h = ((e.voto - 15) / 18) * 120;
                 const col = e.voto >= 28 ? '#22c55e' : e.voto >= 24 ? '#f59e0b' : '#ef4444';
-                return `<div style="text-align:center; min-width:40px;">
-                    <div style="background:${col}; height:${h}px; border-radius:4px 4px 0 0;"></div>
-                    <small>${e.nome.substring(0,5)}</small>
-                </div>`;
+                return `<div style="text-align:center; min-width:45px;"><div style="background:${col}; height:${h}px; border-radius:4px 4px 0 0;"></div><small>${e.nome.substring(0,5)}</small></div>`;
             }).join('');
         }
         
-        // ============ PREVISIONI ============
         function calcolaPrevisione() {
             const v = parseInt(document.getElementById('prev-voto').value);
             const c = parseInt(document.getElementById('prev-cfu').value);
             if (!v || !c) { alert('Inserisci voto e CFU'); return; }
-            const cfuAtt = calcolaCFU();
-            const sommaAtt = esami.reduce((s,e) => s + (e.voto * e.cfu), 0);
-            const nuova = (sommaAtt + (v * c)) / (cfuAtt + c);
             const att = calcolaMediaPonderata();
-            const diff = nuova - att;
-            document.getElementById('previsione-risultato').innerHTML = 
-                `Attuale: ${att.toFixed(2)} → Prevista: <strong>${nuova.toFixed(2)}</strong><br>
-                <span style="color:${diff >= 0 ? 'green' : 'red'}">${diff >= 0 ? '↑' : '↓'} ${Math.abs(diff).toFixed(2)}</span>`;
+            const nuova = ((att * calcolaCFU()) + (v * c)) / (calcolaCFU() + c);
+            document.getElementById('previsione-risultato').innerHTML = `Attuale: ${att.toFixed(2)} → <strong>${nuova.toFixed(2)}</strong>`;
         }
-        
         function calcolaVotoLaurea() {
             const t = parseInt(document.getElementById('laurea-tesi').value) || 0;
             const b = parseInt(document.getElementById('laurea-bonus').value) || 0;
             const base = calcolaVotoBase();
-            if (base === 0) { alert('Inserisci esami prima'); return; }
-            const finale = Math.min(base + t + b, 110);
-            document.getElementById('laurea-risultato').innerHTML = `🎓 ${finale.toFixed(1)}${finale >= 110 ? ' 🎉' : ''}`;
+            if (!base) { alert('Inserisci esami'); return; }
+            document.getElementById('laurea-risultato').textContent = `🎓 ${Math.min(base + t + b, 110).toFixed(1)}`;
         }
-        
         function calcolaPer110() {
             const base = calcolaVotoBase();
-            if (base === 0) { alert('Inserisci esami prima'); return; }
+            if (!base) { alert('Inserisci esami'); return; }
             const nec = 110 - base;
-            document.getElementById('per110-risultato').innerHTML = 
-                nec <= 0 ? '✅ Hai già la media!' : `Ti servono <strong>${nec.toFixed(1)}</strong> punti (tesi+boni)`;
+            document.getElementById('per110-risultato').textContent = nec <= 0 ? '✅ Già ok!' : `Servono ${nec.toFixed(1)} punti`;
         }
         
-        // ============ ESAMI ============
         function aggiungiEsame() {
             const n = document.getElementById('esame-nome').value.trim();
             const v = parseInt(document.getElementById('esame-voto').value);
             const c = parseInt(document.getElementById('esame-cfu').value);
             const d = document.getElementById('esame-data').value || new Date().toISOString().split('T')[0];
-            if (!n || !v || !c) { alert('Compila tutti i campi'); return; }
+            if (!n || !v || !c) { alert('Compila i campi'); return; }
             esami.push({ id: Date.now(), nome: n, voto: v, cfu: c, data: d });
             localStorage.setItem('flashlab_esami', JSON.stringify(esami));
             closeModal(); renderDashboard(); renderChart();
         }
         function rimuoviEsame(id) { if (confirm('Eliminare?')) { esami = esami.filter(e => e.id !== id); localStorage.setItem('flashlab_esami', JSON.stringify(esami)); renderDashboard(); renderChart(); } }
         
-        // ============ TASSE ============
         function renderTasse() {
             const l = document.getElementById('lista-tasse');
             const p = document.getElementById('prossima-scadenza');
-            if (tasse.length === 0) { l.innerHTML = '<div class="empty-state">Nessuna tassa</div>'; p.innerHTML = ''; return; }
+            if (!tasse.length) { l.innerHTML = '<div class="empty-state">Nessuna tassa</div>'; p.innerHTML = ''; return; }
             const np = tasse.filter(t => !t.pagata).sort((a,b) => a.scadenza.localeCompare(b.scadenza));
-            if (np.length > 0) {
-                p.innerHTML = `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:8px; text-align:center;"><strong>⚠️ ${np[0].descrizione}</strong><br>€${np[0].importo} · ${np[0].scadenza}</div>`;
-            } else { p.innerHTML = '<div class="text-center" style="color:green;">✅ Tutte pagate!</div>'; }
-            l.innerHTML = tasse.map(t => `
-                <div class="list-item ${t.pagata ? 'green' : 'yellow'}">
-                    <div><div class="item-nome">${t.descrizione}</div><div class="item-info">€${t.importo} · ${t.scadenza}</div></div>
-                    <div style="display:flex; gap:4px;"><button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button><button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button></div>
-                </div>`).join('');
+            p.innerHTML = np.length ? `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:8px; text-align:center;"><strong>⚠️ ${np[0].descrizione}</strong><br>€${np[0].importo} · ${np[0].scadenza}</div>` : '<div class="text-center" style="color:green;">✅ Tutte pagate!</div>';
+            l.innerHTML = tasse.map(t => `<div class="list-item ${t.pagata ? 'green' : 'yellow'}"><div><div class="item-nome">${t.descrizione}</div><div class="item-info">€${t.importo} · ${t.scadenza}</div></div><div style="display:flex; gap:4px;"><button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button><button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button></div></div>`).join('');
         }
         
-        // ============ ORARIO (VISIBILE) ============
         function renderOrario() {
-            document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => 
-                `<button onclick="selezionaGiorno('${g}')" style="padding:8px 12px; border-radius:20px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'var(--bg-card)'}; color:${g === giornoSel ? 'white' : 'var(--text-primary)'}; cursor:pointer; font-size:0.75rem; font-weight:700;">${g.substring(0,3)}</button>`
-            ).join('');
-            
+            document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => `<button onclick="selezionaGiorno('${g}')" style="padding:10px 14px; border-radius:20px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'var(--bg-card)'}; color:${g === giornoSel ? 'white' : 'var(--text-primary)'}; cursor:pointer; font-size:0.85rem; font-weight:700;">${g.substring(0,3)}</button>`).join('');
             const impegni = orario.filter(o => o.giorno === giornoSel);
             const lista = document.getElementById('lista-orario');
-            
-            if (impegni.length === 0) {
-                lista.innerHTML = `<div class="empty-state">Nessun impegno per ${giornoSel}</div>`;
-                return;
-            }
-            
-            lista.innerHTML = impegni.map(o => `
-                <div class="orario-card ${o.tipo === 'extra' ? 'extra' : ''}">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div class="orario-nome">${o.materia}</div>
-                            <div class="orario-dettagli">🕐 ${o.ora}${o.data ? ' · 📅 ' + o.data : ''} · ${o.tipo === 'universitario' ? '📚 Universitario' : '🎯 Extra'}</div>
-                        </div>
-                        <button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button>
-                    </div>
-                </div>
-            `).join('');
+            if (!impegni.length) { lista.innerHTML = `<div class="empty-state">Nessun impegno per ${giornoSel}</div>`; return; }
+            lista.innerHTML = impegni.map(o => `<div class="orario-card ${o.tipo === 'extra' ? 'extra' : ''}"><div style="display:flex; justify-content:space-between;"><div><div class="orario-nome">${o.materia}</div><div class="orario-dettagli">🕐 ${o.ora}${o.data ? ' · 📅 ' + o.data : ''} · ${o.tipo === 'universitario' ? '📚' : '🎯'}</div></div><button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button></div></div>`).join('');
         }
         
-        // ============ DOMANDE ============
         function renderDomande() {
             const l = document.getElementById('lista-domande');
-            if (domande.length === 0) { l.innerHTML = '<div class="empty-state">Nessuna domanda</div>'; return; }
+            if (!domande.length) { l.innerHTML = '<div class="empty-state">Nessuna domanda</div>'; return; }
             const m = {};
             domande.forEach(d => { if (!m[d.materia]) m[d.materia] = []; m[d.materia].push(d); });
-            l.innerHTML = Object.keys(m).map(mat => `
-                <div style="margin-bottom:10px;"><strong style="color:var(--primary);">${mat}</strong>
-                ${m[mat].map(d => `<p style="font-size:0.85rem; padding:10px; background:var(--bg-card); border-radius:8px; margin:4px 0;">${d.testo}</p>`).join('')}
-                </div>`).join('');
+            l.innerHTML = Object.keys(m).map(mat => `<div><strong>${mat}</strong>${m[mat].map(d => `<p style="padding:8px;">${d.testo}</p>`).join('')}</div>`).join('');
         }
         
-        // ============ OBIETTIVO ============
-        function cambiaObiettivo() {
-            const n = prompt('🎯 Media obiettivo (18-33):', obiettivoMedia);
-            if (n && !isNaN(n) && n >= 18 && n <= 33) { obiettivoMedia = parseInt(n); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); renderDashboard(); }
-        }
+        function cambiaObiettivo() { const n = prompt('Media obiettivo (18-33):', obiettivoMedia); if (n && !isNaN(n) && n >= 18 && n <= 33) { obiettivoMedia = parseInt(n); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); renderDashboard(); } }
+        function resetTutto() { if (confirm('Cancellare tutto?')) { if (confirm('Confermi?')) { ['esami','tasse','orario','domande','obiettivo','cfu_totali','foto','tema'].forEach(k => localStorage.removeItem('flashlab_' + k)); location.reload(); } } }
+        function exportDati() { const dati = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, fotoProfilo, temaScuro }; const b = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = 'flashlab-' + new Date().toISOString().split('T')[0] + '.json'; a.click(); URL.revokeObjectURL(u); alert('✅ Esportato!'); }
+        function importDati() { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { try { const d = JSON.parse(ev.target.result); if (confirm('Importare?')) { esami = d.esami || []; tasse = d.tasse || []; orario = d.orario || []; domande = d.domande || []; obiettivoMedia = d.obiettivoMedia || 28; cfuTotaliCorso = d.cfuTotaliCorso || 180; fotoProfilo = d.fotoProfilo || ''; temaScuro = d.temaScuro || false; localStorage.setItem('flashlab_esami', JSON.stringify(esami)); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); localStorage.setItem('flashlab_foto', fotoProfilo); localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light'); alert('✅ Importato!'); location.reload(); } } catch { alert('❌ File non valido'); } }; r.readAsText(f); }; i.click(); }
+        function openSettings() { const s = prompt('⚙️ IMPOSTAZIONI\n\n1️⃣ CFU totali\n2️⃣ Foto profilo\n3️⃣ Tema scuro/chiaro\n4️⃣ Export\n5️⃣ Import\n6️⃣ Stampa/PDF\n7️⃣ Reset\n\nNumero:'); if (s === '1') { const c = prompt('CFU totali:', cfuTotaliCorso); if (c && !isNaN(c)) { cfuTotaliCorso = parseInt(c); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); renderDashboard(); } } else if (s === '2') cambiaFoto(); else if (s === '3') { toggleTema(); alert(temaScuro ? '🌙 Scuro' : '☀️ Chiaro'); } else if (s === '4') exportDati(); else if (s === '5') importDati(); else if (s === '6') window.print(); else if (s === '7') resetTutto(); }
         
-        // ============ RESET ============
-        function resetTutto() {
-            if (confirm('⚠️ Cancellare TUTTI i dati?')) {
-                if (confirm('🔴 CONFERMA FINALE?')) {
-                    ['esami','tasse','orario','domande','obiettivo','cfu_totali','foto','tema'].forEach(k => localStorage.removeItem('flashlab_' + k));
-                    location.reload();
-                }
-            }
-        }
-        
-        // ============ EXPORT ============
-        function exportDati() {
-            const dati = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, fotoProfilo, temaScuro };
-            const blob = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = 'flashlab-' + new Date().toISOString().split('T')[0] + '.json';
-            a.click(); URL.revokeObjectURL(url);
-            alert('✅ Dati esportati!');
-        }
-        
-        // ============ IMPORT ============
-        function importDati() {
-            const input = document.createElement('input');
-            input.type = 'file'; input.accept = '.json';
-            input.onchange = (e) => {
-                const file = e.target.files[0]; if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    try {
-                        const d = JSON.parse(ev.target.result);
-                        if (confirm('⚠️ Importare? Sostituiranno i dati attuali.')) {
-                            esami = d.esami || []; tasse = d.tasse || []; orario = d.orario || [];
-                            domande = d.domande || []; obiettivoMedia = d.obiettivoMedia || 28;
-                            cfuTotaliCorso = d.cfuTotaliCorso || 180; fotoProfilo = d.fotoProfilo || '';
-                            temaScuro = d.temaScuro || false;
-                            localStorage.setItem('flashlab_esami', JSON.stringify(esami));
-                            localStorage.setItem('flashlab_tasse', JSON.stringify(tasse));
-                            localStorage.setItem('flashlab_orario', JSON.stringify(orario));
-                            localStorage.setItem('flashlab_domande', JSON.stringify(domande));
-                            localStorage.setItem('flashlab_obiettivo', obiettivoMedia);
-                            localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso);
-                            localStorage.setItem('flashlab_foto', fotoProfilo);
-                            localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light');
-                            alert('✅ Importati!'); location.reload();
-                        }
-                    } catch { alert('❌ File non valido'); }
-                };
-                reader.readAsText(file);
-            };
-            input.click();
-        }
-        
-        // ============ SETTINGS ============
-        function openSettings() {
-            const s = prompt('⚙️ IMPOSTAZIONI\n\n1️⃣ CFU totali corso\n2️⃣ Foto profilo\n3️⃣ Tema scuro/chiaro\n4️⃣ Export dati\n5️⃣ Import dati\n6️⃣ Stampa/PDF\n7️⃣ Reset completo\n\nDigita il numero:');
-            if (s === '1') {
-                const c = prompt('📊 CFU totali:', cfuTotaliCorso);
-                if (c && !isNaN(c) && c > 0) { cfuTotaliCorso = parseInt(c); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); renderDashboard(); alert('✅ Aggiornato!'); }
-            } else if (s === '2') cambiaFoto();
-            else if (s === '3') { toggleTema(); alert(temaScuro ? '🌙 Tema scuro attivato' : '☀️ Tema chiaro attivato'); }
-            else if (s === '4') exportDati();
-            else if (s === '5') importDati();
-            else if (s === '6') window.print();
-            else if (s === '7') resetTutto();
-        }
-        
-        // ============ MODALS ============
-        function showAddExam() {
-            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                <div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;">
-                    <h3 style="margin-bottom:12px; color:var(--text-primary);">Aggiungi Esame</h3>
-                    <label class="form-label">📚 Nome esame</label>
-                    <input id="esame-nome" class="form-input" placeholder="es. Analisi Matematica" style="margin-bottom:10px;">
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-                        <div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="es. 28" min="18" max="33"></div>
-                        <div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="es. 12" min="1" max="30"></div>
-                    </div>
-                    <label class="form-label">📅 Data esame</label>
-                    <input id="esame-data" class="form-input" type="date" style="margin-bottom:14px;">
-                    <button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button>
-                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                </div></div>`);
-        }
-        
-        function showAddTassa() {
-            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                <div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;">
-                    <h3 style="margin-bottom:12px; color:var(--text-primary);">Aggiungi Tassa</h3>
-                    <label class="form-label">📝 Descrizione</label>
-                    <input id="tassa-descrizione" class="form-input" placeholder="es. Seconda rata" style="margin-bottom:10px;">
-                    <label class="form-label">💶 Importo (€)</label>
-                    <input id="tassa-importo" class="form-input" type="number" placeholder="es. 500" style="margin-bottom:10px;">
-                    <label class="form-label">📅 Scadenza</label>
-                    <input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:14px;">
-                    <button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button>
-                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                </div></div>`);
-        }
-        
-        function showAddOrario() {
-            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                <div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;">
-                    <h3 style="margin-bottom:12px; color:var(--text-primary);">Aggiungi Impegno</h3>
-                    <label class="form-label">📚 Materia/Attività</label>
-                    <input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;">
-                    <label class="form-label">🕐 Ora</label>
-                    <input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;">
-                    <label class="form-label">📅 Data</label>
-                    <input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;">
-                    <label class="form-label">🏷️ Tipo</label>
-                    <select id="orario-tipo" class="form-input" style="margin-bottom:14px;">
-                        <option value="universitario">📚 Universitario</option>
-                        <option value="extra">🎯 Extra</option>
-                    </select>
-                    <button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button>
-                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                </div></div>`);
-        }
-        
+        function showAddExam() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Esame</h3><label class="form-label">📚 Nome esame</label><input id="esame-nome" class="form-input" placeholder="es. Analisi Matematica" style="margin-bottom:10px;"><div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;"><div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="28" min="18" max="33"></div><div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="12" min="1" max="30"></div></div><label class="form-label">📅 Data</label><input id="esame-data" class="form-input" type="date" style="margin-bottom:14px;"><button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
+        function showAddTassa() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Tassa</h3><label class="form-label">📝 Descrizione</label><input id="tassa-descrizione" class="form-input" placeholder="es. Seconda rata" style="margin-bottom:10px;"><label class="form-label">💶 Importo (€)</label><input id="tassa-importo" class="form-input" type="number" placeholder="500" style="margin-bottom:10px;"><label class="form-label">📅 Scadenza</label><input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:14px;"><button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
+        function showAddOrario() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Impegno</h3><label class="form-label">📚 Materia</label><input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;"><label class="form-label">🕐 Ora</label><input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;"><label class="form-label">📅 Data</label><input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;"><label class="form-label">🏷️ Tipo</label><select id="orario-tipo" class="form-input" style="margin-bottom:14px;"><option value="universitario">📚 Universitario</option><option value="extra">🎯 Extra</option></select><button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
         function closeModal() { const m = document.getElementById('modal'); if (m) m.remove(); }
         
-        // ============ FUNZIONI AGGIUNTIVE ============
-        function aggiungiTassa() {
-            const d = document.getElementById('tassa-descrizione').value.trim();
-            const i = document.getElementById('tassa-importo').value;
-            const s = document.getElementById('tassa-scadenza').value;
-            if (!i || !s) { alert('Compila i campi'); return; }
-            tasse.push({ id: Date.now(), descrizione: d || 'Tassa', importo: parseFloat(i), scadenza: s, pagata: false });
-            localStorage.setItem('flashlab_tasse', JSON.stringify(tasse));
-            closeModal(); renderTasse();
-        }
+        function aggiungiTassa() { const d = document.getElementById('tassa-descrizione').value.trim(); const i = document.getElementById('tassa-importo').value; const s = document.getElementById('tassa-scadenza').value; if (!i || !s) { alert('Compila'); return; } tasse.push({ id: Date.now(), descrizione: d || 'Tassa', importo: parseFloat(i), scadenza: s, pagata: false }); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); closeModal(); renderTasse(); }
         function toggleTassa(id) { const t = tasse.find(x => x.id === id); if (t) { t.pagata = !t.pagata; localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
         function rimuoviTassa(id) { if (confirm('Eliminare?')) { tasse = tasse.filter(t => t.id !== id); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
-        
-        function aggiungiOrario() {
-            const m = document.getElementById('orario-materia').value.trim();
-            const o = document.getElementById('orario-ora').value;
-            const d = document.getElementById('orario-data').value;
-            const t = document.getElementById('orario-tipo').value;
-            if (!m || !o) { alert('Compila i campi'); return; }
-            orario.push({ id: Date.now(), materia: m, ora: o, data: d, giorno: giornoSel, tipo: t });
-            localStorage.setItem('flashlab_orario', JSON.stringify(orario));
-            closeModal(); renderOrario();
-        }
+        function aggiungiOrario() { const m = document.getElementById('orario-materia').value.trim(); const o = document.getElementById('orario-ora').value; const d = document.getElementById('orario-data').value; const t = document.getElementById('orario-tipo').value; if (!m || !o) { alert('Compila'); return; } orario.push({ id: Date.now(), materia: m, ora: o, data: d, giorno: giornoSel, tipo: t }); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); closeModal(); renderOrario(); }
         function rimuoviOrario(id) { if (confirm('Eliminare?')) { orario = orario.filter(o => o.id !== id); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); renderOrario(); } }
         function selezionaGiorno(g) { giornoSel = g; renderOrario(); }
+        function aggiungiDomanda() { const m = document.getElementById('domanda-materia').value.trim(); const t = document.getElementById('domanda-testo').value.trim(); if (!m || !t) { alert('Compila'); return; } domande.push({ id: Date.now(), materia: m, testo: t }); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); document.getElementById('domanda-materia').value = ''; document.getElementById('domanda-testo').value = ''; renderDomande(); }
         
-        function aggiungiDomanda() {
-            const m = document.getElementById('domanda-materia').value.trim();
-            const t = document.getElementById('domanda-testo').value.trim();
-            if (!m || !t) { alert('Compila i campi'); return; }
-            domande.push({ id: Date.now(), materia: m, testo: t });
-            localStorage.setItem('flashlab_domande', JSON.stringify(domande));
-            document.getElementById('domanda-materia').value = ''; document.getElementById('domanda-testo').value = '';
-            renderDomande();
-        }
-        
-        // ============ INIT ============
-        function initApp() {
-            applicaTema();
-            navigateTo('dashboard');
-            document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
-        }
+        function initApp() { applicaTema(); navigateTo('dashboard'); }
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
-    <!-- PWA -->
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').then(r => console.log('✅ SW')).catch(e => console.error('❌ SW')));
-        }
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').then(r => console.log('✅ SW')).catch(e => console.error('❌ SW'))); }
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; showInstallButton(); });
-        function showInstallButton() {
-            const btn = document.createElement('button');
-            btn.textContent = '📱 Installa App';
-            btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:14px 24px; border-radius:30px; font-weight:700; cursor:pointer; z-index:2000;';
-            btn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; btn.remove(); } });
-            document.body.appendChild(btn);
-            setTimeout(() => { if (btn.parentNode) btn.remove(); }, 15000);
-        }
+        function showInstallButton() { const btn = document.createElement('button'); btn.textContent = '📱 Installa App'; btn.style.cssText = 'position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:16px 28px; border-radius:30px; font-weight:700; font-size:1rem; cursor:pointer; z-index:2000;'; btn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; btn.remove(); } }); document.body.appendChild(btn); setTimeout(() => { if (btn.parentNode) btn.remove(); }, 15000); }
     </script>
 </body>
 </html>
