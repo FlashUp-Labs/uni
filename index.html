@@ -14,11 +14,9 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23004a99'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
     
     <style>
-        /* ============ CSS ESISTENTE (INVARIATO) ============ */
         :root {
             --primary: #004a99;
             --primary-light: #1a6bc4;
-            --primary-dark: #003366;
             --bg-main: #f0f2f5;
             --bg-card: #ffffff;
             --text-primary: #1a1a2e;
@@ -29,99 +27,125 @@
             --accent-red: #ef4444;
             --accent-purple: #8b5cf6;
             --border-light: #e5e7eb;
-            --shadow-sm: 0 2px 8px rgba(0, 74, 153, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 74, 153, 0.12);
+            --shadow-sm: 0 2px 8px rgba(0,74,153,0.08);
+            --shadow-md: 0 4px 16px rgba(0,74,153,0.12);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --transition: all 0.3s ease;
             --tab-height: 64px;
-            --header-height: 60px;
             --font-sans: 'Segoe UI', -apple-system, sans-serif;
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 16px; -webkit-tap-highlight-color: transparent; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { font-size:16px; -webkit-tap-highlight-color:transparent; }
         body {
             font-family: var(--font-sans);
             background: var(--bg-main);
             color: var(--text-primary);
-            line-height: 1.6;
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
+            line-height:1.6;
+            max-width:480px;
+            margin:0 auto;
+            min-height:100vh;
             padding-bottom: calc(var(--tab-height) + 20px);
         }
-        
         .app-header {
-            position: sticky; top: 0; z-index: 100;
-            background: var(--primary); color: white;
-            padding: 16px 20px; display: flex;
-            align-items: center; justify-content: space-between;
-            min-height: var(--header-height);
+            position:sticky; top:0; z-index:100;
+            background:var(--primary); color:white;
+            padding:12px 16px;
+            display:flex; align-items:center; justify-content:space-between;
+            min-height:56px;
+            box-shadow:0 2px 12px rgba(0,74,153,0.2);
         }
-        .app-header .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; }
-        .app-header .logo svg { width: 28px; height: 28px; fill: white; }
-        .header-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .header-icon svg { width: 20px; height: 20px; fill: white; }
-        
-        .main-content { padding: 16px; }
+        .app-header .logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:1.1rem; }
+        .header-actions { display:flex; gap:8px; }
+        .header-btn {
+            width:36px; height:36px; border-radius:50%;
+            background:rgba(255,255,255,0.15);
+            border:none; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            color:white; font-size:1rem;
+        }
+        .header-btn:hover { background:rgba(255,255,255,0.25); }
+        .main-content { padding:16px; }
         .tab-bar {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px; height: var(--tab-height);
-            background: var(--bg-card); border-top: 1px solid var(--border-light);
-            display: flex; align-items: center; justify-content: space-around;
-            z-index: 1000;
+            position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+            width:100%; max-width:480px; height:var(--tab-height);
+            background:var(--bg-card); border-top:1px solid var(--border-light);
+            display:flex; align-items:center; justify-content:space-around;
+            z-index:1000; padding:0 4px;
         }
-        .tab-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 12px; border: none; background: none; cursor: pointer; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; }
-        .tab-item svg { width: 22px; height: 22px; fill: currentColor; }
-        .tab-item.active { color: var(--primary); }
-        
-        .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
-        .card-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-        .stat-card { background: var(--bg-card); border-radius: var(--radius-md); padding: 16px; text-align: center; border: 1px solid var(--border-light); }
-        .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-        
-        .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.85rem; cursor: pointer; border: none; width: 100%; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        
-        .form-group { margin-bottom: 14px; }
-        .form-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
-        .form-input, .form-select { width: 100%; padding: 12px 14px; border: 2px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.9rem; }
-        
-        .hidden { display: none !important; }
-        .text-center { text-align: center; }
-        .mt-16 { margin-top: 16px; }
-        .mb-16 { margin-bottom: 16px; }
-        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-        
-        /* Nuovi stili */
-        .progress-bar { background: #e5e7eb; border-radius: 10px; height: 10px; overflow: hidden; margin: 8px 0; }
-        .progress-fill { background: var(--primary); height: 100%; border-radius: 10px; transition: width 0.5s ease; }
-        .badge { display: inline-block; background: var(--primary); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin: 2px; }
-        .goal-card { background: rgba(0, 74, 153, 0.05); border: 1px solid var(--primary); border-radius: var(--radius-md); padding: 12px; margin-bottom: 12px; }
+        .tab-item {
+            display:flex; flex-direction:column; align-items:center; gap:2px;
+            padding:6px 8px; border:none; background:none; cursor:pointer;
+            color:var(--text-muted); font-size:0.6rem; font-weight:600;
+            min-width:48px;
+        }
+        .tab-item.active { color:var(--primary); }
+        .card {
+            background:var(--bg-card); border-radius:var(--radius-lg);
+            padding:16px; margin-bottom:12px; box-shadow:var(--shadow-sm);
+        }
+        .card-title { font-size:0.9rem; font-weight:700; color:var(--primary); margin-bottom:10px; }
+        .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+        .stat-card {
+            background:var(--bg-card); border-radius:var(--radius-md);
+            padding:12px; text-align:center; border:1px solid var(--border-light);
+        }
+        .stat-value { font-size:1.5rem; font-weight:800; color:var(--primary); }
+        .stat-label { font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; }
+        .btn {
+            display:flex; align-items:center; justify-content:center; gap:6px;
+            padding:10px 16px; border-radius:var(--radius-sm);
+            font-weight:700; font-size:0.8rem; cursor:pointer; border:none; width:100%;
+        }
+        .btn-primary { background:var(--primary); color:white; }
+        .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
+        .form-group { margin-bottom:10px; }
+        .form-label { display:block; font-size:0.75rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px; }
+        .form-input, .form-select {
+            width:100%; padding:10px 12px;
+            border:2px solid var(--border-light); border-radius:var(--radius-sm);
+            font-size:0.85rem; font-family:var(--font-sans);
+        }
+        .form-input:focus { border-color:var(--primary); outline:none; }
+        .hidden { display:none !important; }
+        .text-center { text-align:center; }
+        .mt-8 { margin-top:8px; }
+        .mt-16 { margin-top:16px; }
+        .mb-16 { margin-bottom:16px; }
+        .empty-state { text-align:center; padding:30px 16px; color:var(--text-muted); font-size:0.85rem; }
+        .progress-bar { background:#e5e7eb; border-radius:10px; height:8px; overflow:hidden; margin:6px 0; }
+        .progress-fill { background:var(--primary); height:100%; border-radius:10px; transition:width 0.5s; }
+        .badge { display:inline-block; background:var(--primary); color:white; padding:3px 8px; border-radius:12px; font-size:0.65rem; font-weight:600; margin:2px; }
+        .goal-card { background:rgba(0,74,153,0.05); border:1px solid var(--primary); border-radius:var(--radius-md); padding:10px; margin-bottom:10px; }
+        .ai-card { background:rgba(139,92,246,0.1); border:1px solid var(--accent-purple); border-radius:var(--radius-md); padding:10px; margin-bottom:10px; }
+        .list-item {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:10px 12px; background:white; border-radius:var(--radius-sm);
+            margin-bottom:6px; border-left:3px solid var(--primary);
+        }
+        .list-item.green { border-left-color:var(--accent-green); }
+        .list-item.yellow { border-left-color:var(--accent-yellow); }
+        .list-item.red { border-left-color:var(--accent-red); }
+        .list-item.purple { border-left-color:var(--accent-purple); }
+        .btn-icon { background:none; border:none; cursor:pointer; font-size:1rem; }
     </style>
 </head>
 <body>
     
     <!-- HEADER -->
     <header class="app-header">
-        <div class="logo">
-            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-            Flash Lab Uni
-        </div>
-        <div class="header-icon" onclick="openSettings()">
-            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.21.08-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
+        <div class="logo">📊 Flash Lab Uni</div>
+        <div class="header-actions">
+            <button class="header-btn" onclick="resetTutto()" title="Reset completo">🔄</button>
+            <button class="header-btn" onclick="openSettings()" title="Impostazioni">⚙️</button>
         </div>
     </header>
     
     <main class="main-content">
         
         <!-- DASHBOARD -->
-        <div id="page-dashboard" class="page active">
+        <div id="page-dashboard" class="page">
             <div class="card">
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-value" id="stat-media">—</div><div class="stat-label">Media</div></div>
@@ -130,23 +154,31 @@
                     <div class="stat-card"><div class="stat-value" id="stat-voto-base">—</div><div class="stat-label">Voto Base</div></div>
                 </div>
                 
-                <!-- OBIETTIVO -->
-                <div class="goal-card" id="obiettivo-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <strong style="font-size:0.85rem;">🎯 Obiettivo: Media <span id="obiettivo-valore">28</span></strong>
-                        <button onclick="cambiaObiettivo()" style="background:none; border:none; cursor:pointer; font-size:0.8rem;">✏️</button>
+                <!-- PROGRESSO LAUREA -->
+                <div class="goal-card">
+                    <strong style="font-size:0.8rem;">🎓 Progresso Laurea</strong>
+                    <div class="progress-bar"><div class="progress-fill" id="progresso-laurea" style="width:0%;"></div></div>
+                    <p style="font-size:0.7rem; color:var(--text-muted);" id="progresso-testo">Configura i CFU totali nelle impostazioni</p>
+                </div>
+                
+                <!-- OBIETTIVO MEDIA -->
+                <div class="goal-card">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong style="font-size:0.8rem;">🎯 Obiettivo: Media <span id="obiettivo-valore">28</span></strong>
+                        <button onclick="cambiaObiettivo()" style="background:none; border:none; cursor:pointer;">✏️</button>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="obiettivo-progresso" style="width:0%;"></div>
-                    </div>
-                    <p style="font-size:0.75rem; color:var(--text-muted);" id="obiettivo-messaggio">Inserisci esami per vedere il progresso</p>
+                    <div class="progress-bar"><div class="progress-fill" id="obiettivo-progresso" style="width:0%;"></div></div>
+                    <p style="font-size:0.7rem; color:var(--text-muted);" id="obiettivo-messaggio">Inserisci esami</p>
                 </div>
                 
                 <!-- AI TUTOR -->
-                <div style="background:rgba(139,92,246,0.1); border:1px solid #8b5cf6; border-radius:12px; padding:12px; margin-bottom:12px;">
-                    <strong style="font-size:0.85rem;">🤖 AI Tutor:</strong>
-                    <p style="font-size:0.8rem; margin-top:4px;" id="ai-tutor">Inserisci esami per ricevere consigli!</p>
+                <div class="ai-card">
+                    <strong style="font-size:0.8rem;">🤖 AI Tutor</strong>
+                    <p style="font-size:0.75rem; margin-top:4px;" id="ai-tutor">Inserisci esami per ricevere consigli!</p>
                 </div>
+                
+                <!-- STATISTICHE MOTIVAZIONALI -->
+                <div id="stats-motivazionali" style="margin-top:10px;"></div>
             </div>
             
             <div class="card">
@@ -160,25 +192,32 @@
         <div id="page-andamento" class="page hidden">
             <div class="card">
                 <div class="card-title">📈 Andamento Carriera</div>
-                <div class="chart-container" id="chart-andamento" style="display:flex; gap:4px; overflow-x:auto; padding:16px 0;"></div>
+                <div id="chart-andamento" style="display:flex; gap:4px; overflow-x:auto; padding:16px 0; align-items:flex-end;"></div>
             </div>
         </div>
         
         <!-- PREVISIONI -->
         <div id="page-previsioni" class="page hidden">
             <div class="card">
-                <div class="card-title">🔮 Previsioni e Laurea</div>
+                <div class="card-title">🔮 Previsioni Media</div>
                 <div class="form-group"><label class="form-label">Voto previsto</label><input type="number" id="prev-voto" class="form-input" placeholder="28" min="18" max="33"></div>
                 <div class="form-group"><label class="form-label">CFU prossimo esame</label><input type="number" id="prev-cfu" class="form-input" placeholder="12" min="1" max="30"></div>
-                <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola Previsione</button>
-                <div id="previsione-risultato" class="mt-16 text-center" style="font-size:1.1rem; font-weight:700;"></div>
-                
-                <hr style="margin:20px 0; border:none; border-top:1px solid #e5e7eb;">
-                
-                <div class="form-group"><label class="form-label">🎯 Punti tesi (0-8)</label><input type="number" id="laurea-tesi" class="form-input" value="5" min="0" max="8"></div>
-                <div class="form-group"><label class="form-label">🏆 Bonus (0-10)</label><input type="number" id="laurea-bonus" class="form-input" value="0" min="0" max="10"></div>
-                <button class="btn btn-primary" onclick="calcolaVotoLaurea()">🎓 Calcola Voto Laurea</button>
+                <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola</button>
+                <div id="previsione-risultato" class="mt-16 text-center" style="font-size:1rem; font-weight:700;"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">🎓 Calcolo Voto Laurea</div>
+                <div class="form-group"><label class="form-label">Punti tesi (0-8)</label><input type="number" id="laurea-tesi" class="form-input" value="5" min="0" max="8"></div>
+                <div class="form-group"><label class="form-label">Bonus (0-10)</label><input type="number" id="laurea-bonus" class="form-input" value="0" min="0" max="10"></div>
+                <button class="btn btn-primary" onclick="calcolaVotoLaurea()">Calcola Voto</button>
                 <div id="laurea-risultato" class="mt-16 text-center" style="font-size:1.5rem; font-weight:800;"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">🔮 Cosa mi serve per il 110?</div>
+                <button class="btn btn-primary" onclick="calcolaPer110()">Calcola</button>
+                <div id="per110-risultato" class="mt-16 text-center" style="font-size:0.9rem;"></div>
             </div>
         </div>
         
@@ -196,7 +235,7 @@
         <div id="page-orario" class="page hidden">
             <div class="card">
                 <div class="card-title">📅 Orario Settimanale</div>
-                <div id="filtri-giorni" style="display:flex; gap:8px; overflow-x:auto; margin-bottom:12px;"></div>
+                <div id="filtri-giorni" style="display:flex; gap:4px; overflow-x:auto; margin-bottom:10px;"></div>
                 <div id="lista-orario"></div>
                 <button class="btn btn-primary" onclick="showAddOrario()">➕ Aggiungi Impegno</button>
             </div>
@@ -216,24 +255,26 @@
     
     <!-- TAB BAR -->
     <nav class="tab-bar">
-        <button class="tab-item active" onclick="navigateTo('dashboard')" data-tab="dashboard">🏠 Home</button>
-        <button class="tab-item" onclick="navigateTo('andamento')" data-tab="andamento">📈 Andamento</button>
-        <button class="tab-item" onclick="navigateTo('previsioni')" data-tab="previsioni">🔮 Previsioni</button>
-        <button class="tab-item" onclick="navigateTo('tasse')" data-tab="tasse">💰 Tasse</button>
-        <button class="tab-item" onclick="navigateTo('orario')" data-tab="orario">📅 Orario</button>
-        <button class="tab-item" onclick="navigateTo('domande')" data-tab="domande">❓ Domande</button>
+        <button class="tab-item active" onclick="navigateTo('dashboard')" data-tab="dashboard">🏠<br>Home</button>
+        <button class="tab-item" onclick="navigateTo('andamento')" data-tab="andamento">📈<br>Trend</button>
+        <button class="tab-item" onclick="navigateTo('previsioni')" data-tab="previsioni">🔮<br>Previsioni</button>
+        <button class="tab-item" onclick="navigateTo('tasse')" data-tab="tasse">💰<br>Tasse</button>
+        <button class="tab-item" onclick="navigateTo('orario')" data-tab="orario">📅<br>Orario</button>
+        <button class="tab-item" onclick="navigateTo('domande')" data-tab="domande">❓<br>FAQ</button>
     </nav>
     
     <script>
-        // ============ DATA LAYER ============
+        // ============ DATA ============
         let esami = JSON.parse(localStorage.getItem('flashlab_esami') || '[]');
         let tasse = JSON.parse(localStorage.getItem('flashlab_tasse') || '[]');
         let orario = JSON.parse(localStorage.getItem('flashlab_orario') || '[]');
         let domande = JSON.parse(localStorage.getItem('flashlab_domande') || '[]');
         let obiettivoMedia = parseInt(localStorage.getItem('flashlab_obiettivo') || '28');
+        let cfuTotaliCorso = parseInt(localStorage.getItem('flashlab_cfu_totali') || '180');
         
-        const PAGES = ['dashboard', 'andamento', 'previsioni', 'tasse', 'orario', 'domande'];
-        let currentPage = 'dashboard';
+        const PAGES = ['dashboard','andamento','previsioni','tasse','orario','domande'];
+        let giornoSel = 'Lunedì';
+        const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
         
         // ============ NAVIGAZIONE ============
         function navigateTo(page) {
@@ -241,7 +282,6 @@
             document.getElementById('page-' + page).classList.remove('hidden');
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             document.querySelector(`[data-tab="${page}"]`).classList.add('active');
-            currentPage = page;
             updatePage(page);
         }
         
@@ -256,13 +296,11 @@
         // ============ CALCOLI ============
         function calcolaMediaPonderata() {
             if (esami.length === 0) return 0;
-            const cfu = esami.reduce((s, e) => s + e.cfu, 0);
-            const somma = esami.reduce((s, e) => s + (e.voto * e.cfu), 0);
+            const cfu = esami.reduce((s,e) => s + e.cfu, 0);
+            const somma = esami.reduce((s,e) => s + (e.voto * e.cfu), 0);
             return cfu > 0 ? somma / cfu : 0;
         }
-        
-        function calcolaCFU() { return esami.reduce((s, e) => s + e.cfu, 0); }
-        
+        function calcolaCFU() { return esami.reduce((s,e) => s + e.cfu, 0); }
         function calcolaVotoBase() {
             const media = calcolaMediaPonderata();
             return media > 0 ? (media * 110) / 30 : 0;
@@ -272,21 +310,35 @@
         function getAITutor() {
             const media = calcolaMediaPonderata();
             if (media === 0) return 'Inserisci i tuoi esami per ricevere consigli personalizzati! 📚';
-            if (media < 24) return '📚 Concentrati sulle basi: ripassa le materie fondamentali e chiedi aiuto ai tutor.';
-            if (media < 26) return '🎯 Sei sulla buona strada! Punta a migliorare gli esami con più CFU.';
-            if (media < 28) return '🔥 Ottimo lavoro! Puoi puntare al 110 con un po\' di impegno in più.';
-            if (media < 29.5) return '🏆 Eccellente! Sei da lode! Mantieni questo ritmo!';
-            return '👑 Straordinario! Media da 110 e lode garantita!';
+            if (media < 24) return '📚 Concentrati sulle basi e chiedi aiuto ai tutor.';
+            if (media < 26) return '🎯 Buon lavoro! Migliora gli esami con più CFU.';
+            if (media < 28) return '🔥 Ottimo! Puoi puntare al 110!';
+            if (media < 29.5) return '🏆 Eccellente! Sei da lode!';
+            return '👑 Straordinario! 110 e lode garantito!';
         }
         
-        // ============ OBIETTIVO ============
-        function cambiaObiettivo() {
-            const nuovo = prompt('🎯 Inserisci la media obiettivo (es. 28):', obiettivoMedia);
-            if (nuovo && !isNaN(nuovo) && nuovo >= 18 && nuovo <= 33) {
-                obiettivoMedia = parseInt(nuovo);
-                localStorage.setItem('flashlab_obiettivo', obiettivoMedia);
-                renderDashboard();
-            }
+        // ============ STATISTICHE MOTIVAZIONALI ============
+        function renderStatsMotivazionali() {
+            const media = calcolaMediaPonderata();
+            const cfu = calcolaCFU();
+            const votoMax = esami.length > 0 ? Math.max(...esami.map(e => e.voto)) : 0;
+            const votoMin = esami.length > 0 ? Math.min(...esami.map(e => e.voto)) : 0;
+            const esamiConLode = esami.filter(e => e.voto >= 30).length;
+            const progressoLaurea = cfuTotaliCorso > 0 ? (cfu / cfuTotaliCorso) * 100 : 0;
+            
+            document.getElementById('progresso-laurea').style.width = Math.min(progressoLaurea, 100) + '%';
+            document.getElementById('progresso-testo').textContent = 
+                esami.length > 0 ? `Hai completato il ${progressoLaurea.toFixed(0)}% del percorso (${cfu}/${cfuTotaliCorsi} CFU)` : 
+                'Imposta i CFU totali nelle impostazioni';
+            
+            const statsHTML = `
+                ${votoMax > 0 ? `<span class="badge">🏆 Max: ${votoMax}</span>` : ''}
+                ${votoMin > 0 ? `<span class="badge">📉 Min: ${votoMin}</span>` : ''}
+                ${esamiConLode > 0 ? `<span class="badge">🌟 Lodi: ${esamiConLode}</span>` : ''}
+                ${media > 0 ? `<span class="badge">📊 Media: ${media.toFixed(1)}</span>` : ''}
+            `;
+            
+            document.getElementById('stats-motivazionali').innerHTML = statsHTML;
         }
         
         // ============ DASHBOARD ============
@@ -302,51 +354,57 @@
             
             // Obiettivo
             document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
-            const progresso = media > 0 ? Math.min((media / obiettivoMedia) * 100, 100) : 0;
-            document.getElementById('obiettivo-progresso').style.width = progresso + '%';
+            const progObiettivo = media > 0 ? Math.min((media / obiettivoMedia) * 100, 100) : 0;
+            document.getElementById('obiettivo-progresso').style.width = progObiettivo + '%';
             document.getElementById('obiettivo-messaggio').textContent = 
-                media > 0 ? `Progresso: ${progresso.toFixed(0)}% verso l'obiettivo` : 'Inserisci esami per vedere il progresso';
+                media > 0 ? `${progObiettivo.toFixed(0)}% verso l'obiettivo` : 'Inserisci esami';
             
             // AI Tutor
             document.getElementById('ai-tutor').textContent = getAITutor();
             
+            // Stats motivazionali
+            renderStatsMotivazionali();
+            
             // Lista esami
             const lista = document.getElementById('lista-esami-dashboard');
             if (esami.length === 0) {
-                lista.innerHTML = '<div class="empty-state"><p>Nessun esame inserito</p></div>';
+                lista.innerHTML = '<div class="empty-state">Nessun esame inserito</div>';
                 return;
             }
             
-            lista.innerHTML = [...esami].sort((a,b) => b.data.localeCompare(a.data)).map(e => `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-left:3px solid ${e.voto >= 28 ? 'green' : e.voto >= 24 ? 'orange' : 'red'}; margin-bottom:8px; background:white; border-radius:8px;">
-                    <div><strong>${e.nome}</strong><br><small>CFU: ${e.cfu} · ${e.data}</small></div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <strong>${e.voto}</strong>
-                        <button onclick="rimuoviEsame(${e.id})" style="background:none; border:none; cursor:pointer;">🗑️</button>
+            lista.innerHTML = [...esami].sort((a,b) => b.data.localeCompare(a.data)).map(e => {
+                const colorClass = e.voto >= 28 ? 'green' : e.voto >= 24 ? 'yellow' : 'red';
+                return `
+                    <div class="list-item ${colorClass}">
+                        <div><strong>${e.nome}</strong><br><small>CFU: ${e.cfu} · ${e.data}</small></div>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <strong>${e.voto}</strong>
+                            <button class="btn-icon" onclick="rimuoviEsame(${e.id})">🗑️</button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
         // ============ CHART ============
         function renderChart() {
             const container = document.getElementById('chart-andamento');
             if (esami.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>Inserisci esami per vedere il grafico</p></div>';
+                container.innerHTML = '<div class="empty-state">Inserisci esami per vedere il grafico</div>';
                 return;
             }
-            
             const sorted = [...esami].sort((a,b) => a.data.localeCompare(b.data));
             container.innerHTML = sorted.map(e => {
-                const h = ((e.voto - 15) / 18) * 100;
-                return `<div style="text-align:center; min-width:40px;">
-                    <div style="background:${e.voto >= 28 ? 'green' : e.voto >= 24 ? 'orange' : 'red'}; height:${h}px; border-radius:4px 4px 0 0;"></div>
-                    <small>${e.nome.substring(0,5)}</small>
+                const h = ((e.voto - 15) / 18) * 120;
+                const color = e.voto >= 28 ? '#22c55e' : e.voto >= 24 ? '#f59e0b' : '#ef4444';
+                return `<div style="text-align:center; min-width:36px;">
+                    <div style="background:${color}; height:${h}px; border-radius:4px 4px 0 0;"></div>
+                    <small style="font-size:0.6rem;">${e.nome.substring(0,5)}</small>
                 </div>`;
             }).join('');
         }
         
-        // ============ PREVISIONI E LAUREA ============
+        // ============ PREVISIONI ============
         function calcolaPrevisione() {
             const voto = parseInt(document.getElementById('prev-voto').value);
             const cfu = parseInt(document.getElementById('prev-cfu').value);
@@ -360,22 +418,27 @@
             
             document.getElementById('previsione-risultato').innerHTML = 
                 `Media attuale: ${mediaAtt.toFixed(2)}<br>Media prevista: <strong>${nuovaMedia.toFixed(2)}</strong><br>
-                <span style="color:${diff >= 0 ? 'green' : 'red'}">${diff >= 0 ? '↑' : '↓'} ${Math.abs(diff).toFixed(2)} punti</span>`;
+                <span style="color:${diff >= 0 ? 'green' : 'red'}">${diff >= 0 ? '↑' : '↓'} ${Math.abs(diff).toFixed(2)}</span>`;
         }
         
         function calcolaVotoLaurea() {
             const tesi = parseInt(document.getElementById('laurea-tesi').value) || 0;
             const bonus = parseInt(document.getElementById('laurea-bonus').value) || 0;
             const votoBase = calcolaVotoBase();
-            
-            if (votoBase === 0) {
-                document.getElementById('laurea-risultato').textContent = 'Inserisci esami prima';
-                return;
-            }
-            
+            if (votoBase === 0) { alert('Inserisci esami prima'); return; }
             const finale = Math.min(votoBase + tesi + bonus, 110);
             document.getElementById('laurea-risultato').innerHTML = 
-                `🎓 Voto finale: <span style="color:#004a99;">${finale.toFixed(1)}</span>${finale >= 110 ? ' 🎉 LODE!' : ''}`;
+                `🎓 <span style="color:#004a99;">${finale.toFixed(1)}</span>${finale >= 110 ? ' 🎉 LODE!' : ''}`;
+        }
+        
+        function calcolaPer110() {
+            const votoBase = calcolaVotoBase();
+            if (votoBase === 0) { alert('Inserisci esami prima'); return; }
+            const necessari = 110 - votoBase;
+            document.getElementById('per110-risultato').innerHTML = 
+                necessari <= 0 ? '✅ Hai già la media per il 110!' :
+                `Ti servono <strong>${necessari.toFixed(1)}</strong> punti tra tesi (max 8) e bonus (max 10).<br>
+                ${necessari <= 18 ? '✅ Raggiungibile!' : '⚠️ Difficile ma possibile!'}`;
         }
         
         // ============ ESAMI ============
@@ -384,9 +447,7 @@
             const voto = parseInt(document.getElementById('esame-voto').value);
             const cfu = parseInt(document.getElementById('esame-cfu').value);
             const data = document.getElementById('esame-data').value || new Date().toISOString().split('T')[0];
-            
             if (!nome || !voto || !cfu) { alert('Compila tutti i campi'); return; }
-            
             esami.push({ id: Date.now(), nome, voto, cfu, data });
             localStorage.setItem('flashlab_esami', JSON.stringify(esami));
             closeModal();
@@ -407,49 +468,42 @@
         function renderTasse() {
             const lista = document.getElementById('lista-tasse');
             const prossima = document.getElementById('prossima-scadenza');
-            
             if (tasse.length === 0) {
-                lista.innerHTML = '<div class="empty-state"><p>Nessuna tassa</p></div>';
+                lista.innerHTML = '<div class="empty-state">Nessuna tassa</div>';
                 prossima.innerHTML = '';
                 return;
             }
-            
             const nonPagate = tasse.filter(t => !t.pagata).sort((a,b) => a.scadenza.localeCompare(b.scadenza));
             if (nonPagate.length > 0) {
                 const p = nonPagate[0];
-                prossima.innerHTML = `<div style="background:rgba(245,158,11,0.1); padding:12px; border-radius:8px; text-align:center;">
-                    <strong>⚠️ Prossima scadenza:</strong><br>${p.descrizione} · €${p.importo} · ${p.scadenza}</div>`;
+                prossima.innerHTML = `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:8px; text-align:center;"><strong>⚠️ ${p.descrizione}</strong><br>€${p.importo} · ${p.scadenza}</div>`;
             } else {
                 prossima.innerHTML = '<div class="text-center" style="color:green;">✅ Tutte pagate!</div>';
             }
-            
             lista.innerHTML = tasse.map(t => `
-                <div style="display:flex; justify-content:space-between; padding:12px; border-left:3px solid ${t.pagata ? 'green' : 'orange'}; margin-bottom:8px; background:white; border-radius:8px;">
+                <div class="list-item ${t.pagata ? 'green' : 'yellow'}">
                     <div><strong>${t.descrizione}</strong><br><small>€${t.importo} · ${t.scadenza}</small></div>
-                    <div style="display:flex; gap:8px;">
-                        <button onclick="toggleTassa(${t.id})" style="background:none; border:none; cursor:pointer;">${t.pagata ? '✅' : '⬜'}</button>
-                        <button onclick="rimuoviTassa(${t.id})" style="background:none; border:none; cursor:pointer;">🗑️</button>
+                    <div style="display:flex; gap:4px;">
+                        <button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button>
+                        <button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button>
                     </div>
                 </div>
             `).join('');
         }
         
         // ============ ORARIO ============
-        const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
-        let giornoSel = GIORNI[0];
-        
         function renderOrario() {
             document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => 
-                `<button onclick="selezionaGiorno('${g}')" style="padding:6px 12px; border-radius:20px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'white'}; color:${g === giornoSel ? 'white' : '#333'}; cursor:pointer; font-size:0.7rem;">${g.substring(0,3)}</button>`
+                `<button onclick="selezionaGiorno('${g}')" style="padding:6px 10px; border-radius:16px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'white'}; color:${g === giornoSel ? 'white' : '#333'}; cursor:pointer; font-size:0.65rem;">${g.substring(0,3)}</button>`
             ).join('');
             
             const impegni = orario.filter(o => o.giorno === giornoSel);
             document.getElementById('lista-orario').innerHTML = impegni.length === 0 ? 
-                `<div class="empty-state"><p>Nessun impegno per ${giornoSel}</p></div>` :
+                `<div class="empty-state">Nessun impegno per ${giornoSel}</div>` :
                 impegni.map(o => `
-                    <div style="display:flex; justify-content:space-between; padding:12px; margin-bottom:8px; background:white; border-radius:8px;">
-                        <div><strong>${o.materia}</strong><br><small>${o.ora} · ${o.tipo}</small></div>
-                        <button onclick="rimuoviOrario(${o.id})" style="background:none; border:none;">🗑️</button>
+                    <div class="list-item ${o.tipo === 'universitario' ? '' : 'purple'}">
+                        <div><strong>${o.materia}</strong><br><small>${o.ora}${o.data ? ' · ' + o.data : ''} · ${o.tipo}</small></div>
+                        <button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button>
                     </div>
                 `).join('');
         }
@@ -458,35 +512,67 @@
         function renderDomande() {
             const lista = document.getElementById('lista-domande');
             if (domande.length === 0) {
-                lista.innerHTML = '<div class="empty-state"><p>Nessuna domanda</p></div>';
+                lista.innerHTML = '<div class="empty-state">Nessuna domanda</div>';
                 return;
             }
-            
             const materie = {};
             domande.forEach(d => { if (!materie[d.materia]) materie[d.materia] = []; materie[d.materia].push(d); });
-            
             lista.innerHTML = Object.keys(materie).map(m => `
-                <div style="margin-bottom:12px;">
+                <div style="margin-bottom:10px;">
                     <strong style="color:#004a99;">${m}</strong>
-                    ${materie[m].map(d => `<p style="font-size:0.85rem; padding:8px; background:white; border-radius:8px; margin:4px 0;">${d.testo}</p>`).join('')}
+                    ${materie[m].map(d => `<p style="font-size:0.8rem; padding:8px; background:white; border-radius:6px; margin:4px 0;">${d.testo}</p>`).join('')}
                 </div>
             `).join('');
+        }
+        
+        // ============ OBIETTIVO ============
+        function cambiaObiettivo() {
+            const nuovo = prompt('🎯 Media obiettivo (18-33):', obiettivoMedia);
+            if (nuovo && !isNaN(nuovo) && nuovo >= 18 && nuovo <= 33) {
+                obiettivoMedia = parseInt(nuovo);
+                localStorage.setItem('flashlab_obiettivo', obiettivoMedia);
+                renderDashboard();
+            }
+        }
+        
+        // ============ RESET ============
+        function resetTutto() {
+            if (confirm('⚠️ Cancellare TUTTI i dati?\n\nEsami, tasse, orario, domande, obiettivo.\n\nQuesta operazione non è reversibile!')) {
+                if (confirm('🔴 CONFERMA FINALE: Sicuro?')) {
+                    localStorage.removeItem('flashlab_esami');
+                    localStorage.removeItem('flashlab_tasse');
+                    localStorage.removeItem('flashlab_orario');
+                    localStorage.removeItem('flashlab_domande');
+                    localStorage.removeItem('flashlab_obiettivo');
+                    location.reload();
+                }
+            }
+        }
+        
+        // ============ SETTINGS ============
+        function openSettings() {
+            const nuovoCFU = prompt('📊 CFU totali del tuo corso di laurea:', cfuTotaliCorso);
+            if (nuovoCFU && !isNaN(nuovoCFU) && nuovoCFU > 0) {
+                cfuTotaliCorso = parseInt(nuovoCFU);
+                localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso);
+                renderDashboard();
+            }
         }
         
         // ============ MODALS ============
         function showAddExam() {
             document.body.insertAdjacentHTML('beforeend', `
                 <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
-                        <h3 style="margin-bottom:16px;">Aggiungi Esame</h3>
+                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px; max-height:90vh; overflow-y:auto;">
+                        <h3 style="margin-bottom:12px;">Aggiungi Esame</h3>
                         <input id="esame-nome" class="form-input" placeholder="Nome esame" style="margin-bottom:8px;">
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
                             <input id="esame-voto" class="form-input" type="number" placeholder="Voto" min="18" max="33">
                             <input id="esame-cfu" class="form-input" type="number" placeholder="CFU" min="1" max="30">
                         </div>
-                        <input id="esame-data" class="form-input" type="date" style="margin-bottom:16px;">
+                        <input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;">
                         <button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button>
-                        <button class="btn btn-outline" onclick="document.getElementById('modal').remove()" style="margin-top:8px;">Annulla</button>
+                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
                     </div>
                 </div>
             `);
@@ -495,13 +581,13 @@
         function showAddTassa() {
             document.body.insertAdjacentHTML('beforeend', `
                 <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
-                        <h3 style="margin-bottom:16px;">Aggiungi Tassa</h3>
+                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px;">
+                        <h3 style="margin-bottom:12px;">Aggiungi Tassa</h3>
                         <input id="tassa-descrizione" class="form-input" placeholder="Descrizione" style="margin-bottom:8px;">
                         <input id="tassa-importo" class="form-input" type="number" placeholder="Importo €" style="margin-bottom:8px;">
-                        <input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:16px;">
+                        <input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;">
                         <button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button>
-                        <button class="btn btn-outline" onclick="document.getElementById('modal').remove()" style="margin-top:8px;">Annulla</button>
+                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
                     </div>
                 </div>
             `);
@@ -510,16 +596,17 @@
         function showAddOrario() {
             document.body.insertAdjacentHTML('beforeend', `
                 <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
-                        <h3 style="margin-bottom:16px;">Aggiungi Impegno</h3>
-                        <input id="orario-materia" class="form-input" placeholder="Materia" style="margin-bottom:8px;">
+                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px; max-height:90vh; overflow-y:auto;">
+                        <h3 style="margin-bottom:12px;">Aggiungi Impegno</h3>
+                        <input id="orario-materia" class="form-input" placeholder="Materia/Attività" style="margin-bottom:8px;">
                         <input id="orario-ora" class="form-input" type="time" style="margin-bottom:8px;">
-                        <select id="orario-tipo" class="form-input" style="margin-bottom:16px;">
+                        <input id="orario-data" class="form-input" type="date" style="margin-bottom:8px;">
+                        <select id="orario-tipo" class="form-input" style="margin-bottom:12px;">
                             <option value="universitario">Universitario</option>
                             <option value="extra">Extra</option>
                         </select>
                         <button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button>
-                        <button class="btn btn-outline" onclick="document.getElementById('modal').remove()" style="margin-top:8px;">Annulla</button>
+                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
                     </div>
                 </div>
             `);
@@ -530,7 +617,7 @@
             if (modal) modal.remove();
         }
         
-        // ============ ALTRE FUNZIONI ============
+        // ============ FUNZIONI AGGIUNTIVE ============
         function aggiungiTassa() {
             const descrizione = document.getElementById('tassa-descrizione').value.trim();
             const importo = document.getElementById('tassa-importo').value;
@@ -554,9 +641,10 @@
         function aggiungiOrario() {
             const materia = document.getElementById('orario-materia').value.trim();
             const ora = document.getElementById('orario-ora').value;
+            const data = document.getElementById('orario-data').value;
             const tipo = document.getElementById('orario-tipo').value;
             if (!materia || !ora) { alert('Compila i campi'); return; }
-            orario.push({ id: Date.now(), materia, ora, giorno: giornoSel, tipo });
+            orario.push({ id: Date.now(), materia, ora, data, giorno: giornoSel, tipo });
             localStorage.setItem('flashlab_orario', JSON.stringify(orario));
             closeModal();
             renderOrario();
@@ -579,22 +667,16 @@
             renderDomande();
         }
         
-        function openSettings() {
-            alert('⚙️ Flash Lab Uni v1.0\nby Tesi Flash\n\n🎯 Funzionalità:\n- Media ponderata\n- Voto laurea\n- AI Tutor\n- Obiettivo personalizzato');
-        }
-        
         // ============ INIT ============
         function initApp() {
             navigateTo('dashboard');
             document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
         }
-        
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
-    <!-- ============ PWA INSTALLAZIONE ============ -->
+    <!-- PWA SERVICE WORKER -->
     <script>
-        // [CODICE PWA IDENTICO A QUELLO CHE HAI GIÀ - LO MANTENIAMO]
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -602,18 +684,16 @@
                     .catch(err => console.error('❌ SW fallito'));
             });
         }
-        
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             showInstallButton();
         });
-        
         function showInstallButton() {
             const btn = document.createElement('button');
             btn.textContent = '📱 Installa App';
-            btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:14px 24px; border-radius:30px; font-weight:700; cursor:pointer; z-index:2000;';
+            btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:700; cursor:pointer; z-index:2000;';
             btn.addEventListener('click', async () => {
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
