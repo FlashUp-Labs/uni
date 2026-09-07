@@ -1262,40 +1262,201 @@
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
-    <!-- ============================================================
-         PWA - SERVICE WORKER
-         ============================================================ -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((reg) => console.log('✅ SW registrato:', reg.scope))
-                    .catch((err) => console.error('❌ SW fallito:', err));
-            });
+<!-- ============================================================
+     PWA - INSTALLAZIONE UNIVERSALE (iOS + Android + Desktop)
+     ============================================================ -->
+<script>
+    // ============ RILEVA DISPOSITIVO ============
+    function detectDevice() {
+        const ua = navigator.userAgent.toLowerCase();
+        const isIOS = /iphone|ipad|ipod/.test(ua);
+        const isAndroid = /android/.test(ua);
+        const isDesktop = !isIOS && !isAndroid;
+        return { isIOS, isAndroid, isDesktop };
+    }
+
+    // ============ CONTROLLA SE GIÀ INSTALLATA ============
+    function checkIfInstalled() {
+        if (window.navigator.standalone === true) return true;
+        if (window.matchMedia('(display-mode: standalone)').matches) return true;
+        return false;
+    }
+
+    let deferredPrompt;
+    let isAppInstalled = checkIfInstalled();
+    const device = detectDevice();
+
+    // ============ ANDROID/DESKTOP: Prompt nativo ============
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('📱 Prompt installazione disponibile');
+        
+        if (!isAppInstalled) {
+            showInstallButton();
+        }
+    });
+
+    // ============ APP INSTALLATA ============
+    window.addEventListener('appinstalled', () => {
+        console.log('🎉 App installata!');
+        isAppInstalled = true;
+        deferredPrompt = null;
+        document.querySelectorAll('.install-btn').forEach(btn => btn.remove());
+    });
+
+    // ============ MOSTRA BOTTONE INSTALLAZIONE ============
+    function showInstallButton() {
+        if (isAppInstalled) return;
+        
+        document.querySelectorAll('.install-btn').forEach(btn => btn.remove());
+        
+        const btn = document.createElement('button');
+        btn.className = 'install-btn';
+        
+        // Testo diverso per iOS
+        if (device.isIOS) {
+            btn.textContent = '📱 Aggiungi alla Home';
+        } else {
+            btn.textContent = '📱 Installa App';
         }
         
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
+        btn.style.cssText = `
+            position: fixed;
+            bottom: ${device.isIOS ? '20px' : '80px'};
+            left: 50%;
+            transform: translateX(-50%);
+            background: #004a99;
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 74, 153, 0.5);
+            z-index: 9999;
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            animation: installPulse 2s infinite;
+        `;
+        
+        btn.addEventListener('click', async (e) => {
             e.preventDefault();
-            deferredPrompt = e;
-            showInstallButton();
+            
+            if (device.isIOS) {
+                showIOSInstructions();
+                btn.remove();
+            } else if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const result = await deferredPrompt.userChoice;
+                console.log('📱 Scelta:', result.outcome);
+                deferredPrompt = null;
+                btn.remove();
+            } else {
+                showAndroidInstructions();
+                btn.remove();
+            }
         });
         
-        function showInstallButton() {
-            const btn = document.createElement('button');
-            btn.textContent = '📱 Installa App';
-            btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:14px 24px; border-radius:30px; font-weight:700; cursor:pointer; z-index:2000;';
-            btn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    await deferredPrompt.userChoice;
-                    deferredPrompt = null;
-                    btn.remove();
+        document.body.appendChild(btn);
+    }
+
+    // ============ ISTRUZIONI iOS ============
+    function showIOSInstructions() {
+        const isIPad = /ipad/.test(navigator.userAgent.toLowerCase());
+        const deviceName = isIPad ? 'iPad' : 'iPhone';
+        
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; border-radius: 20px; padding: 24px; max-width: 350px; width: 100%; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif;">
+                <div style="font-size: 3rem; margin-bottom: 12px;">📱</div>
+                <h3 style="color: #004a99; font-weight: 700; margin-bottom: 16px; font-size: 1.2rem;">Installa su ${deviceName}</h3>
+                
+                <div style="text-align: left; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">1</span>
+                        <span style="font-size: 0.9rem;">Tocca il pulsante <strong>Condividi</strong> (📤) in basso</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">2</span>
+                        <span style="font-size: 0.9rem;">Scorri verso il basso nel menu</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">3</span>
+                        <span style="font-size: 0.9rem;">Tocca <strong>"Aggiungi a Home"</strong> (🏠)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="background: #004a99; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">4</span>
+                        <span style="font-size: 0.9rem;">Tocca <strong>"Aggiungi"</strong> in alto a destra</span>
+                    </div>
+                </div>
+                
+                <button onclick="this.closest('div[style*=fixed]').remove()" style="background: #004a99; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.9rem;">
+                    Ho capito!
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+    }
+
+    // ============ ISTRUZIONI ANDROID ============
+    function showAndroidInstructions() {
+        alert('📱 Per installare:\n\n1. Apri il menu del browser (⋮)\n2. Tocca "Installa app" o "Aggiungi a schermata Home"');
+    }
+
+    // ============ REGISTRAZIONE SERVICE WORKER ============
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then((reg) => console.log('✅ SW registrato:', reg.scope))
+                .catch((err) => console.error('❌ SW fallito:', err));
+        });
+    }
+
+    // ============ AVVIO AUTOMATICO ============
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            if (!isAppInstalled) {
+                if (device.isIOS) {
+                    // Su iOS mostra sempre il bottone
+                    showInstallButton();
+                } else if (device.isAndroid && !deferredPrompt) {
+                    // Su Android mostra dopo 5 secondi se il prompt non è arrivato
+                    showInstallButton();
                 }
-            });
-            document.body.appendChild(btn);
-            setTimeout(() => { if (btn.parentNode) btn.remove(); }, 10000);
+            }
+        }, 3000);
+    });
+
+    // ============ ANIMAZIONE ============
+    const installStyle = document.createElement('style');
+    installStyle.textContent = `
+        @keyframes installPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
         }
-    </script>
+    `;
+    document.head.appendChild(installStyle);
+</script>
+    
 </body>
 </html>
