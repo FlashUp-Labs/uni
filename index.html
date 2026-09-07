@@ -651,26 +651,630 @@
     </style>
 </head>
 <body>
-    <!-- TUTTO IL RESTO DEL BODY È UGUALE -->
     
     <!-- ============================================================
-         PWA - REGISTRAZIONE SERVICE WORKER (UN SOLO SCRIPT!)
+         HEADER
+         ============================================================ -->
+    <header class="app-header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+            </svg>
+            Flash Lab Uni
+        </div>
+        <div class="header-icon" onclick="openSettings()" title="Impostazioni">
+            <svg viewBox="0 0 24 24">
+                <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.21.08-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/>
+            </svg>
+        </div>
+    </header>
+    
+    <!-- ============================================================
+         MAIN CONTENT - PAGES (SPA Navigation)
+         ============================================================ -->
+    <main class="main-content">
+        
+        <!-- ============ PAGE: DASHBOARD ============ -->
+        <div id="page-dashboard" class="page active">
+            <div class="card">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-media">—</div>
+                        <div class="stat-label">Media Ponderata</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-cfu">0</div>
+                        <div class="stat-label">CFU Acquisiti</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-esami">0</div>
+                        <div class="stat-label">Esami Sostenuti</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-voto-base">—</div>
+                        <div class="stat-label">Voto di Partenza</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                    I Miei Esami
+                </div>
+                <div id="lista-esami-dashboard"></div>
+                <button class="btn btn-primary" onclick="showAddExam()">
+                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Aggiungi Esame
+                </button>
+            </div>
+        </div>
+        
+        <!-- ============ PAGE: ANDAMENTO ============ -->
+        <div id="page-andamento" class="page hidden">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
+                    Andamento Carriera
+                </div>
+                <p class="card-desc">Come ogni voto ha influenzato la tua media nel tempo.</p>
+                <div class="chart-container" id="chart-andamento"></div>
+            </div>
+        </div>
+        
+        <!-- ============ PAGE: PREVISIONI ============ -->
+        <div id="page-previsioni" class="page hidden">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                    Previsioni Media
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Voto previsto</label>
+                    <input type="number" id="prev-voto" class="form-input" placeholder="es. 28" min="18" max="33">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CFU prossimo esame</label>
+                    <input type="number" id="prev-cfu" class="form-input" placeholder="es. 12" min="1" max="30">
+                </div>
+                <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola Previsione</button>
+                <div class="card-desc text-center mt-16" id="previsione-risultato" style="font-size:1.2rem; font-weight:700; color:var(--primary);">—</div>
+            </div>
+        </div>
+        
+        <!-- ============ PAGE: TASSE ============ -->
+        <div id="page-tasse" class="page hidden">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    Gestione Tasse
+                </div>
+                <div id="prossima-scadenza" class="mb-16"></div>
+                <div id="lista-tasse"></div>
+                <button class="btn btn-primary" onclick="showAddTassa()">
+                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Aggiungi Tassa
+                </button>
+            </div>
+        </div>
+        
+        <!-- ============ PAGE: ORARIO ============ -->
+        <div id="page-orario" class="page hidden">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    Orario Settimanale
+                </div>
+                <div class="filter-chips" id="filtri-giorni"></div>
+                <div id="lista-orario"></div>
+                <button class="btn btn-primary" onclick="showAddOrario()">Aggiungi Impegno</button>
+            </div>
+        </div>
+        
+        <!-- ============ PAGE: DOMANDE ============ -->
+        <div id="page-domande" class="page hidden">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                    Domande d'Esame
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Materia</label>
+                    <input type="text" id="domanda-materia" class="form-input" placeholder="es. Storia">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Domanda</label>
+                    <textarea id="domanda-testo" class="form-input" rows="3" placeholder="Scrivi la domanda..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="aggiungiDomanda()">Condividi Domanda</button>
+                <div id="lista-domande" class="mt-16"></div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- ============================================================
+         TAB BAR
+         ============================================================ -->
+    <nav class="tab-bar">
+        <button class="tab-item active" onclick="navigateTo('dashboard')" data-tab="dashboard">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Home
+        </button>
+        <button class="tab-item" onclick="navigateTo('andamento')" data-tab="andamento">
+            <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
+            Andamento
+        </button>
+        <button class="tab-item" onclick="navigateTo('previsioni')" data-tab="previsioni">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+            Previsioni
+        </button>
+        <button class="tab-item" onclick="navigateTo('tasse')" data-tab="tasse">
+            <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+            Tasse
+        </button>
+        <button class="tab-item" onclick="navigateTo('orario')" data-tab="orario">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            Orario
+        </button>
+        <button class="tab-item" onclick="navigateTo('domande')" data-tab="domande">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+            Domande
+        </button>
+    </nav>
+    
+    <!-- ============================================================
+         JAVASCRIPT - SPA LOGIC & DATA MANAGEMENT
+         ============================================================ -->
+    <script>
+        // ============ DATA LAYER ============
+        const STORAGE_KEYS = {
+            esami: 'flashlab_esami',
+            tasse: 'flashlab_tasse',
+            orario: 'flashlab_orario',
+            domande: 'flashlab_domande'
+        };
+        
+        let esami = JSON.parse(localStorage.getItem(STORAGE_KEYS.esami) || '[]');
+        let tasse = JSON.parse(localStorage.getItem(STORAGE_KEYS.tasse) || '[]');
+        let orario = JSON.parse(localStorage.getItem(STORAGE_KEYS.orario) || '[]');
+        let domande = JSON.parse(localStorage.getItem(STORAGE_KEYS.domande) || '[]');
+        
+        // ============ NAVIGATION ============
+        const PAGES = ['dashboard', 'andamento', 'previsioni', 'tasse', 'orario', 'domande'];
+        let currentPage = 'dashboard';
+        
+        function navigateTo(pageName) {
+            if (!PAGES.includes(pageName)) return;
+            currentPage = pageName;
+            
+            PAGES.forEach(page => {
+                const pageEl = document.getElementById('page-' + page);
+                if (pageEl) {
+                    pageEl.classList.add('hidden');
+                    pageEl.classList.remove('active');
+                }
+            });
+            
+            const targetPage = document.getElementById('page-' + pageName);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('active');
+            }
+            
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const activeTab = document.querySelector(`.tab-item[data-tab="${pageName}"]`);
+            if (activeTab) activeTab.classList.add('active');
+            
+            updatePageContent(pageName);
+        }
+        
+        function updatePageContent(pageName) {
+            switch(pageName) {
+                case 'dashboard': renderDashboard(); break;
+                case 'andamento': renderChart(); break;
+                case 'tasse': renderTasse(); break;
+                case 'orario': renderOrario(); break;
+                case 'domande': renderDomande(); break;
+            }
+        }
+        
+        // ============ ESAMI ============
+        function aggiungiEsame() {
+            const nome = document.getElementById('esame-nome').value.trim();
+            const voto = parseInt(document.getElementById('esame-voto').value);
+            const cfu = parseInt(document.getElementById('esame-cfu').value);
+            const data = document.getElementById('esame-data').value || new Date().toISOString().split('T')[0];
+            
+            if (!nome || !voto || !cfu) { alert('⚠️ Compila tutti i campi'); return; }
+            if (voto < 18 || voto > 33) { alert('⚠️ Voto tra 18 e 33'); return; }
+            
+            esami.push({ id: Date.now(), nome, voto, cfu, data });
+            localStorage.setItem(STORAGE_KEYS.esami, JSON.stringify(esami));
+            
+            document.getElementById('esame-nome').value = '';
+            document.getElementById('esame-voto').value = '';
+            document.getElementById('esame-cfu').value = '';
+            document.getElementById('esame-data').value = '';
+            
+            renderDashboard();
+            closeModal();
+            alert('✅ Esame aggiunto!');
+        }
+        
+        function rimuoviEsame(id) {
+            if (confirm('⚠️ Eliminare questo esame?')) {
+                esami = esami.filter(e => e.id !== id);
+                localStorage.setItem(STORAGE_KEYS.esami, JSON.stringify(esami));
+                renderDashboard();
+                renderChart();
+            }
+        }
+        
+        function calcolaMediaPonderata() {
+            if (esami.length === 0) return 0;
+            const cfuTotali = esami.reduce((sum, e) => sum + e.cfu, 0);
+            const sommaPonderata = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0);
+            return cfuTotali > 0 ? sommaPonderata / cfuTotali : 0;
+        }
+        
+        function renderDashboard() {
+            const media = calcolaMediaPonderata();
+            const cfu = esami.reduce((sum, e) => sum + e.cfu, 0);
+            const votoBase = media > 0 ? (media * 110) / 30 : 0;
+            
+            document.getElementById('stat-media').textContent = media > 0 ? media.toFixed(2) : '—';
+            document.getElementById('stat-cfu').textContent = cfu;
+            document.getElementById('stat-esami').textContent = esami.length;
+            document.getElementById('stat-voto-base').textContent = votoBase > 0 ? votoBase.toFixed(1) : '—';
+            
+            const lista = document.getElementById('lista-esami-dashboard');
+            if (esami.length === 0) {
+                lista.innerHTML = '<div class="empty-state"><p>Nessun esame inserito</p></div>';
+                return;
+            }
+            
+            const esamiOrdinati = [...esami].sort((a, b) => b.data.localeCompare(a.data));
+            lista.innerHTML = esamiOrdinati.map(esame => `
+                <div class="exam-item">
+                    <div class="exam-info">
+                        <div class="exam-name">${esame.nome}</div>
+                        <div class="exam-meta">CFU: ${esame.cfu} · ${esame.data}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="exam-grade">${esame.voto}</span>
+                        <button class="btn-icon" onclick="rimuoviEsame(${esame.id})">
+                            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderChart() {
+            const container = document.getElementById('chart-andamento');
+            if (esami.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>Inserisci esami per vedere l\'andamento</p></div>';
+                return;
+            }
+            
+            const maxVoto = 33;
+            const esamiOrdinati = [...esami].sort((a, b) => a.data.localeCompare(b.data));
+            
+            container.innerHTML = esamiOrdinati.map((esame, index) => {
+                const heightPercent = ((esame.voto - 15) / (maxVoto - 15)) * 100;
+                return `
+                    <div class="chart-bar-wrapper" title="${esame.nome}: ${esame.voto}">
+                        <div style="display:flex; align-items:flex-end; height:120px; width:100%;">
+                            <div class="chart-bar" style="height:${heightPercent}%;"></div>
+                        </div>
+                        <div class="chart-bar-label">${esame.nome.substring(0, 6)}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function calcolaPrevisione() {
+            const votoPrevisto = parseInt(document.getElementById('prev-voto').value);
+            const cfuPrevisto = parseInt(document.getElementById('prev-cfu').value);
+            const risultato = document.getElementById('previsione-risultato');
+            
+            if (!votoPrevisto || !cfuPrevisto) { alert('⚠️ Inserisci voto e CFU'); return; }
+            
+            if (esami.length === 0) {
+                risultato.textContent = `Con questo esame avrai media: ${votoPrevisto.toFixed(1)}`;
+                return;
+            }
+            
+            const cfuAttuali = esami.reduce((sum, e) => sum + e.cfu, 0);
+            const sommaAttuale = esami.reduce((sum, e) => sum + (e.voto * e.cfu), 0);
+            const nuovaMedia = (sommaAttuale + (votoPrevisto * cfuPrevisto)) / (cfuAttuali + cfuPrevisto);
+            const mediaAttuale = calcolaMediaPonderata();
+            
+            risultato.innerHTML = `Media attuale: ${mediaAttuale.toFixed(2)}<br>Media prevista: <strong>${nuovaMedia.toFixed(2)}</strong>`;
+        }
+        
+        // ============ TASSE ============
+        function aggiungiTassa() {
+            const importo = document.getElementById('tassa-importo').value;
+            const scadenza = document.getElementById('tassa-scadenza').value;
+            const descrizione = document.getElementById('tassa-descrizione').value.trim();
+            
+            if (!importo || !scadenza) { alert('⚠️ Inserisci importo e scadenza'); return; }
+            
+            tasse.push({ id: Date.now(), importo: parseFloat(importo), scadenza, descrizione: descrizione || 'Tassa', pagata: false });
+            localStorage.setItem(STORAGE_KEYS.tasse, JSON.stringify(tasse));
+            
+            document.getElementById('tassa-importo').value = '';
+            document.getElementById('tassa-scadenza').value = '';
+            document.getElementById('tassa-descrizione').value = '';
+            
+            renderTasse();
+            closeModal();
+            alert('✅ Tassa aggiunta!');
+        }
+        
+        function rimuoviTassa(id) {
+            if (confirm('⚠️ Eliminare questa tassa?')) {
+                tasse = tasse.filter(t => t.id !== id);
+                localStorage.setItem(STORAGE_KEYS.tasse, JSON.stringify(tasse));
+                renderTasse();
+            }
+        }
+        
+        function toggleTassaPagata(id) {
+            const tassa = tasse.find(t => t.id === id);
+            if (tassa) {
+                tassa.pagata = !tassa.pagata;
+                localStorage.setItem(STORAGE_KEYS.tasse, JSON.stringify(tasse));
+                renderTasse();
+            }
+        }
+        
+        function renderTasse() {
+            const lista = document.getElementById('lista-tasse');
+            const prossimaScadenza = document.getElementById('prossima-scadenza');
+            
+            if (tasse.length === 0) {
+                lista.innerHTML = '<div class="empty-state"><p>Nessuna tassa registrata</p></div>';
+                prossimaScadenza.innerHTML = '';
+                return;
+            }
+            
+            const tasseNonPagate = tasse.filter(t => !t.pagata).sort((a, b) => a.scadenza.localeCompare(b.scadenza));
+            if (tasseNonPagate.length > 0) {
+                const prossima = tasseNonPagate[0];
+                prossimaScadenza.innerHTML = `<div style="background:rgba(245,158,11,0.1); border:1px solid var(--accent-yellow); border-radius:var(--radius-md); padding:12px; text-align:center;"><strong>Prossima scadenza:</strong> ${prossima.descrizione} · €${prossima.importo} · ${prossima.scadenza}</div>`;
+            } else {
+                prossimaScadenza.innerHTML = '<div class="text-center" style="color:var(--accent-green);">✅ Tutte pagate!</div>';
+            }
+            
+            lista.innerHTML = tasse.map(tassa => `
+                <div class="tassa-item ${tassa.pagata ? 'pagata' : ''}">
+                    <div>
+                        <strong>${tassa.descrizione}</strong>
+                        <div style="font-size:0.8rem;">€${tassa.importo} · ${tassa.scadenza}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="btn-icon" onclick="toggleTassaPagata(${tassa.id})">${tassa.pagata ? '✅' : '⬜'}</button>
+                        <button class="btn-icon" onclick="rimuoviTassa(${tassa.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ============ ORARIO ============
+        const GIORNI = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+        let giornoSelezionato = GIORNI[0];
+        
+        function aggiungiOrario() {
+            const materia = document.getElementById('orario-materia').value.trim();
+            const ora = document.getElementById('orario-ora').value;
+            const tipo = document.getElementById('orario-tipo').value;
+            
+            if (!materia || !ora) { alert('⚠️ Inserisci materia e ora'); return; }
+            
+            orario.push({ id: Date.now(), materia, ora, giorno: giornoSelezionato, tipo });
+            localStorage.setItem(STORAGE_KEYS.orario, JSON.stringify(orario));
+            
+            document.getElementById('orario-materia').value = '';
+            document.getElementById('orario-ora').value = '';
+            
+            renderOrario();
+            closeModal();
+            alert('✅ Impegno aggiunto!');
+        }
+        
+        function rimuoviOrario(id) {
+            if (confirm('⚠️ Eliminare questo impegno?')) {
+                orario = orario.filter(o => o.id !== id);
+                localStorage.setItem(STORAGE_KEYS.orario, JSON.stringify(orario));
+                renderOrario();
+            }
+        }
+        
+        function renderOrario() {
+            const filtri = document.getElementById('filtri-giorni');
+            const lista = document.getElementById('lista-orario');
+            
+            filtri.innerHTML = GIORNI.map(giorno => `
+                <button class="filter-chip ${giorno === giornoSelezionato ? 'active' : ''}" onclick="selezionaGiorno('${giorno}')">${giorno.substring(0,3)}</button>
+            `).join('');
+            
+            const impegniDelGiorno = orario.filter(o => o.giorno === giornoSelezionato);
+            
+            if (impegniDelGiorno.length === 0) {
+                lista.innerHTML = `<div class="empty-state"><p>Nessun impegno per ${giornoSelezionato}</p></div>`;
+                return;
+            }
+            
+            lista.innerHTML = impegniDelGiorno.map(impegno => `
+                <div class="orario-item ${impegno.tipo}">
+                    <span class="orario-dot"></span>
+                    <div style="flex:1;">
+                        <strong>${impegno.materia}</strong>
+                        <div style="font-size:0.8rem;">${impegno.ora} · ${impegno.tipo}</div>
+                    </div>
+                    <button class="btn-icon" onclick="rimuoviOrario(${impegno.id})">🗑️</button>
+                </div>
+            `).join('');
+        }
+        
+        function selezionaGiorno(giorno) {
+            giornoSelezionato = giorno;
+            renderOrario();
+        }
+        
+        // ============ DOMANDE ============
+        function aggiungiDomanda() {
+            const materia = document.getElementById('domanda-materia').value.trim();
+            const testo = document.getElementById('domanda-testo').value.trim();
+            
+            if (!materia || !testo) { alert('⚠️ Inserisci materia e domanda'); return; }
+            
+            domande.push({ id: Date.now(), materia, testo, data: new Date().toISOString() });
+            localStorage.setItem(STORAGE_KEYS.domande, JSON.stringify(domande));
+            
+            document.getElementById('domanda-materia').value = '';
+            document.getElementById('domanda-testo').value = '';
+            
+            renderDomande();
+            alert('✅ Domanda condivisa!');
+        }
+        
+        function rimuoviDomanda(id) {
+            if (confirm('⚠️ Eliminare questa domanda?')) {
+                domande = domande.filter(d => d.id !== id);
+                localStorage.setItem(STORAGE_KEYS.domande, JSON.stringify(domande));
+                renderDomande();
+            }
+        }
+        
+        function renderDomande() {
+            const lista = document.getElementById('lista-domande');
+            
+            if (domande.length === 0) {
+                lista.innerHTML = '<div class="empty-state"><p>Nessuna domanda condivisa</p></div>';
+                return;
+            }
+            
+            const materie = {};
+            domande.forEach(d => {
+                if (!materie[d.materia]) materie[d.materia] = [];
+                materie[d.materia].push(d);
+            });
+            
+            lista.innerHTML = Object.keys(materie).map(materia => `
+                <div style="margin-bottom:16px;">
+                    <h4 style="color:var(--primary); font-weight:700;">${materia}</h4>
+                    ${materie[materia].map(d => `
+                        <div class="exam-item" style="border-left-color: var(--accent-purple);">
+                            <div style="flex:1;">
+                                <p style="font-size:0.85rem;">${d.testo}</p>
+                            </div>
+                            <button class="btn-icon" onclick="rimuoviDomanda(${d.id})">🗑️</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+        
+        // ============ MODALS ============
+        function showAddExam() {
+            const modalHTML = `
+                <div style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
+                        <h3 style="color:var(--primary); font-weight:700; margin-bottom:16px;">Aggiungi Esame</h3>
+                        <div class="form-group"><label class="form-label">Nome esame</label><input type="text" id="esame-nome" class="form-input" placeholder="es. Analisi"></div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                            <div class="form-group"><label class="form-label">Voto</label><input type="number" id="esame-voto" class="form-input" placeholder="28" min="18" max="33"></div>
+                            <div class="form-group"><label class="form-label">CFU</label><input type="number" id="esame-cfu" class="form-input" placeholder="12" min="1" max="30"></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">Data</label><input type="date" id="esame-data" class="form-input"></div>
+                        <div style="display:flex; gap:8px; margin-top:16px;">
+                            <button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button>
+                            <button class="btn btn-outline" onclick="closeModal()">Annulla</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        function showAddTassa() {
+            const modalHTML = `
+                <div style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
+                        <h3 style="color:var(--primary); font-weight:700; margin-bottom:16px;">Aggiungi Tassa</h3>
+                        <div class="form-group"><label class="form-label">Descrizione</label><input type="text" id="tassa-descrizione" class="form-input" placeholder="es. Seconda rata"></div>
+                        <div class="form-group"><label class="form-label">Importo (€)</label><input type="number" id="tassa-importo" class="form-input" placeholder="500"></div>
+                        <div class="form-group"><label class="form-label">Scadenza</label><input type="date" id="tassa-scadenza" class="form-input"></div>
+                        <div style="display:flex; gap:8px; margin-top:16px;">
+                            <button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button>
+                            <button class="btn btn-outline" onclick="closeModal()">Annulla</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        function showAddOrario() {
+            const modalHTML = `
+                <div style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                    <div style="background:white; border-radius:16px; padding:24px; width:100%; max-width:400px;">
+                        <h3 style="color:var(--primary); font-weight:700; margin-bottom:16px;">Aggiungi Impegno</h3>
+                        <div class="form-group"><label class="form-label">Materia/Attività</label><input type="text" id="orario-materia" class="form-input" placeholder="es. Fisica"></div>
+                        <div class="form-group"><label class="form-label">Ora</label><input type="time" id="orario-ora" class="form-input"></div>
+                        <div class="form-group"><label class="form-label">Tipo</label><select id="orario-tipo" class="form-select"><option value="universitario">Universitario</option><option value="extra">Extra</option></select></div>
+                        <div style="display:flex; gap:8px; margin-top:16px;">
+                            <button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button>
+                            <button class="btn btn-outline" onclick="closeModal()">Annulla</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        function closeModal() {
+            const modals = document.querySelectorAll('[style*="position:fixed"]');
+            if (modals.length > 0) modals[modals.length - 1].remove();
+        }
+        
+        function openSettings() {
+            alert('⚙️ Flash Lab Uni v1.0\nby Tesi Flash');
+        }
+        
+        // ============ INIT ============
+        function initApp() {
+            navigateTo('dashboard');
+            renderDashboard();
+            renderChart();
+            renderTasse();
+            renderOrario();
+            renderDomande();
+            console.log('📊 Flash Lab Uni avviato!');
+        }
+        
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+    
+    <!-- ============================================================
+         PWA - SERVICE WORKER
          ============================================================ -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then((registration) => {
-                        console.log('✅ Service Worker registrato:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.error('❌ Service Worker fallito:', error);
-                    });
+                    .then((reg) => console.log('✅ SW registrato:', reg.scope))
+                    .catch((err) => console.error('❌ SW fallito:', err));
             });
         }
         
         let deferredPrompt;
-        
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -680,38 +1284,17 @@
         function showInstallButton() {
             const btn = document.createElement('button');
             btn.textContent = '📱 Installa App';
-            btn.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #004a99;
-                color: white;
-                border: none;
-                padding: 14px 24px;
-                border-radius: 30px;
-                font-weight: 700;
-                font-size: 0.9rem;
-                cursor: pointer;
-                box-shadow: 0 8px 24px rgba(0, 74, 153, 0.4);
-                z-index: 2000;
-            `;
-            
+            btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:14px 24px; border-radius:30px; font-weight:700; cursor:pointer; z-index:2000;';
             btn.addEventListener('click', async () => {
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    const result = await deferredPrompt.userChoice;
-                    console.log('📱 Scelta:', result.outcome);
+                    await deferredPrompt.userChoice;
                     deferredPrompt = null;
                     btn.remove();
                 }
             });
-            
             document.body.appendChild(btn);
-            
-            setTimeout(() => {
-                if (btn.parentNode) btn.remove();
-            }, 10000);
+            setTimeout(() => { if (btn.parentNode) btn.remove(); }, 10000);
         }
     </script>
 </body>
