@@ -59,25 +59,26 @@
         .app-header {
             position:sticky; top:0; z-index:100;
             background:var(--primary); color:white;
-            padding:14px 18px;
+            padding:10px 14px;
             display:flex; align-items:center; justify-content:space-between;
-            min-height:60px;
+            min-height:56px;
         }
-        .app-header .logo { font-size:1.3rem; font-weight:800; display:flex; align-items:center; gap:8px; }
-        .app-header .logo .logo-text { display:flex; flex-direction:column; align-items:center; text-align:center; }
-        .app-header .logo .logo-title { color:white; font-weight:800; font-size:1.3rem; }
-        .app-header .logo .logo-subtitle { font-size:0.85rem; font-weight:700; margin-top:2px; text-decoration:none; }
+        .app-header .logo { display:flex; align-items:center; gap:6px; }
+        .app-header .logo .logo-text { display:flex; flex-direction:column; align-items:flex-start; text-align:left; }
+        .app-header .logo .logo-title { color:white; font-weight:800; font-size:1.1rem; line-height:1.2; }
+        .app-header .logo .logo-subtitle { font-size:0.8rem; font-weight:700; margin-top:2px; text-decoration:underline; text-underline-offset:2px; }
         .app-header .logo .logo-subtitle .by { color:white; }
         .app-header .logo .logo-subtitle .tesi { color:#f59e0b; }
         .app-header .logo .logo-subtitle .flash { color:white; }
-        .app-header .logo .logo-tagline { font-size:0.6rem; color:rgba(255,255,255,0.7); margin-top:1px; }
+        .app-header .logo .logo-tagline { font-size:0.55rem; color:rgba(255,255,255,0.75); margin-top:1px; line-height:1.2; }
         .profile-pic-header {
-            width:40px; height:40px; border-radius:50%;
+            width:42px; height:42px; border-radius:50%;
             background:rgba(255,255,255,0.3); border:2px solid white;
             display:flex; align-items:center; justify-content:center;
             overflow:hidden; cursor:pointer; font-size:1.2rem;
+            flex-shrink:0; aspect-ratio:1/1;
         }
-        .profile-pic-header img { width:100%; height:100%; object-fit:cover; }
+        .profile-pic-header img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
         .header-btn { width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; cursor:pointer; font-size:1.3rem; color:white; }
         .main-content { padding:16px; }
         
@@ -201,16 +202,12 @@
             .card { box-shadow:none; border:1px solid #ddd; }
         }
         
-        /* ============ PADDING EXTRA PER iOS STANDALONE ============ */
+        /* PADDING EXTRA PER iOS STANDALONE */
         @media (display-mode: standalone) {
-            body {
-                padding-bottom: calc(var(--tab-height) + 60px) !important;
-            }
+            body { padding-bottom: calc(var(--tab-height) + 60px) !important; }
         }
         @supports (-webkit-touch-callout: none) {
-            body {
-                padding-bottom: calc(var(--tab-height) + 60px) !important;
-            }
+            body { padding-bottom: calc(var(--tab-height) + 60px) !important; }
         }
     </style>
 </head>
@@ -230,7 +227,7 @@
                 <img id="profile-pic-img" style="display:none;" alt="Profilo">
             </div>
         </div>
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:6px; flex-shrink:0; margin-left:6px;">
             <button class="header-btn" onclick="resetTutto()">🔄</button>
             <button class="header-btn" onclick="openSettings()">⚙️</button>
         </div>
