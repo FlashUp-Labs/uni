@@ -2,8 +2,8 @@
     "name": "Flash Lab Uni",
     "short_name": "FlashLab",
     "description": "Il tuo libretto universitario digitale - gestisci esami, tasse e orari",
-    "start_url": "/",
-    "scope": "/",
+    "start_url": "./",
+    "scope": "./",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#f0f2f5",
@@ -12,30 +12,23 @@
     "categories": ["education", "productivity"],
     "icons": [
         {
-            "src": "icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23004a99'/%3E%3Ccircle cx='256' cy='200' r='60' fill='white' opacity='0.2'/%3E%3Cpath d='M156 210L256 160l100 50-100 50z' fill='white'/%3E%3Cpath d='M176 260v40l80 40 80-40v-40l-80 40z' fill='%23f59e0b'/%3E%3Ctext x='256' y='420' font-family='Arial' font-size='80' font-weight='bold' fill='white' text-anchor='middle'%3EFLASH%3C/text%3E%3C/svg%3E",
+            "sizes": "any",
+            "type": "image/svg+xml",
             "purpose": "any"
         },
         {
-            "src": "icon-512.png",
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23004a99'/%3E%3Ccircle cx='256' cy='200' r='60' fill='white' opacity='0.2'/%3E%3Cpath d='M156 210L256 160l100 50-100 50z' fill='white'/%3E%3Cpath d='M176 260v40l80 40 80-40v-40l-80 40z' fill='%23f59e0b'/%3E%3Ctext x='256' y='420' font-family='Arial' font-size='80' font-weight='bold' fill='white' text-anchor='middle'%3EFLASH%3C/text%3E%3C/svg%3E",
             "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
+            "type": "image/svg+xml",
             "purpose": "maskable"
         }
     ],
     "shortcuts": [
         {
             "name": "Aggiungi Esame",
-            "url": "/?action=add-exam",
-            "description": "Aggiungi un nuovo esame",
-            "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+            "url": "./?action=add-exam",
+            "description": "Aggiungi un nuovo esame"
         }
     ]
 }
