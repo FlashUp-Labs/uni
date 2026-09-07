@@ -1,0 +1,41 @@
+{
+    "name": "Flash Lab Uni",
+    "short_name": "FlashLab",
+    "description": "Il tuo libretto universitario digitale - gestisci esami, tasse e orari",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#f0f2f5",
+    "theme_color": "#004a99",
+    "lang": "it",
+    "categories": ["education", "productivity"],
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Aggiungi Esame",
+            "url": "/?action=add-exam",
+            "description": "Aggiungi un nuovo esame",
+            "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+        }
+    ]
+}
