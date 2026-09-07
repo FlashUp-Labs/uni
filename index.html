@@ -117,9 +117,22 @@
             padding:14px 18px; border-radius:var(--radius-sm);
             font-weight:700; font-size:0.95rem; cursor:pointer; border:none; width:100%;
             color:white !important;
+            -webkit-text-fill-color:white !important;
         }
-        .btn-primary { background:var(--primary); color:white !important; }
-        .btn-primary svg, .btn-primary span { color:white !important; fill:white !important; }
+        .btn-primary { 
+            background:var(--primary); 
+            color:white !important;
+            -webkit-text-fill-color:white !important;
+        }
+        .btn-primary svg, .btn-primary span, .btn-primary * { 
+            color:white !important; 
+            fill:white !important;
+            stroke:white !important;
+            -webkit-text-fill-color:white !important;
+        }
+        .btn-primary::before, .btn-primary::after {
+            color:white !important;
+        }
         .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
         
         .form-group { margin-bottom:14px; }
@@ -539,7 +552,6 @@
     
     <!-- PWA UNIVERSALE (iOS + Android + Desktop) - FISSO FINCHÉ NON INSTALLI -->
     <script>
-        // ============ REGISTRAZIONE SERVICE WORKER ============
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -547,8 +559,6 @@
                     .catch(err => console.error('❌ SW fallito'));
             });
         }
-
-        // ============ RILEVA DISPOSITIVO ============
         function detectDevice() {
             const ua = navigator.userAgent.toLowerCase();
             const isIOS = /iphone|ipad|ipod/.test(ua);
@@ -556,47 +566,29 @@
             const isDesktop = !isIOS && !isAndroid;
             return { isIOS, isAndroid, isDesktop };
         }
-
-        // ============ CONTROLLA SE GIÀ INSTALLATA ============
         function isAppInstalled() {
             if (window.navigator.standalone === true) return true;
             if (window.matchMedia('(display-mode: standalone)').matches) return true;
             return false;
         }
-
         let deferredPrompt = null;
         const device = detectDevice();
-
-        // ============ PROMPT NATIVO ============
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             showInstallButton();
         });
-
-        // ============ APP INSTALLATA ============
         window.addEventListener('appinstalled', () => {
             deferredPrompt = null;
             document.querySelectorAll('.install-btn').forEach(b => b.remove());
         });
-
-        // ============ MOSTRA BOTTONE (FISSO) ============
         function showInstallButton() {
             if (isAppInstalled()) return;
             document.querySelectorAll('.install-btn').forEach(b => b.remove());
-            
             const btn = document.createElement('button');
             btn.className = 'install-btn';
             btn.textContent = device.isIOS ? '📱 Aggiungi alla Home' : device.isAndroid ? '📱 Installa App' : '💻 Installa App';
-            btn.style.cssText = `
-                position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-                background: #004a99; color: white !important; border: 2px solid white;
-                padding: 16px 28px; border-radius: 30px; font-weight: 700; font-size: 1rem;
-                cursor: pointer; z-index: 9999; box-shadow: 0 4px 20px rgba(0,74,153,0.6);
-                animation: pulseInstall 2s infinite; -webkit-tap-highlight-color: transparent;
-                white-space: nowrap; -webkit-appearance: none; appearance: none;
-            `;
-            
+            btn.style.cssText = 'position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#004a99; color:white !important; border:2px solid white; padding:16px 28px; border-radius:30px; font-weight:700; font-size:1rem; cursor:pointer; z-index:9999; box-shadow:0 4px 20px rgba(0,74,153,0.6); animation:pulseInstall 2s infinite; -webkit-tap-highlight-color:transparent; white-space:nowrap; -webkit-appearance:none; appearance:none;';
             btn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 if (device.isIOS) { showIOSInstructions(); }
@@ -607,10 +599,8 @@
                     if (result.outcome === 'accepted') btn.remove();
                 } else { showManualInstructions(); }
             });
-            
             document.body.appendChild(btn);
         }
-
         function showIOSInstructions() {
             const isIPad = /ipad/.test(navigator.userAgent.toLowerCase());
             const deviceName = isIPad ? 'iPad' : 'iPhone';
@@ -619,19 +609,15 @@
             modal.innerHTML = `<div style="background:white; border-radius:20px; padding:24px; max-width:350px; width:100%; text-align:center; font-family:'Segoe UI',-apple-system,sans-serif;"><div style="font-size:3rem; margin-bottom:12px;">📱</div><h3 style="color:#004a99; font-weight:700; margin-bottom:16px;">Installa su ${deviceName}</h3><div style="text-align:left; margin-bottom:20px;"><div style="display:flex; gap:12px; margin-bottom:14px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">1</span><span>Tocca <strong>Condividi</strong> (📤) in <strong>alto a destra</strong></span></div><div style="display:flex; gap:12px; margin-bottom:14px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">2</span><span>Scorri e tocca <strong>"Aggiungi a Home"</strong> (🏠)</span></div><div style="display:flex; gap:12px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">3</span><span>Tocca <strong>"Aggiungi"</strong> in alto a destra</span></div></div><button onclick="this.closest('div[style*=fixed]').remove()" style="background:#004a99; color:white; border:none; padding:12px 24px; border-radius:25px; font-weight:700; cursor:pointer; width:100%;">Ho capito!</button></div>`;
             document.body.appendChild(modal);
         }
-
         function showManualInstructions() {
             alert('📱 Per installare:\n\n1. Apri il menu del browser (⋮ o ☰)\n2. Tocca "Installa app" o "Aggiungi a schermata Home"');
         }
-
-        // ============ AVVIO AUTOMATICO + RICONTROLLO ============
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { if (!isAppInstalled()) showInstallButton(); }, 2000);
         });
         setInterval(() => {
             if (!isAppInstalled() && !document.querySelector('.install-btn')) showInstallButton();
         }, 5000);
-
         const installStyle = document.createElement('style');
         installStyle.textContent = '@keyframes pulseInstall { 0%,100%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.05)} }';
         document.head.appendChild(installStyle);
