@@ -117,10 +117,30 @@
             padding:14px 18px; border-radius:var(--radius-sm);
             font-weight:700; font-size:0.95rem; cursor:pointer; border:none; width:100%;
             color:white !important;
+            -webkit-text-fill-color:white !important;
         }
-        .btn-primary { background:var(--primary); color:white !important; }
-        .btn-primary svg, .btn-primary span { color:white !important; fill:white !important; }
-        .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
+        .btn-primary { 
+            background:var(--primary); 
+            color:white !important;
+            -webkit-text-fill-color:white !important;
+        }
+        .btn-primary svg, .btn-primary span, .btn-primary * { 
+            color:white !important; 
+            fill:white !important;
+            stroke:white !important;
+            -webkit-text-fill-color:white !important;
+        }
+        .btn-outline { 
+            background:transparent; 
+            border:2px solid var(--primary); 
+            color:var(--primary) !important;
+            -webkit-text-fill-color:var(--primary) !important;
+        }
+        body.dark-mode .btn-outline {
+            color:var(--text-primary) !important;
+            -webkit-text-fill-color:var(--text-primary) !important;
+            border-color:var(--text-primary) !important;
+        }
         
         .form-group { margin-bottom:14px; }
         .form-label { display:block; font-size:0.9rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
@@ -361,11 +381,8 @@
         let giornoSel = 'Lunedì';
         const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];
         
-        // ============ TEMA ============
         function applicaTema() { if (temaScuro) document.body.classList.add('dark-mode'); else document.body.classList.remove('dark-mode'); }
         function toggleTema() { temaScuro = !temaScuro; localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light'); applicaTema(); }
-        
-        // ============ FOTO PROFILO ============
         function cambiaFoto() {
             const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
             input.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader();
@@ -379,8 +396,6 @@
             if (fotoProfilo) { placeholder.style.display = 'none'; img.style.display = 'block'; img.src = fotoProfilo; }
             else { placeholder.style.display = 'block'; img.style.display = 'none'; }
         }
-        
-        // ============ NAVIGAZIONE ============
         function navigateTo(page) {
             PAGES.forEach(p => document.getElementById('page-' + p).classList.add('hidden'));
             document.getElementById('page-' + page).classList.remove('hidden');
@@ -395,14 +410,11 @@
             if (p === 'orario') renderOrario();
             if (p === 'domande') renderDomande();
         }
-        
-        // ============ CALCOLI ============
         function calcolaMediaPonderata() { if (!esami.length) return 0; const c = esami.reduce((s,e) => s + e.cfu, 0); const s = esami.reduce((x,e) => x + (e.voto * e.cfu), 0); return c ? s/c : 0; }
         function calcolaCFU() { return esami.reduce((s,e) => s + e.cfu, 0); }
         function calcolaVotoBase() { const m = calcolaMediaPonderata(); return m ? (m * 110) / 30 : 0; }
         function getAITutor() { const m = calcolaMediaPonderata(); if (!m) return 'Inserisci esami!'; if (m < 24) return '📚 Basi da consolidare.'; if (m < 26) return '🎯 Buon lavoro!'; if (m < 28) return '🔥 Puoi puntare al 110!'; if (m < 29.5) return '🏆 Eccellente!'; return '👑 Straordinario!'; }
         
-        // ============ DASHBOARD ============
         function renderDashboard() {
             const m = calcolaMediaPonderata(), c = calcolaCFU(), vb = calcolaVotoBase();
             document.getElementById('stat-media').textContent = m ? m.toFixed(2) : '—';
@@ -428,7 +440,6 @@
             }).join('');
         }
         
-        // ============ TREND ============
         function renderTrend() {
             const m = calcolaMediaPonderata();
             const max = esami.length ? Math.max(...esami.map(e => e.voto)) : 0;
@@ -448,7 +459,6 @@
             }).join('');
         }
         
-        // ============ PREVISIONI ============
         function calcolaPrevisione() {
             const v = parseInt(document.getElementById('prev-voto').value);
             const c = parseInt(document.getElementById('prev-cfu').value);
@@ -469,14 +479,11 @@
         function calcolaVotoLaurea() { const t = parseInt(document.getElementById('laurea-tesi').value) || 0; const b = parseInt(document.getElementById('laurea-bonus').value) || 0; const base = calcolaVotoBase(); if (!base) { alert('Inserisci esami'); return; } document.getElementById('laurea-risultato').textContent = `🎓 ${Math.min(base + t + b, 110).toFixed(1)}`; }
         function calcolaPer110() { const base = calcolaVotoBase(); if (!base) { alert('Inserisci esami'); return; } const nec = 110 - base; document.getElementById('per110-risultato').textContent = nec <= 0 ? '✅ Già ok!' : `Servono ${nec.toFixed(1)} punti`; }
         
-        // ============ ESAMI ============
         function aggiungiEsame() { const n = document.getElementById('esame-nome').value.trim(); const v = parseInt(document.getElementById('esame-voto').value); const c = parseInt(document.getElementById('esame-cfu').value); const d = document.getElementById('esame-data').value || new Date().toISOString().split('T')[0]; if (!n || !v || !c) { alert('Compila i campi'); return; } esami.push({ id: Date.now(), nome: n, voto: v, cfu: c, data: d }); localStorage.setItem('flashlab_esami', JSON.stringify(esami)); closeModal(); renderDashboard(); renderTrend(); }
         function rimuoviEsame(id) { if (confirm('Eliminare?')) { esami = esami.filter(e => e.id !== id); localStorage.setItem('flashlab_esami', JSON.stringify(esami)); renderDashboard(); renderTrend(); } }
         
-        // ============ TASSE ============
         function renderTasse() { const l = document.getElementById('lista-tasse'); const p = document.getElementById('prossima-scadenza'); if (!tasse.length) { l.innerHTML = '<div class="empty-state">Nessuna tassa</div>'; p.innerHTML = ''; return; } const np = tasse.filter(t => !t.pagata).sort((a,b) => a.scadenza.localeCompare(b.scadenza)); p.innerHTML = np.length ? `<div style="background:rgba(245,158,11,0.15); padding:10px; border-radius:8px; text-align:center;"><strong style="color:var(--text-primary);">⚠️ ${np[0].descrizione}</strong><br><span style="color:var(--text-secondary);">€${np[0].importo} · ${np[0].scadenza}</span></div>` : '<div class="text-center" style="color:var(--accent-green);">✅ Tutte pagate!</div>'; l.innerHTML = tasse.map(t => `<div class="list-item ${t.pagata ? 'green' : 'yellow'}"><div><div class="item-nome">${t.descrizione}</div><div class="item-info">€${t.importo} · ${t.scadenza}</div></div><div style="display:flex; gap:4px;"><button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button><button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button></div></div>`).join(''); }
         
-        // ============ ORARIO ============
         function renderOrario() {
             document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => `<button onclick="selezionaGiorno('${g}')" style="padding:10px 14px; border-radius:20px; border:1px solid var(--border-light); background:${g === giornoSel ? 'var(--primary)' : 'var(--bg-card)'}; color:${g === giornoSel ? 'white' : 'var(--text-primary)'}; cursor:pointer; font-size:0.85rem; font-weight:700; flex-shrink:0;">${g.substring(0,3)}</button>`).join('');
             const impegni = orario.filter(o => o.giorno === giornoSel);
@@ -486,11 +493,9 @@
         }
         function toggleOrarioCompletato(id) { const o = orario.find(x => x.id === id); if (o) { o.completato = !o.completato; localStorage.setItem('flashlab_orario', JSON.stringify(orario)); renderOrario(); } }
         
-        // ============ DOMANDE ============
         function renderDomande() { const l = document.getElementById('lista-domande'); if (!domande.length) { l.innerHTML = '<div class="empty-state">Nessuna domanda</div>'; return; } l.innerHTML = domande.map(d => `<div class="list-item purple"><div><div class="item-nome">${d.materia}</div><div class="item-info">${d.testo}</div></div><button class="btn-icon" onclick="rimuoviDomanda(${d.id})">🗑️</button></div>`).join(''); }
         function rimuoviDomanda(id) { if (confirm('Eliminare domanda?')) { domande = domande.filter(d => d.id !== id); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); renderDomande(); } }
         
-        // ============ SETTINGS ============
         function openSettings() {
             const modal = document.createElement('div');
             modal.className = 'settings-modal';
@@ -504,25 +509,22 @@
                     <div class="settings-option" onclick="importDati(); closeSettings();"><span class="settings-icon">📥</span> Import dati</div>
                     <div class="settings-option" onclick="window.print(); closeSettings();"><span class="settings-icon">🖨️</span> Stampa/PDF</div>
                     <div class="settings-option" onclick="resetTutto(); closeSettings();"><span class="settings-icon">🔄</span> Reset completo</div>
-                    <button class="btn btn-outline" onclick="closeSettings()" style="margin-top:8px; color:var(--text-primary);">Chiudi</button>
+                    <button class="btn btn-outline" onclick="closeSettings()" style="margin-top:8px;">Chiudi</button>
                     <p class="settings-info">🔒 Privacy: Tutti i dati sono salvati SOLO sul tuo browser (localStorage). Non memorizziamo nulla sui nostri server. I dati non sono sincronizzati tra dispositivi diversi. Usa "Export dati" per fare un backup e "Import dati" per ripristinarlo su un altro dispositivo.</p>
                 </div>`;
             document.body.appendChild(modal);
         }
         function closeSettings() { const m = document.querySelector('.settings-modal'); if (m) m.remove(); }
         function impostaCFU() { const c = prompt('CFU totali:', cfuTotaliCorso); if (c && !isNaN(c)) { cfuTotaliCorso = parseInt(c); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); renderDashboard(); } }
-        
         function exportDati() { const d = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, fotoProfilo, temaScuro }; const b = new Blob([JSON.stringify(d)], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = 'flashlab.json'; a.click(); URL.revokeObjectURL(u); }
         function importDati() { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { try { const d = JSON.parse(ev.target.result); esami = d.esami || []; tasse = d.tasse || []; orario = d.orario || []; domande = d.domande || []; obiettivoMedia = d.obiettivoMedia || 28; cfuTotaliCorso = d.cfuTotaliCorso || 180; fotoProfilo = d.fotoProfilo || ''; localStorage.setItem('flashlab_esami', JSON.stringify(esami)); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); localStorage.setItem('flashlab_foto', fotoProfilo); aggiornaFotoHeader(); location.reload(); } catch { alert('❌ File non valido'); } }; r.readAsText(f); }; i.click(); }
         function resetTutto() { if (confirm('Cancellare tutto?')) { if (confirm('Confermi?')) { ['esami','tasse','orario','domande','obiettivo','cfu_totali','foto','tema'].forEach(k => localStorage.removeItem('flashlab_' + k)); location.reload(); } } }
         
-        // ============ MODALS ============
-        function showAddExam() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Esame</h3><label class="form-label">📚 Nome</label><input id="esame-nome" class="form-input" placeholder="es. Analisi" style="margin-bottom:10px;"><div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"><div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="28"></div><div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="12"></div></div><label class="form-label">📅 Data</label><input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px; color:var(--text-primary);">Chiudi</button></div></div>`); }
-        function showAddTassa() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Tassa</h3><label class="form-label">📝 Descrizione</label><input id="tassa-descrizione" class="form-input" placeholder="es. Rata" style="margin-bottom:10px;"><label class="form-label">💶 Importo</label><input id="tassa-importo" class="form-input" type="number" placeholder="500" style="margin-bottom:10px;"><label class="form-label">📅 Scadenza</label><input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px; color:var(--text-primary);">Chiudi</button></div></div>`); }
-        function showAddOrario() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Impegno</h3><label class="form-label">📚 Materia</label><input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;"><label class="form-label">🕐 Ora</label><input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;"><label class="form-label">📅 Data</label><input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;"><label class="form-label">🏷️ Tipo</label><select id="orario-tipo" class="form-input"><option value="universitario">📚 Universitario</option><option value="extra">🎯 Extra</option></select><button class="btn btn-primary" onclick="aggiungiOrario()" style="margin-top:12px;">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px; color:var(--text-primary);">Chiudi</button></div></div>`); }
+        function showAddExam() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Esame</h3><label class="form-label">📚 Nome</label><input id="esame-nome" class="form-input" placeholder="es. Analisi" style="margin-bottom:10px;"><div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"><div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="28"></div><div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="12"></div></div><label class="form-label">📅 Data</label><input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Chiudi</button></div></div>`); }
+        function showAddTassa() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Tassa</h3><label class="form-label">📝 Descrizione</label><input id="tassa-descrizione" class="form-input" placeholder="es. Rata" style="margin-bottom:10px;"><label class="form-label">💶 Importo</label><input id="tassa-importo" class="form-input" type="number" placeholder="500" style="margin-bottom:10px;"><label class="form-label">📅 Scadenza</label><input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Chiudi</button></div></div>`); }
+        function showAddOrario() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeModal()"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="color:var(--text-primary);">Aggiungi Impegno</h3><label class="form-label">📚 Materia</label><input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;"><label class="form-label">🕐 Ora</label><input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;"><label class="form-label">📅 Data</label><input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;"><label class="form-label">🏷️ Tipo</label><select id="orario-tipo" class="form-input"><option value="universitario">📚 Universitario</option><option value="extra">🎯 Extra</option></select><button class="btn btn-primary" onclick="aggiungiOrario()" style="margin-top:12px;">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Chiudi</button></div></div>`); }
         function closeModal() { const m = document.getElementById('modal'); if (m) m.remove(); }
         
-        // ============ FUNZIONI ============
         function aggiungiTassa() { const d = document.getElementById('tassa-descrizione').value.trim(); const i = document.getElementById('tassa-importo').value; const s = document.getElementById('tassa-scadenza').value; if (!i || !s) { alert('Compila i campi'); return; } tasse.push({ id: Date.now(), descrizione: d || 'Tassa', importo: parseFloat(i), scadenza: s, pagata: false }); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); closeModal(); renderTasse(); }
         function toggleTassa(id) { const t = tasse.find(x => x.id === id); if (t) { t.pagata = !t.pagata; localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
         function rimuoviTassa(id) { if (confirm('Eliminare?')) { tasse = tasse.filter(t => t.id !== id); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
@@ -532,14 +534,12 @@
         function aggiungiDomanda() { const m = document.getElementById('domanda-materia').value.trim(); const t = document.getElementById('domanda-testo').value.trim(); if (!m || !t) { alert('Compila i campi'); return; } domande.push({ id: Date.now(), materia: m, testo: t }); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); document.getElementById('domanda-materia').value = ''; document.getElementById('domanda-testo').value = ''; renderDomande(); }
         function cambiaObiettivo() { const n = prompt('Media obiettivo:', obiettivoMedia); if (n && !isNaN(n)) { obiettivoMedia = parseInt(n); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); renderDashboard(); } }
         
-        // ============ INIT ============
         function initApp() { applicaTema(); aggiornaFotoHeader(); navigateTo('dashboard'); }
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
     <!-- PWA UNIVERSALE (iOS + Android + Desktop) - FISSO FINCHÉ NON INSTALLI -->
     <script>
-        // ============ REGISTRAZIONE SERVICE WORKER ============
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -547,8 +547,6 @@
                     .catch(err => console.error('❌ SW fallito'));
             });
         }
-
-        // ============ RILEVA DISPOSITIVO ============
         function detectDevice() {
             const ua = navigator.userAgent.toLowerCase();
             const isIOS = /iphone|ipad|ipod/.test(ua);
@@ -556,47 +554,29 @@
             const isDesktop = !isIOS && !isAndroid;
             return { isIOS, isAndroid, isDesktop };
         }
-
-        // ============ CONTROLLA SE GIÀ INSTALLATA ============
         function isAppInstalled() {
             if (window.navigator.standalone === true) return true;
             if (window.matchMedia('(display-mode: standalone)').matches) return true;
             return false;
         }
-
         let deferredPrompt = null;
         const device = detectDevice();
-
-        // ============ PROMPT NATIVO ============
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             showInstallButton();
         });
-
-        // ============ APP INSTALLATA ============
         window.addEventListener('appinstalled', () => {
             deferredPrompt = null;
             document.querySelectorAll('.install-btn').forEach(b => b.remove());
         });
-
-        // ============ MOSTRA BOTTONE (FISSO) ============
         function showInstallButton() {
             if (isAppInstalled()) return;
             document.querySelectorAll('.install-btn').forEach(b => b.remove());
-            
             const btn = document.createElement('button');
             btn.className = 'install-btn';
             btn.textContent = device.isIOS ? '📱 Aggiungi alla Home' : device.isAndroid ? '📱 Installa App' : '💻 Installa App';
-            btn.style.cssText = `
-                position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-                background: #004a99; color: white !important; border: 2px solid white;
-                padding: 16px 28px; border-radius: 30px; font-weight: 700; font-size: 1rem;
-                cursor: pointer; z-index: 9999; box-shadow: 0 4px 20px rgba(0,74,153,0.6);
-                animation: pulseInstall 2s infinite; -webkit-tap-highlight-color: transparent;
-                white-space: nowrap; -webkit-appearance: none; appearance: none;
-            `;
-            
+            btn.style.cssText = 'position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#004a99; color:white !important; border:2px solid white; padding:16px 28px; border-radius:30px; font-weight:700; font-size:1rem; cursor:pointer; z-index:9999; box-shadow:0 4px 20px rgba(0,74,153,0.6); animation:pulseInstall 2s infinite; -webkit-tap-highlight-color:transparent; white-space:nowrap; -webkit-appearance:none; appearance:none;';
             btn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 if (device.isIOS) { showIOSInstructions(); }
@@ -607,10 +587,8 @@
                     if (result.outcome === 'accepted') btn.remove();
                 } else { showManualInstructions(); }
             });
-            
             document.body.appendChild(btn);
         }
-
         function showIOSInstructions() {
             const isIPad = /ipad/.test(navigator.userAgent.toLowerCase());
             const deviceName = isIPad ? 'iPad' : 'iPhone';
@@ -619,19 +597,15 @@
             modal.innerHTML = `<div style="background:white; border-radius:20px; padding:24px; max-width:350px; width:100%; text-align:center; font-family:'Segoe UI',-apple-system,sans-serif;"><div style="font-size:3rem; margin-bottom:12px;">📱</div><h3 style="color:#004a99; font-weight:700; margin-bottom:16px;">Installa su ${deviceName}</h3><div style="text-align:left; margin-bottom:20px;"><div style="display:flex; gap:12px; margin-bottom:14px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">1</span><span>Tocca <strong>Condividi</strong> (📤) in <strong>alto a destra</strong></span></div><div style="display:flex; gap:12px; margin-bottom:14px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">2</span><span>Scorri e tocca <strong>"Aggiungi a Home"</strong> (🏠)</span></div><div style="display:flex; gap:12px;"><span style="background:#004a99; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;">3</span><span>Tocca <strong>"Aggiungi"</strong> in alto a destra</span></div></div><button onclick="this.closest('div[style*=fixed]').remove()" style="background:#004a99; color:white; border:none; padding:12px 24px; border-radius:25px; font-weight:700; cursor:pointer; width:100%;">Ho capito!</button></div>`;
             document.body.appendChild(modal);
         }
-
         function showManualInstructions() {
             alert('📱 Per installare:\n\n1. Apri il menu del browser (⋮ o ☰)\n2. Tocca "Installa app" o "Aggiungi a schermata Home"');
         }
-
-        // ============ AVVIO AUTOMATICO + RICONTROLLO ============
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { if (!isAppInstalled()) showInstallButton(); }, 2000);
         });
         setInterval(() => {
             if (!isAppInstalled() && !document.querySelector('.install-btn')) showInstallButton();
         }, 5000);
-
         const installStyle = document.createElement('style');
         installStyle.textContent = '@keyframes pulseInstall { 0%,100%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.05)} }';
         document.head.appendChild(installStyle);
