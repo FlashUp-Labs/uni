@@ -28,7 +28,6 @@
             --accent-purple: #8b5cf6;
             --border-light: #e5e7eb;
             --shadow-sm: 0 2px 8px rgba(0,74,153,0.08);
-            --shadow-md: 0 4px 16px rgba(0,74,153,0.12);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
@@ -129,6 +128,23 @@
         .list-item.red { border-left-color:var(--accent-red); }
         .list-item.purple { border-left-color:var(--accent-purple); }
         .btn-icon { background:none; border:none; cursor:pointer; font-size:1rem; }
+        
+        /* ============ STAMPA ============ */
+        @media print {
+            .tab-bar, .app-header, .btn, .header-btn, .install-btn {
+                display: none !important;
+            }
+            body {
+                background: white;
+                max-width: 100%;
+                padding: 0;
+            }
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body>
@@ -154,14 +170,12 @@
                     <div class="stat-card"><div class="stat-value" id="stat-voto-base">—</div><div class="stat-label">Voto Base</div></div>
                 </div>
                 
-                <!-- PROGRESSO LAUREA -->
                 <div class="goal-card">
                     <strong style="font-size:0.8rem;">🎓 Progresso Laurea</strong>
                     <div class="progress-bar"><div class="progress-fill" id="progresso-laurea" style="width:0%;"></div></div>
                     <p style="font-size:0.7rem; color:var(--text-muted);" id="progresso-testo">Configura i CFU totali nelle impostazioni</p>
                 </div>
                 
-                <!-- OBIETTIVO MEDIA -->
                 <div class="goal-card">
                     <div style="display:flex; justify-content:space-between;">
                         <strong style="font-size:0.8rem;">🎯 Obiettivo: Media <span id="obiettivo-valore">28</span></strong>
@@ -171,13 +185,11 @@
                     <p style="font-size:0.7rem; color:var(--text-muted);" id="obiettivo-messaggio">Inserisci esami</p>
                 </div>
                 
-                <!-- AI TUTOR -->
                 <div class="ai-card">
                     <strong style="font-size:0.8rem;">🤖 AI Tutor</strong>
                     <p style="font-size:0.75rem; margin-top:4px;" id="ai-tutor">Inserisci esami per ricevere consigli!</p>
                 </div>
                 
-                <!-- STATISTICHE MOTIVAZIONALI -->
                 <div id="stats-motivazionali" style="margin-top:10px;"></div>
             </div>
             
@@ -317,7 +329,7 @@
             return '👑 Straordinario! 110 e lode garantito!';
         }
         
-        // ============ STATISTICHE MOTIVAZIONALI ============
+        // ============ STATISTICHE ============
         function renderStatsMotivazionali() {
             const media = calcolaMediaPonderata();
             const cfu = calcolaCFU();
@@ -328,16 +340,14 @@
             
             document.getElementById('progresso-laurea').style.width = Math.min(progressoLaurea, 100) + '%';
             document.getElementById('progresso-testo').textContent = 
-                esami.length > 0 ? `Hai completato il ${progressoLaurea.toFixed(0)}% del percorso (${cfu}/${cfuTotaliCorsi} CFU)` : 
+                esami.length > 0 ? `Hai completato il ${progressoLaurea.toFixed(0)}% del percorso (${cfu}/${cfuTotaliCorso} CFU)` : 
                 'Imposta i CFU totali nelle impostazioni';
             
             const statsHTML = `
                 ${votoMax > 0 ? `<span class="badge">🏆 Max: ${votoMax}</span>` : ''}
                 ${votoMin > 0 ? `<span class="badge">📉 Min: ${votoMin}</span>` : ''}
                 ${esamiConLode > 0 ? `<span class="badge">🌟 Lodi: ${esamiConLode}</span>` : ''}
-                ${media > 0 ? `<span class="badge">📊 Media: ${media.toFixed(1)}</span>` : ''}
             `;
-            
             document.getElementById('stats-motivazionali').innerHTML = statsHTML;
         }
         
@@ -352,37 +362,26 @@
             document.getElementById('stat-esami').textContent = esami.length;
             document.getElementById('stat-voto-base').textContent = votoBase > 0 ? votoBase.toFixed(1) : '—';
             
-            // Obiettivo
             document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
             const progObiettivo = media > 0 ? Math.min((media / obiettivoMedia) * 100, 100) : 0;
             document.getElementById('obiettivo-progresso').style.width = progObiettivo + '%';
-            document.getElementById('obiettivo-messaggio').textContent = 
-                media > 0 ? `${progObiettivo.toFixed(0)}% verso l'obiettivo` : 'Inserisci esami';
+            document.getElementById('obiettivo-messaggio').textContent = media > 0 ? `${progObiettivo.toFixed(0)}% verso l'obiettivo` : 'Inserisci esami';
             
-            // AI Tutor
             document.getElementById('ai-tutor').textContent = getAITutor();
-            
-            // Stats motivazionali
             renderStatsMotivazionali();
             
-            // Lista esami
             const lista = document.getElementById('lista-esami-dashboard');
             if (esami.length === 0) {
                 lista.innerHTML = '<div class="empty-state">Nessun esame inserito</div>';
                 return;
             }
-            
             lista.innerHTML = [...esami].sort((a,b) => b.data.localeCompare(a.data)).map(e => {
                 const colorClass = e.voto >= 28 ? 'green' : e.voto >= 24 ? 'yellow' : 'red';
-                return `
-                    <div class="list-item ${colorClass}">
-                        <div><strong>${e.nome}</strong><br><small>CFU: ${e.cfu} · ${e.data}</small></div>
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <strong>${e.voto}</strong>
-                            <button class="btn-icon" onclick="rimuoviEsame(${e.id})">🗑️</button>
-                        </div>
-                    </div>
-                `;
+                return `<div class="list-item ${colorClass}">
+                    <div><strong>${e.nome}</strong><br><small>CFU: ${e.cfu} · ${e.data}</small></div>
+                    <div style="display:flex; align-items:center; gap:6px;"><strong>${e.voto}</strong>
+                    <button class="btn-icon" onclick="rimuoviEsame(${e.id})">🗑️</button></div>
+                </div>`;
             }).join('');
         }
         
@@ -409,13 +408,11 @@
             const voto = parseInt(document.getElementById('prev-voto').value);
             const cfu = parseInt(document.getElementById('prev-cfu').value);
             if (!voto || !cfu) { alert('Inserisci voto e CFU'); return; }
-            
             const cfuAtt = calcolaCFU();
             const sommaAtt = esami.reduce((s,e) => s + (e.voto * e.cfu), 0);
             const nuovaMedia = (sommaAtt + (voto * cfu)) / (cfuAtt + cfu);
             const mediaAtt = calcolaMediaPonderata();
             const diff = nuovaMedia - mediaAtt;
-            
             document.getElementById('previsione-risultato').innerHTML = 
                 `Media attuale: ${mediaAtt.toFixed(2)}<br>Media prevista: <strong>${nuovaMedia.toFixed(2)}</strong><br>
                 <span style="color:${diff >= 0 ? 'green' : 'red'}">${diff >= 0 ? '↑' : '↓'} ${Math.abs(diff).toFixed(2)}</span>`;
@@ -427,8 +424,7 @@
             const votoBase = calcolaVotoBase();
             if (votoBase === 0) { alert('Inserisci esami prima'); return; }
             const finale = Math.min(votoBase + tesi + bonus, 110);
-            document.getElementById('laurea-risultato').innerHTML = 
-                `🎓 <span style="color:#004a99;">${finale.toFixed(1)}</span>${finale >= 110 ? ' 🎉 LODE!' : ''}`;
+            document.getElementById('laurea-risultato').innerHTML = `🎓 <span style="color:#004a99;">${finale.toFixed(1)}</span>${finale >= 110 ? ' 🎉 LODE!' : ''}`;
         }
         
         function calcolaPer110() {
@@ -437,8 +433,7 @@
             const necessari = 110 - votoBase;
             document.getElementById('per110-risultato').innerHTML = 
                 necessari <= 0 ? '✅ Hai già la media per il 110!' :
-                `Ti servono <strong>${necessari.toFixed(1)}</strong> punti tra tesi (max 8) e bonus (max 10).<br>
-                ${necessari <= 18 ? '✅ Raggiungibile!' : '⚠️ Difficile ma possibile!'}`;
+                `Ti servono <strong>${necessari.toFixed(1)}</strong> punti tra tesi e bonus.<br>${necessari <= 18 ? '✅ Raggiungibile!' : '⚠️ Difficile!'}`;
         }
         
         // ============ ESAMI ============
@@ -450,17 +445,13 @@
             if (!nome || !voto || !cfu) { alert('Compila tutti i campi'); return; }
             esami.push({ id: Date.now(), nome, voto, cfu, data });
             localStorage.setItem('flashlab_esami', JSON.stringify(esami));
-            closeModal();
-            renderDashboard();
-            renderChart();
+            closeModal(); renderDashboard(); renderChart();
         }
-        
         function rimuoviEsame(id) {
             if (confirm('Eliminare questo esame?')) {
                 esami = esami.filter(e => e.id !== id);
                 localStorage.setItem('flashlab_esami', JSON.stringify(esami));
-                renderDashboard();
-                renderChart();
+                renderDashboard(); renderChart();
             }
         }
         
@@ -468,18 +459,12 @@
         function renderTasse() {
             const lista = document.getElementById('lista-tasse');
             const prossima = document.getElementById('prossima-scadenza');
-            if (tasse.length === 0) {
-                lista.innerHTML = '<div class="empty-state">Nessuna tassa</div>';
-                prossima.innerHTML = '';
-                return;
-            }
+            if (tasse.length === 0) { lista.innerHTML = '<div class="empty-state">Nessuna tassa</div>'; prossima.innerHTML = ''; return; }
             const nonPagate = tasse.filter(t => !t.pagata).sort((a,b) => a.scadenza.localeCompare(b.scadenza));
             if (nonPagate.length > 0) {
                 const p = nonPagate[0];
                 prossima.innerHTML = `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:8px; text-align:center;"><strong>⚠️ ${p.descrizione}</strong><br>€${p.importo} · ${p.scadenza}</div>`;
-            } else {
-                prossima.innerHTML = '<div class="text-center" style="color:green;">✅ Tutte pagate!</div>';
-            }
+            } else { prossima.innerHTML = '<div class="text-center" style="color:green;">✅ Tutte pagate!</div>'; }
             lista.innerHTML = tasse.map(t => `
                 <div class="list-item ${t.pagata ? 'green' : 'yellow'}">
                     <div><strong>${t.descrizione}</strong><br><small>€${t.importo} · ${t.scadenza}</small></div>
@@ -487,8 +472,7 @@
                         <button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button>
                         <button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button>
                     </div>
-                </div>
-            `).join('');
+                </div>`).join('');
         }
         
         // ============ ORARIO ============
@@ -496,7 +480,6 @@
             document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => 
                 `<button onclick="selezionaGiorno('${g}')" style="padding:6px 10px; border-radius:16px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'white'}; color:${g === giornoSel ? 'white' : '#333'}; cursor:pointer; font-size:0.65rem;">${g.substring(0,3)}</button>`
             ).join('');
-            
             const impegni = orario.filter(o => o.giorno === giornoSel);
             document.getElementById('lista-orario').innerHTML = impegni.length === 0 ? 
                 `<div class="empty-state">Nessun impegno per ${giornoSel}</div>` :
@@ -504,25 +487,19 @@
                     <div class="list-item ${o.tipo === 'universitario' ? '' : 'purple'}">
                         <div><strong>${o.materia}</strong><br><small>${o.ora}${o.data ? ' · ' + o.data : ''} · ${o.tipo}</small></div>
                         <button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button>
-                    </div>
-                `).join('');
+                    </div>`).join('');
         }
         
         // ============ DOMANDE ============
         function renderDomande() {
             const lista = document.getElementById('lista-domande');
-            if (domande.length === 0) {
-                lista.innerHTML = '<div class="empty-state">Nessuna domanda</div>';
-                return;
-            }
+            if (domande.length === 0) { lista.innerHTML = '<div class="empty-state">Nessuna domanda</div>'; return; }
             const materie = {};
             domande.forEach(d => { if (!materie[d.materia]) materie[d.materia] = []; materie[d.materia].push(d); });
             lista.innerHTML = Object.keys(materie).map(m => `
-                <div style="margin-bottom:10px;">
-                    <strong style="color:#004a99;">${m}</strong>
-                    ${materie[m].map(d => `<p style="font-size:0.8rem; padding:8px; background:white; border-radius:6px; margin:4px 0;">${d.testo}</p>`).join('')}
-                </div>
-            `).join('');
+                <div style="margin-bottom:10px;"><strong style="color:#004a99;">${m}</strong>
+                ${materie[m].map(d => `<p style="font-size:0.8rem; padding:8px; background:white; border-radius:6px; margin:4px 0;">${d.testo}</p>`).join('')}
+                </div>`).join('');
         }
         
         // ============ OBIETTIVO ============
@@ -537,141 +514,156 @@
         
         // ============ RESET ============
         function resetTutto() {
-            if (confirm('⚠️ Cancellare TUTTI i dati?\n\nEsami, tasse, orario, domande, obiettivo.\n\nQuesta operazione non è reversibile!')) {
+            if (confirm('⚠️ Cancellare TUTTI i dati?\n\nQuesta operazione non è reversibile!')) {
                 if (confirm('🔴 CONFERMA FINALE: Sicuro?')) {
                     localStorage.removeItem('flashlab_esami');
                     localStorage.removeItem('flashlab_tasse');
                     localStorage.removeItem('flashlab_orario');
                     localStorage.removeItem('flashlab_domande');
                     localStorage.removeItem('flashlab_obiettivo');
+                    localStorage.removeItem('flashlab_cfu_totali');
                     location.reload();
                 }
             }
         }
         
+        // ============ EXPORT ============
+        function exportDati() {
+            const dati = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, esportato: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'flashlab-backup-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ Dati esportati!');
+        }
+        
+        // ============ IMPORT ============
+        function importDati() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const dati = JSON.parse(event.target.result);
+                        if (confirm('⚠️ Importare? Sostituiranno i dati attuali.')) {
+                            esami = dati.esami || []; tasse = dati.tasse || []; orario = dati.orario || [];
+                            domande = dati.domande || []; obiettivoMedia = dati.obiettivoMedia || 28; cfuTotaliCorso = dati.cfuTotaliCorso || 180;
+                            localStorage.setItem('flashlab_esami', JSON.stringify(esami));
+                            localStorage.setItem('flashlab_tasse', JSON.stringify(tasse));
+                            localStorage.setItem('flashlab_orario', JSON.stringify(orario));
+                            localStorage.setItem('flashlab_domande', JSON.stringify(domande));
+                            localStorage.setItem('flashlab_obiettivo', obiettivoMedia);
+                            localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso);
+                            alert('✅ Dati importati!'); location.reload();
+                        }
+                    } catch (error) { alert('❌ File non valido!'); }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
         // ============ SETTINGS ============
         function openSettings() {
-            const nuovoCFU = prompt('📊 CFU totali del tuo corso di laurea:', cfuTotaliCorso);
-            if (nuovoCFU && !isNaN(nuovoCFU) && nuovoCFU > 0) {
-                cfuTotaliCorso = parseInt(nuovoCFU);
-                localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso);
-                renderDashboard();
-            }
+            const scelta = prompt('⚙️ IMPOSTAZIONI\n\n1️⃣ CFU totali corso\n2️⃣ Export dati\n3️⃣ Import dati\n4️⃣ Stampa/PDF\n5️⃣ Reset completo\n\nDigita il numero:');
+            if (scelta === '1') {
+                const nuovoCFU = prompt('📊 CFU totali:', cfuTotaliCorso);
+                if (nuovoCFU && !isNaN(nuovoCFU) && nuovoCFU > 0) {
+                    cfuTotaliCorso = parseInt(nuovoCFU);
+                    localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso);
+                    renderDashboard(); alert('✅ CFU aggiornati!');
+                }
+            } else if (scelta === '2') exportDati();
+            else if (scelta === '3') importDati();
+            else if (scelta === '4') window.print();
+            else if (scelta === '5') resetTutto();
         }
         
         // ============ MODALS ============
         function showAddExam() {
-            document.body.insertAdjacentHTML('beforeend', `
-                <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px; max-height:90vh; overflow-y:auto;">
-                        <h3 style="margin-bottom:12px;">Aggiungi Esame</h3>
-                        <input id="esame-nome" class="form-input" placeholder="Nome esame" style="margin-bottom:8px;">
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
-                            <input id="esame-voto" class="form-input" type="number" placeholder="Voto" min="18" max="33">
-                            <input id="esame-cfu" class="form-input" type="number" placeholder="CFU" min="1" max="30">
-                        </div>
-                        <input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;">
-                        <button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button>
-                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                    </div>
-                </div>
-            `);
+            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px;">
+                    <h3 style="margin-bottom:12px;">Aggiungi Esame</h3>
+                    <input id="esame-nome" class="form-input" placeholder="Nome esame" style="margin-bottom:8px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+                        <input id="esame-voto" class="form-input" type="number" placeholder="Voto" min="18" max="33">
+                        <input id="esame-cfu" class="form-input" type="number" placeholder="CFU" min="1" max="30"></div>
+                    <input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;">
+                    <button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button>
+                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
+                </div></div>`);
         }
         
         function showAddTassa() {
-            document.body.insertAdjacentHTML('beforeend', `
-                <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px;">
-                        <h3 style="margin-bottom:12px;">Aggiungi Tassa</h3>
-                        <input id="tassa-descrizione" class="form-input" placeholder="Descrizione" style="margin-bottom:8px;">
-                        <input id="tassa-importo" class="form-input" type="number" placeholder="Importo €" style="margin-bottom:8px;">
-                        <input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;">
-                        <button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button>
-                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                    </div>
-                </div>
-            `);
+            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px;">
+                    <h3 style="margin-bottom:12px;">Aggiungi Tassa</h3>
+                    <input id="tassa-descrizione" class="form-input" placeholder="Descrizione" style="margin-bottom:8px;">
+                    <input id="tassa-importo" class="form-input" type="number" placeholder="Importo €" style="margin-bottom:8px;">
+                    <input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;">
+                    <button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button>
+                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
+                </div></div>`);
         }
         
         function showAddOrario() {
-            document.body.insertAdjacentHTML('beforeend', `
-                <div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
-                    <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px; max-height:90vh; overflow-y:auto;">
-                        <h3 style="margin-bottom:12px;">Aggiungi Impegno</h3>
-                        <input id="orario-materia" class="form-input" placeholder="Materia/Attività" style="margin-bottom:8px;">
-                        <input id="orario-ora" class="form-input" type="time" style="margin-bottom:8px;">
-                        <input id="orario-data" class="form-input" type="date" style="margin-bottom:8px;">
-                        <select id="orario-tipo" class="form-input" style="margin-bottom:12px;">
-                            <option value="universitario">Universitario</option>
-                            <option value="extra">Extra</option>
-                        </select>
-                        <button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button>
-                        <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
-                    </div>
-                </div>
-            `);
+            document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;">
+                <div style="background:white; border-radius:16px; padding:20px; width:100%; max-width:400px;">
+                    <h3 style="margin-bottom:12px;">Aggiungi Impegno</h3>
+                    <input id="orario-materia" class="form-input" placeholder="Materia/Attività" style="margin-bottom:8px;">
+                    <input id="orario-ora" class="form-input" type="time" style="margin-bottom:8px;">
+                    <input id="orario-data" class="form-input" type="date" style="margin-bottom:8px;">
+                    <select id="orario-tipo" class="form-input" style="margin-bottom:12px;"><option value="universitario">Universitario</option><option value="extra">Extra</option></select>
+                    <button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button>
+                    <button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button>
+                </div></div>`);
         }
         
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            if (modal) modal.remove();
-        }
+        function closeModal() { const m = document.getElementById('modal'); if (m) m.remove(); }
         
         // ============ FUNZIONI AGGIUNTIVE ============
         function aggiungiTassa() {
-            const descrizione = document.getElementById('tassa-descrizione').value.trim();
-            const importo = document.getElementById('tassa-importo').value;
-            const scadenza = document.getElementById('tassa-scadenza').value;
-            if (!importo || !scadenza) { alert('Compila i campi'); return; }
-            tasse.push({ id: Date.now(), descrizione: descrizione || 'Tassa', importo: parseFloat(importo), scadenza, pagata: false });
+            const d = document.getElementById('tassa-descrizione').value.trim();
+            const i = document.getElementById('tassa-importo').value;
+            const s = document.getElementById('tassa-scadenza').value;
+            if (!i || !s) { alert('Compila i campi'); return; }
+            tasse.push({ id: Date.now(), descrizione: d || 'Tassa', importo: parseFloat(i), scadenza: s, pagata: false });
             localStorage.setItem('flashlab_tasse', JSON.stringify(tasse));
-            closeModal();
-            renderTasse();
+            closeModal(); renderTasse();
         }
-        
-        function toggleTassa(id) {
-            const t = tasse.find(x => x.id === id);
-            if (t) { t.pagata = !t.pagata; localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); }
-        }
-        
-        function rimuoviTassa(id) {
-            if (confirm('Eliminare?')) { tasse = tasse.filter(t => t.id !== id); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); }
-        }
-        
+        function toggleTassa(id) { const t = tasse.find(x => x.id === id); if (t) { t.pagata = !t.pagata; localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
+        function rimuoviTassa(id) { if (confirm('Eliminare?')) { tasse = tasse.filter(t => t.id !== id); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
         function aggiungiOrario() {
-            const materia = document.getElementById('orario-materia').value.trim();
-            const ora = document.getElementById('orario-ora').value;
-            const data = document.getElementById('orario-data').value;
-            const tipo = document.getElementById('orario-tipo').value;
-            if (!materia || !ora) { alert('Compila i campi'); return; }
-            orario.push({ id: Date.now(), materia, ora, data, giorno: giornoSel, tipo });
+            const m = document.getElementById('orario-materia').value.trim();
+            const o = document.getElementById('orario-ora').value;
+            const d = document.getElementById('orario-data').value;
+            const t = document.getElementById('orario-tipo').value;
+            if (!m || !o) { alert('Compila i campi'); return; }
+            orario.push({ id: Date.now(), materia: m, ora: o, data: d, giorno: giornoSel, tipo: t });
             localStorage.setItem('flashlab_orario', JSON.stringify(orario));
-            closeModal();
-            renderOrario();
+            closeModal(); renderOrario();
         }
-        
-        function rimuoviOrario(id) {
-            if (confirm('Eliminare?')) { orario = orario.filter(o => o.id !== id); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); renderOrario(); }
-        }
-        
+        function rimuoviOrario(id) { if (confirm('Eliminare?')) { orario = orario.filter(o => o.id !== id); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); renderOrario(); } }
         function selezionaGiorno(g) { giornoSel = g; renderOrario(); }
-        
         function aggiungiDomanda() {
-            const materia = document.getElementById('domanda-materia').value.trim();
-            const testo = document.getElementById('domanda-testo').value.trim();
-            if (!materia || !testo) { alert('Compila i campi'); return; }
-            domande.push({ id: Date.now(), materia, testo });
+            const m = document.getElementById('domanda-materia').value.trim();
+            const t = document.getElementById('domanda-testo').value.trim();
+            if (!m || !t) { alert('Compila i campi'); return; }
+            domande.push({ id: Date.now(), materia: m, testo: t });
             localStorage.setItem('flashlab_domande', JSON.stringify(domande));
-            document.getElementById('domanda-materia').value = '';
-            document.getElementById('domanda-testo').value = '';
+            document.getElementById('domanda-materia').value = ''; document.getElementById('domanda-testo').value = '';
             renderDomande();
         }
         
         // ============ INIT ============
-        function initApp() {
-            navigateTo('dashboard');
-            document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
-        }
+        function initApp() { navigateTo('dashboard'); document.getElementById('obiettivo-valore').textContent = obiettivoMedia; }
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
@@ -679,29 +671,16 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('✅ SW registrato'))
-                    .catch(err => console.error('❌ SW fallito'));
+                navigator.serviceWorker.register('./sw.js').then(reg => console.log('✅ SW')).catch(err => console.error('❌ SW'));
             });
         }
         let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            showInstallButton();
-        });
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; showInstallButton(); });
         function showInstallButton() {
             const btn = document.createElement('button');
             btn.textContent = '📱 Installa App';
             btn.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:700; cursor:pointer; z-index:2000;';
-            btn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    await deferredPrompt.userChoice;
-                    deferredPrompt = null;
-                    btn.remove();
-                }
-            });
+            btn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; btn.remove(); } });
             document.body.appendChild(btn);
             setTimeout(() => { if (btn.parentNode) btn.remove(); }, 10000);
         }
