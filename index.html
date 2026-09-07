@@ -65,10 +65,8 @@
         }
         .app-header .logo { font-size:1.3rem; font-weight:800; }
         .header-btn { width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; cursor:pointer; font-size:1.3rem; color:white; }
-        
         .main-content { padding:16px; }
         
-        /* TAB BAR GRANDE */
         .tab-bar {
             position:fixed; bottom:0; left:50%; transform:translateX(-50%);
             width:100%; max-width:480px; height:var(--tab-height);
@@ -123,11 +121,10 @@
         .mb-16 { margin-bottom:16px; }
         .empty-state { text-align:center; padding:30px 16px; color:var(--text-muted); font-size:1rem; }
         .progress-bar { background:#e5e7eb; border-radius:10px; height:12px; overflow:hidden; margin:8px 0; }
-        .progress-fill { background:var(--primary); height:100%; border-radius:10px; transition:width 0.5s; }
+        .progress-fill { background:var(--primary); height:100%; border-radius:10px; }
         .badge { display:inline-block; background:var(--primary); color:white; padding:5px 12px; border-radius:14px; font-size:0.75rem; font-weight:700; margin:2px; }
         .goal-card { background:rgba(0,74,153,0.05); border:1px solid var(--primary); border-radius:var(--radius-md); padding:14px; margin-bottom:12px; }
         .ai-card { background:rgba(139,92,246,0.1); border:1px solid var(--accent-purple); border-radius:var(--radius-md); padding:14px; margin-bottom:12px; }
-        
         .list-item {
             display:flex; justify-content:space-between; align-items:center;
             padding:14px 16px; background:var(--bg-card); border-radius:var(--radius-sm);
@@ -137,7 +134,6 @@
         .list-item .item-info { font-size:0.85rem; color:var(--text-secondary); }
         .btn-icon { background:none; border:none; cursor:pointer; font-size:1.4rem; }
         
-        /* ORARIO VISIBILE */
         .orario-card {
             background:var(--bg-card); border-radius:var(--radius-sm);
             padding:14px; margin-bottom:8px; border-left:4px solid var(--primary);
@@ -146,15 +142,37 @@
         .orario-card .orario-nome { font-weight:700; font-size:1rem; }
         .orario-card .orario-dettagli { font-size:0.9rem; font-weight:600; margin-top:4px; }
         
-        /* INPUT DATE/TIME VISIBILI */
-        .form-input[type="date"], .form-input[type="time"] {
-            color-scheme: light;
-            min-height: 50px;
+        .form-input[type="date"], .form-input[type="time"] { color-scheme: light; min-height: 50px; }
+        body.dark-mode .form-input[type="date"], body.dark-mode .form-input[type="time"] { color-scheme: dark; }
+        
+        /* MODAL IMPOSTAZIONI */
+        .settings-modal {
+            position:fixed; top:0; left:0; right:0; bottom:0;
+            background:rgba(0,0,0,0.6); z-index:3000;
+            display:flex; align-items:center; justify-content:center; padding:20px;
         }
-        body.dark-mode .form-input[type="date"], 
-        body.dark-mode .form-input[type="time"] {
-            color-scheme: dark;
+        .settings-box {
+            background:var(--bg-card); border-radius:20px; padding:24px;
+            width:100%; max-width:380px;
         }
+        .settings-title { font-size:1.3rem; font-weight:800; text-align:center; margin-bottom:16px; color:var(--primary); }
+        .settings-option {
+            display:flex; align-items:center; gap:12px;
+            padding:14px; margin-bottom:8px;
+            background:var(--bg-main); border-radius:12px;
+            cursor:pointer; font-size:0.95rem; font-weight:600;
+            transition: all 0.2s;
+        }
+        .settings-option:hover { background:rgba(0,74,153,0.1); }
+        .settings-option .settings-icon { font-size:1.4rem; }
+        
+        /* TREND MIGLIORATO */
+        .trend-card {
+            background:var(--bg-card); border-radius:var(--radius-md);
+            padding:16px; margin-bottom:10px;
+        }
+        .trend-card .trend-title { font-weight:700; font-size:0.95rem; margin-bottom:6px; }
+        .trend-card .trend-value { font-size:1.5rem; font-weight:800; color:var(--primary); }
         
         @media print {
             .tab-bar, .app-header, .btn, .header-btn { display:none !important; }
@@ -165,10 +183,9 @@
 </head>
 <body>
     
-    <!-- HEADER -->
     <header class="app-header">
         <div class="logo">📊 Flash Lab Uni</div>
-        <div class="header-actions" style="display:flex; gap:8px;">
+        <div style="display:flex; gap:8px;">
             <button class="header-btn" onclick="resetTutto()">🔄</button>
             <button class="header-btn" onclick="openSettings()">⚙️</button>
         </div>
@@ -185,30 +202,25 @@
                     <div class="stat-card"><div class="stat-value" id="stat-esami">0</div><div class="stat-label">Esami</div></div>
                     <div class="stat-card"><div class="stat-value" id="stat-voto-base">—</div><div class="stat-label">Voto Base</div></div>
                 </div>
-                
                 <div class="goal-card">
-                    <strong style="font-size:1rem;">🎓 Progresso Laurea</strong>
+                    <strong>🎓 Progresso Laurea</strong>
                     <div class="progress-bar"><div class="progress-fill" id="progresso-laurea" style="width:0%;"></div></div>
-                    <p style="font-size:0.85rem;" id="progresso-testo">Configura CFU in ⚙️</p>
+                    <p style="font-size:0.85rem;" id="progresso-testo">Configura in ⚙️</p>
                 </div>
-                
                 <div class="goal-card">
                     <div style="display:flex; justify-content:space-between;">
-                        <strong style="font-size:1rem;">🎯 Obiettivo: <span id="obiettivo-valore">28</span></strong>
-                        <button onclick="cambiaObiettivo()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✏️</button>
+                        <strong>🎯 Obiettivo: <span id="obiettivo-valore">28</span></strong>
+                        <button onclick="cambiaObiettivo()" style="background:none; border:none; font-size:1.2rem;">✏️</button>
                     </div>
                     <div class="progress-bar"><div class="progress-fill" id="obiettivo-progresso" style="width:0%;"></div></div>
                     <p style="font-size:0.85rem;" id="obiettivo-messaggio">Inserisci esami</p>
                 </div>
-                
                 <div class="ai-card">
-                    <strong style="font-size:1rem;">🤖 AI Tutor</strong>
-                    <p style="font-size:0.9rem; margin-top:4px;" id="ai-tutor">Inserisci esami!</p>
+                    <strong>🤖 AI Tutor</strong>
+                    <p style="font-size:0.9rem;" id="ai-tutor">Inserisci esami!</p>
                 </div>
-                
-                <div id="stats-motivazionali" style="margin-top:10px;"></div>
+                <div id="stats-motivazionali"></div>
             </div>
-            
             <div class="card">
                 <div class="card-title">📚 I Miei Esami</div>
                 <div id="lista-esami-dashboard"></div>
@@ -216,11 +228,13 @@
             </div>
         </div>
         
-        <!-- ANDAMENTO -->
+        <!-- TREND MIGLIORATO -->
         <div id="page-andamento" class="page hidden">
             <div class="card">
-                <div class="card-title">📈 Andamento Carriera</div>
+                <div class="card-title">📈 Analisi Carriera</div>
+                <div id="trend-stats" style="margin-bottom:12px;"></div>
                 <div id="chart-andamento" style="display:flex; gap:8px; overflow-x:auto; padding:16px 0; align-items:flex-end;"></div>
+                <p style="font-size:0.8rem; color:var(--text-muted); text-align:center; margin-top:8px;">📊 Ogni barra = un esame · Colore in base al voto</p>
             </div>
         </div>
         
@@ -228,32 +242,22 @@
         <div id="page-previsioni" class="page hidden">
             <div class="card">
                 <div class="card-title">🔮 Previsioni Media</div>
-                <div class="form-group">
-                    <label class="form-label">Voto previsto</label>
-                    <input type="number" id="prev-voto" class="form-input" placeholder="es. 28" min="18" max="33">
-                    <p class="form-hint">Es: 28</p>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">CFU prossimo esame</label>
-                    <input type="number" id="prev-cfu" class="form-input" placeholder="es. 12" min="1" max="30">
-                    <p class="form-hint">Es: 12</p>
-                </div>
+                <div class="form-group"><label class="form-label">Voto previsto</label><input type="number" id="prev-voto" class="form-input" placeholder="es. 28"></div>
+                <div class="form-group"><label class="form-label">CFU prossimo esame</label><input type="number" id="prev-cfu" class="form-input" placeholder="es. 12"></div>
                 <button class="btn btn-primary" onclick="calcolaPrevisione()">Calcola</button>
                 <div id="previsione-risultato" class="mt-16 text-center" style="font-size:1.2rem; font-weight:700;"></div>
             </div>
-            
             <div class="card">
                 <div class="card-title">🎓 Voto Laurea</div>
-                <div class="form-group"><label class="form-label">Punti tesi (0-8)</label><input type="number" id="laurea-tesi" class="form-input" value="5" min="0" max="8"></div>
-                <div class="form-group"><label class="form-label">Bonus (0-10)</label><input type="number" id="laurea-bonus" class="form-input" value="0" min="0" max="10"></div>
+                <div class="form-group"><label class="form-label">Punti tesi</label><input type="number" id="laurea-tesi" class="form-input" value="5"></div>
+                <div class="form-group"><label class="form-label">Bonus</label><input type="number" id="laurea-bonus" class="form-input" value="0"></div>
                 <button class="btn btn-primary" onclick="calcolaVotoLaurea()">Calcola</button>
                 <div id="laurea-risultato" class="mt-16 text-center" style="font-size:2rem; font-weight:800;"></div>
             </div>
-            
             <div class="card">
                 <div class="card-title">🔮 Per il 110?</div>
                 <button class="btn btn-primary" onclick="calcolaPer110()">Scopri</button>
-                <div id="per110-risultato" class="mt-16 text-center" style="font-size:1rem;"></div>
+                <div id="per110-risultato" class="mt-16 text-center"></div>
             </div>
         </div>
         
@@ -271,7 +275,7 @@
         <div id="page-orario" class="page hidden">
             <div class="card">
                 <div class="card-title">📅 Orario Settimanale</div>
-                <div id="filtri-giorni" style="display:flex; gap:6px; overflow-x:auto; margin-bottom:14px;"></div>
+                <div id="filtri-giorni" style="display:flex; gap:6px; overflow-x:auto; margin-bottom:14px; padding-bottom:8px;"></div>
                 <div id="lista-orario"></div>
                 <button class="btn btn-primary" onclick="showAddOrario()">➕ Aggiungi Impegno</button>
             </div>
@@ -282,7 +286,7 @@
             <div class="card">
                 <div class="card-title">❓ Domande</div>
                 <div class="form-group"><label class="form-label">Materia</label><input type="text" id="domanda-materia" class="form-input" placeholder="es. Storia"></div>
-                <div class="form-group"><label class="form-label">Domanda</label><textarea id="domanda-testo" class="form-input" rows="3" placeholder="Scrivi..."></textarea></div>
+                <div class="form-group"><label class="form-label">Domanda</label><textarea id="domanda-testo" class="form-input" rows="3"></textarea></div>
                 <button class="btn btn-primary" onclick="aggiungiDomanda()">Condividi</button>
                 <div id="lista-domande" class="mt-16"></div>
             </div>
@@ -312,18 +316,13 @@
         
         const PAGES = ['dashboard','andamento','previsioni','tasse','orario','domande'];
         let giornoSel = 'Lunedì';
-        const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+        const GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];
         
+        // ============ TEMA ============
         function applicaTema() { if (temaScuro) document.body.classList.add('dark-mode'); else document.body.classList.remove('dark-mode'); }
         function toggleTema() { temaScuro = !temaScuro; localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light'); applicaTema(); }
-        function cambiaFoto() {
-            const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-            input.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader();
-                r.onload = (ev) => { fotoProfilo = ev.target.result; localStorage.setItem('flashlab_foto', fotoProfilo); alert('✅ Foto aggiornata!'); };
-                r.readAsDataURL(f); };
-            input.click();
-        }
         
+        // ============ NAVIGAZIONE ============
         function navigateTo(page) {
             PAGES.forEach(p => document.getElementById('page-' + p).classList.add('hidden'));
             document.getElementById('page-' + page).classList.remove('hidden');
@@ -331,13 +330,21 @@
             document.querySelector(`[data-tab="${page}"]`).classList.add('active');
             updatePage(page);
         }
-        function updatePage(p) { if (p === 'dashboard') renderDashboard(); if (p === 'andamento') renderChart(); if (p === 'tasse') renderTasse(); if (p === 'orario') renderOrario(); if (p === 'domande') renderDomande(); }
+        function updatePage(p) {
+            if (p === 'dashboard') renderDashboard();
+            if (p === 'andamento') renderTrend();
+            if (p === 'tasse') renderTasse();
+            if (p === 'orario') renderOrario();
+            if (p === 'domande') renderDomande();
+        }
         
+        // ============ CALCOLI ============
         function calcolaMediaPonderata() { if (!esami.length) return 0; const c = esami.reduce((s,e) => s + e.cfu, 0); const s = esami.reduce((x,e) => x + (e.voto * e.cfu), 0); return c ? s/c : 0; }
         function calcolaCFU() { return esami.reduce((s,e) => s + e.cfu, 0); }
         function calcolaVotoBase() { const m = calcolaMediaPonderata(); return m ? (m * 110) / 30 : 0; }
-        function getAITutor() { const m = calcolaMediaPonderata(); if (!m) return 'Inserisci esami! 📚'; if (m < 24) return '📚 Basi da consolidare.'; if (m < 26) return '🎯 Buon lavoro!'; if (m < 28) return '🔥 Puoi puntare al 110!'; if (m < 29.5) return '🏆 Eccellente!'; return '👑 Straordinario!'; }
+        function getAITutor() { const m = calcolaMediaPonderata(); if (!m) return 'Inserisci esami!'; if (m < 24) return '📚 Basi da consolidare.'; if (m < 26) return '🎯 Buon lavoro!'; if (m < 28) return '🔥 Puoi puntare al 110!'; if (m < 29.5) return '🏆 Eccellente!'; return '👑 Straordinario!'; }
         
+        // ============ DASHBOARD ============
         function renderDashboard() {
             const m = calcolaMediaPonderata(), c = calcolaCFU(), vb = calcolaVotoBase();
             document.getElementById('stat-media').textContent = m ? m.toFixed(2) : '—';
@@ -346,16 +353,15 @@
             document.getElementById('stat-voto-base').textContent = vb ? vb.toFixed(1) : '—';
             const prog = cfuTotaliCorso ? (c / cfuTotaliCorso) * 100 : 0;
             document.getElementById('progresso-laurea').style.width = Math.min(prog, 100) + '%';
-            document.getElementById('progresso-testo').textContent = esami.length ? `${prog.toFixed(0)}% (${c}/${cfuTotaliCorso} CFU)` : 'Configura in ⚙️';
+            document.getElementById('progresso-testo').textContent = esami.length ? `${prog.toFixed(0)}% (${c}/${cfuTotaliCorso})` : 'Configura in ⚙️';
             document.getElementById('obiettivo-valore').textContent = obiettivoMedia;
             const po = m ? Math.min((m / obiettivoMedia) * 100, 100) : 0;
             document.getElementById('obiettivo-progresso').style.width = po + '%';
             document.getElementById('obiettivo-messaggio').textContent = m ? `${po.toFixed(0)}% verso obiettivo` : 'Inserisci esami';
             document.getElementById('ai-tutor').textContent = getAITutor();
             const max = esami.length ? Math.max(...esami.map(e => e.voto)) : 0;
-            const min = esami.length ? Math.min(...esami.map(e => e.voto)) : 0;
             const lodi = esami.filter(e => e.voto >= 30).length;
-            document.getElementById('stats-motivazionali').innerHTML = `${max ? `<span class="badge">🏆 ${max}</span>` : ''}${min ? `<span class="badge">📉 ${min}</span>` : ''}${lodi ? `<span class="badge">🌟 ${lodi} lodi</span>` : ''}`;
+            document.getElementById('stats-motivazionali').innerHTML = `${max ? `<span class="badge">🏆 ${max}</span>` : ''}${lodi ? `<span class="badge">🌟 ${lodi} lodi</span>` : ''}`;
             const lista = document.getElementById('lista-esami-dashboard');
             if (!esami.length) { lista.innerHTML = '<div class="empty-state">Nessun esame</div>'; return; }
             lista.innerHTML = [...esami].sort((a,b) => b.data.localeCompare(a.data)).map(e => {
@@ -364,9 +370,22 @@
             }).join('');
         }
         
-        function renderChart() {
+        // ============ TREND MIGLIORATO ============
+        function renderTrend() {
+            const m = calcolaMediaPonderata();
+            const max = esami.length ? Math.max(...esami.map(e => e.voto)) : 0;
+            const min = esami.length ? Math.min(...esami.map(e => e.voto)) : 0;
+            const mediaAritmetica = esami.length ? (esami.reduce((s,e) => s + e.voto, 0) / esami.length) : 0;
+            
+            document.getElementById('trend-stats').innerHTML = `
+                <div class="trend-card"><div class="trend-title">📊 Media Ponderata</div><div class="trend-value">${m ? m.toFixed(2) : '—'}</div></div>
+                <div class="trend-card"><div class="trend-title">📈 Media Aritmetica</div><div class="trend-value">${mediaAritmetica ? mediaAritmetica.toFixed(2) : '—'}</div></div>
+                <div class="trend-card"><div class="trend-title">🏆 Voto Massimo</div><div class="trend-value">${max || '—'}</div></div>
+                <div class="trend-card"><div class="trend-title">📉 Voto Minimo</div><div class="trend-value">${min || '—'}</div></div>
+            `;
+            
             const c = document.getElementById('chart-andamento');
-            if (!esami.length) { c.innerHTML = '<div class="empty-state">Inserisci esami</div>'; return; }
+            if (!esami.length) { c.innerHTML = '<div class="empty-state">Inserisci esami per vedere il grafico</div>'; return; }
             c.innerHTML = [...esami].sort((a,b) => a.data.localeCompare(b.data)).map(e => {
                 const h = ((e.voto - 15) / 18) * 120;
                 const col = e.voto >= 28 ? '#22c55e' : e.voto >= 24 ? '#f59e0b' : '#ef4444';
@@ -374,6 +393,7 @@
             }).join('');
         }
         
+        // ============ PREVISIONI ============
         function calcolaPrevisione() {
             const v = parseInt(document.getElementById('prev-voto').value);
             const c = parseInt(document.getElementById('prev-cfu').value);
@@ -396,6 +416,7 @@
             document.getElementById('per110-risultato').textContent = nec <= 0 ? '✅ Già ok!' : `Servono ${nec.toFixed(1)} punti`;
         }
         
+        // ============ ESAMI ============
         function aggiungiEsame() {
             const n = document.getElementById('esame-nome').value.trim();
             const v = parseInt(document.getElementById('esame-voto').value);
@@ -404,10 +425,11 @@
             if (!n || !v || !c) { alert('Compila i campi'); return; }
             esami.push({ id: Date.now(), nome: n, voto: v, cfu: c, data: d });
             localStorage.setItem('flashlab_esami', JSON.stringify(esami));
-            closeModal(); renderDashboard(); renderChart();
+            closeModal(); renderDashboard(); renderTrend();
         }
-        function rimuoviEsame(id) { if (confirm('Eliminare?')) { esami = esami.filter(e => e.id !== id); localStorage.setItem('flashlab_esami', JSON.stringify(esami)); renderDashboard(); renderChart(); } }
+        function rimuoviEsame(id) { if (confirm('Eliminare?')) { esami = esami.filter(e => e.id !== id); localStorage.setItem('flashlab_esami', JSON.stringify(esami)); renderDashboard(); renderTrend(); } }
         
+        // ============ TASSE ============
         function renderTasse() {
             const l = document.getElementById('lista-tasse');
             const p = document.getElementById('prossima-scadenza');
@@ -417,33 +439,65 @@
             l.innerHTML = tasse.map(t => `<div class="list-item ${t.pagata ? 'green' : 'yellow'}"><div><div class="item-nome">${t.descrizione}</div><div class="item-info">€${t.importo} · ${t.scadenza}</div></div><div style="display:flex; gap:4px;"><button class="btn-icon" onclick="toggleTassa(${t.id})">${t.pagata ? '✅' : '⬜'}</button><button class="btn-icon" onclick="rimuoviTassa(${t.id})">🗑️</button></div></div>`).join('');
         }
         
+        // ============ ORARIO (CON DOMENICA) ============
         function renderOrario() {
-            document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => `<button onclick="selezionaGiorno('${g}')" style="padding:10px 14px; border-radius:20px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'var(--bg-card)'}; color:${g === giornoSel ? 'white' : 'var(--text-primary)'}; cursor:pointer; font-size:0.85rem; font-weight:700;">${g.substring(0,3)}</button>`).join('');
+            document.getElementById('filtri-giorni').innerHTML = GIORNI.map(g => 
+                `<button onclick="selezionaGiorno('${g}')" style="padding:10px 14px; border-radius:20px; border:1px solid #ddd; background:${g === giornoSel ? '#004a99' : 'var(--bg-card)'}; color:${g === giornoSel ? 'white' : 'var(--text-primary)'}; cursor:pointer; font-size:0.85rem; font-weight:700; flex-shrink:0;">${g.substring(0,3)}</button>`
+            ).join('');
             const impegni = orario.filter(o => o.giorno === giornoSel);
             const lista = document.getElementById('lista-orario');
             if (!impegni.length) { lista.innerHTML = `<div class="empty-state">Nessun impegno per ${giornoSel}</div>`; return; }
-            lista.innerHTML = impegni.map(o => `<div class="orario-card ${o.tipo === 'extra' ? 'extra' : ''}"><div style="display:flex; justify-content:space-between;"><div><div class="orario-nome">${o.materia}</div><div class="orario-dettagli">🕐 ${o.ora}${o.data ? ' · 📅 ' + o.data : ''} · ${o.tipo === 'universitario' ? '📚' : '🎯'}</div></div><button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button></div></div>`).join('');
+            lista.innerHTML = impegni.map(o => `<div class="orario-card ${o.tipo === 'extra' ? 'extra' : ''}"><div style="display:flex; justify-content:space-between;"><div><div class="orario-nome">${o.materia}</div><div class="orario-dettagli">🕐 ${o.ora}${o.data ? ' · 📅 ' + o.data : ''}</div></div><button class="btn-icon" onclick="rimuoviOrario(${o.id})">🗑️</button></div></div>`).join('');
         }
         
+        // ============ DOMANDE (CON ELIMINA) ============
         function renderDomande() {
             const l = document.getElementById('lista-domande');
             if (!domande.length) { l.innerHTML = '<div class="empty-state">Nessuna domanda</div>'; return; }
-            const m = {};
-            domande.forEach(d => { if (!m[d.materia]) m[d.materia] = []; m[d.materia].push(d); });
-            l.innerHTML = Object.keys(m).map(mat => `<div><strong>${mat}</strong>${m[mat].map(d => `<p style="padding:8px;">${d.testo}</p>`).join('')}</div>`).join('');
+            l.innerHTML = domande.map((d, i) => `
+                <div class="list-item purple">
+                    <div><div class="item-nome">${d.materia}</div><div class="item-info">${d.testo}</div></div>
+                    <button class="btn-icon" onclick="rimuoviDomanda(${d.id})">🗑️</button>
+                </div>
+            `).join('');
         }
+        function rimuoviDomanda(id) { if (confirm('Eliminare domanda?')) { domande = domande.filter(d => d.id !== id); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); renderDomande(); } }
         
-        function cambiaObiettivo() { const n = prompt('Media obiettivo (18-33):', obiettivoMedia); if (n && !isNaN(n) && n >= 18 && n <= 33) { obiettivoMedia = parseInt(n); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); renderDashboard(); } }
+        // ============ SETTINGS MODALE ============
+        function openSettings() {
+            const modal = document.createElement('div');
+            modal.className = 'settings-modal';
+            modal.innerHTML = `
+                <div class="settings-box">
+                    <div class="settings-title">⚙️ Impostazioni</div>
+                    <div class="settings-option" onclick="impostaCFU(); closeSettings();"><span class="settings-icon">📊</span> CFU totali corso</div>
+                    <div class="settings-option" onclick="cambiaFoto(); closeSettings();"><span class="settings-icon">📸</span> Foto profilo</div>
+                    <div class="settings-option" onclick="toggleTema(); closeSettings();"><span class="settings-icon">🌙</span> Tema scuro/chiaro</div>
+                    <div class="settings-option" onclick="exportDati(); closeSettings();"><span class="settings-icon">💾</span> Export dati</div>
+                    <div class="settings-option" onclick="importDati(); closeSettings();"><span class="settings-icon">📥</span> Import dati</div>
+                    <div class="settings-option" onclick="window.print(); closeSettings();"><span class="settings-icon">🖨️</span> Stampa/PDF</div>
+                    <div class="settings-option" onclick="resetTutto(); closeSettings();"><span class="settings-icon">🔄</span> Reset completo</div>
+                    <button class="btn btn-outline" onclick="closeSettings()">Chiudi</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        function closeSettings() { const m = document.querySelector('.settings-modal'); if (m) m.remove(); }
+        function impostaCFU() { const c = prompt('CFU totali:', cfuTotaliCorso); if (c && !isNaN(c)) { cfuTotaliCorso = parseInt(c); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); renderDashboard(); } }
+        function cambiaFoto() { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { fotoProfilo = ev.target.result; localStorage.setItem('flashlab_foto', fotoProfilo); alert('✅ Foto aggiornata!'); }; r.readAsDataURL(f); }; i.click(); }
+        
+        function exportDati() { const d = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, fotoProfilo, temaScuro }; const b = new Blob([JSON.stringify(d)], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = 'flashlab.json'; a.click(); URL.revokeObjectURL(u); }
+        function importDati() { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { try { const d = JSON.parse(ev.target.result); esami = d.esami || []; tasse = d.tasse || []; orario = d.orario || []; domande = d.domande || []; obiettivoMedia = d.obiettivoMedia || 28; cfuTotaliCorso = d.cfuTotaliCorso || 180; localStorage.setItem('flashlab_esami', JSON.stringify(esami)); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); location.reload(); } catch { alert('❌ File non valido'); } }; r.readAsText(f); }; i.click(); }
+        
         function resetTutto() { if (confirm('Cancellare tutto?')) { if (confirm('Confermi?')) { ['esami','tasse','orario','domande','obiettivo','cfu_totali','foto','tema'].forEach(k => localStorage.removeItem('flashlab_' + k)); location.reload(); } } }
-        function exportDati() { const dati = { esami, tasse, orario, domande, obiettivoMedia, cfuTotaliCorso, fotoProfilo, temaScuro }; const b = new Blob([JSON.stringify(dati, null, 2)], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = 'flashlab-' + new Date().toISOString().split('T')[0] + '.json'; a.click(); URL.revokeObjectURL(u); alert('✅ Esportato!'); }
-        function importDati() { const i = document.createElement('input'); i.type = 'file'; i.accept = '.json'; i.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { try { const d = JSON.parse(ev.target.result); if (confirm('Importare?')) { esami = d.esami || []; tasse = d.tasse || []; orario = d.orario || []; domande = d.domande || []; obiettivoMedia = d.obiettivoMedia || 28; cfuTotaliCorso = d.cfuTotaliCorso || 180; fotoProfilo = d.fotoProfilo || ''; temaScuro = d.temaScuro || false; localStorage.setItem('flashlab_esami', JSON.stringify(esami)); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); localStorage.setItem('flashlab_foto', fotoProfilo); localStorage.setItem('flashlab_tema', temaScuro ? 'dark' : 'light'); alert('✅ Importato!'); location.reload(); } } catch { alert('❌ File non valido'); } }; r.readAsText(f); }; i.click(); }
-        function openSettings() { const s = prompt('⚙️ IMPOSTAZIONI\n\n1️⃣ CFU totali\n2️⃣ Foto profilo\n3️⃣ Tema scuro/chiaro\n4️⃣ Export\n5️⃣ Import\n6️⃣ Stampa/PDF\n7️⃣ Reset\n\nNumero:'); if (s === '1') { const c = prompt('CFU totali:', cfuTotaliCorso); if (c && !isNaN(c)) { cfuTotaliCorso = parseInt(c); localStorage.setItem('flashlab_cfu_totali', cfuTotaliCorso); renderDashboard(); } } else if (s === '2') cambiaFoto(); else if (s === '3') { toggleTema(); alert(temaScuro ? '🌙 Scuro' : '☀️ Chiaro'); } else if (s === '4') exportDati(); else if (s === '5') importDati(); else if (s === '6') window.print(); else if (s === '7') resetTutto(); }
         
-        function showAddExam() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Esame</h3><label class="form-label">📚 Nome esame</label><input id="esame-nome" class="form-input" placeholder="es. Analisi Matematica" style="margin-bottom:10px;"><div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;"><div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="28" min="18" max="33"></div><div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="12" min="1" max="30"></div></div><label class="form-label">📅 Data</label><input id="esame-data" class="form-input" type="date" style="margin-bottom:14px;"><button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
-        function showAddTassa() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Tassa</h3><label class="form-label">📝 Descrizione</label><input id="tassa-descrizione" class="form-input" placeholder="es. Seconda rata" style="margin-bottom:10px;"><label class="form-label">💶 Importo (€)</label><input id="tassa-importo" class="form-input" type="number" placeholder="500" style="margin-bottom:10px;"><label class="form-label">📅 Scadenza</label><input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:14px;"><button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
-        function showAddOrario() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3 style="margin-bottom:12px;">Aggiungi Impegno</h3><label class="form-label">📚 Materia</label><input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;"><label class="form-label">🕐 Ora</label><input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;"><label class="form-label">📅 Data</label><input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;"><label class="form-label">🏷️ Tipo</label><select id="orario-tipo" class="form-input" style="margin-bottom:14px;"><option value="universitario">📚 Universitario</option><option value="extra">🎯 Extra</option></select><button class="btn btn-primary" onclick="aggiungiOrario()">Salva</button><button class="btn btn-outline" onclick="closeModal()" style="margin-top:6px;">Annulla</button></div></div>`); }
+        // ============ MODALS ============
+        function showAddExam() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3>Aggiungi Esame</h3><label class="form-label">📚 Nome</label><input id="esame-nome" class="form-input" placeholder="es. Analisi" style="margin-bottom:10px;"><div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"><div><label class="form-label">🔢 Voto</label><input id="esame-voto" class="form-input" type="number" placeholder="28"></div><div><label class="form-label">📊 CFU</label><input id="esame-cfu" class="form-input" type="number" placeholder="12"></div></div><label class="form-label">📅 Data</label><input id="esame-data" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiEsame()">Salva</button></div></div>`); }
+        function showAddTassa() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3>Aggiungi Tassa</h3><label class="form-label">📝 Descrizione</label><input id="tassa-descrizione" class="form-input" placeholder="es. Rata" style="margin-bottom:10px;"><label class="form-label">💶 Importo</label><input id="tassa-importo" class="form-input" type="number" placeholder="500" style="margin-bottom:10px;"><label class="form-label">📅 Scadenza</label><input id="tassa-scadenza" class="form-input" type="date" style="margin-bottom:12px;"><button class="btn btn-primary" onclick="aggiungiTassa()">Salva</button></div></div>`); }
+        function showAddOrario() { document.body.insertAdjacentHTML('beforeend', `<div id="modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;"><div style="background:var(--bg-card); border-radius:16px; padding:20px; width:100%; max-width:400px;"><h3>Aggiungi Impegno</h3><label class="form-label">📚 Materia</label><input id="orario-materia" class="form-input" placeholder="es. Fisica" style="margin-bottom:10px;"><label class="form-label">🕐 Ora</label><input id="orario-ora" class="form-input" type="time" style="margin-bottom:10px;"><label class="form-label">📅 Data</label><input id="orario-data" class="form-input" type="date" style="margin-bottom:10px;"><label class="form-label">🏷️ Tipo</label><select id="orario-tipo" class="form-input"><option value="universitario">📚 Universitario</option><option value="extra">🎯 Extra</option></select><button class="btn btn-primary" onclick="aggiungiOrario()" style="margin-top:12px;">Salva</button></div></div>`); }
         function closeModal() { const m = document.getElementById('modal'); if (m) m.remove(); }
         
+        // ============ FUNZIONI ============
         function aggiungiTassa() { const d = document.getElementById('tassa-descrizione').value.trim(); const i = document.getElementById('tassa-importo').value; const s = document.getElementById('tassa-scadenza').value; if (!i || !s) { alert('Compila'); return; } tasse.push({ id: Date.now(), descrizione: d || 'Tassa', importo: parseFloat(i), scadenza: s, pagata: false }); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); closeModal(); renderTasse(); }
         function toggleTassa(id) { const t = tasse.find(x => x.id === id); if (t) { t.pagata = !t.pagata; localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
         function rimuoviTassa(id) { if (confirm('Eliminare?')) { tasse = tasse.filter(t => t.id !== id); localStorage.setItem('flashlab_tasse', JSON.stringify(tasse)); renderTasse(); } }
@@ -451,16 +505,34 @@
         function rimuoviOrario(id) { if (confirm('Eliminare?')) { orario = orario.filter(o => o.id !== id); localStorage.setItem('flashlab_orario', JSON.stringify(orario)); renderOrario(); } }
         function selezionaGiorno(g) { giornoSel = g; renderOrario(); }
         function aggiungiDomanda() { const m = document.getElementById('domanda-materia').value.trim(); const t = document.getElementById('domanda-testo').value.trim(); if (!m || !t) { alert('Compila'); return; } domande.push({ id: Date.now(), materia: m, testo: t }); localStorage.setItem('flashlab_domande', JSON.stringify(domande)); document.getElementById('domanda-materia').value = ''; document.getElementById('domanda-testo').value = ''; renderDomande(); }
+        function cambiaObiettivo() { const n = prompt('Media obiettivo:', obiettivoMedia); if (n && !isNaN(n)) { obiettivoMedia = parseInt(n); localStorage.setItem('flashlab_obiettivo', obiettivoMedia); renderDashboard(); } }
         
+        // ============ INIT ============
         function initApp() { applicaTema(); navigateTo('dashboard'); }
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
     
+    <!-- PWA UNIVERSALE -->
     <script>
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').then(r => console.log('✅ SW')).catch(e => console.error('❌ SW'))); }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').then(r => console.log('✅ SW')).catch(e => console.error('❌ SW')));
+        }
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; showInstallButton(); });
-        function showInstallButton() { const btn = document.createElement('button'); btn.textContent = '📱 Installa App'; btn.style.cssText = 'position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:16px 28px; border-radius:30px; font-weight:700; font-size:1rem; cursor:pointer; z-index:2000;'; btn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; btn.remove(); } }); document.body.appendChild(btn); setTimeout(() => { if (btn.parentNode) btn.remove(); }, 15000); }
+        function showInstallButton() {
+            const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+            const btn = document.createElement('button');
+            btn.textContent = isIOS ? '📱 Aggiungi alla Home' : '📱 Installa App';
+            btn.style.cssText = 'position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#004a99; color:white; border:none; padding:16px 28px; border-radius:30px; font-weight:700; font-size:1rem; cursor:pointer; z-index:2000;';
+            btn.addEventListener('click', async () => {
+                if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; btn.remove(); }
+                else if (isIOS) { alert('📱 Su iPhone:\n\n1. Tocca Condividi (📤) in alto a destra\n2. Scorri e tocca "Aggiungi a Home"\n3. Tocca "Aggiungi"'); btn.remove(); }
+            });
+            document.body.appendChild(btn);
+            setTimeout(() => { if (btn.parentNode) btn.remove(); }, 15000);
+        }
+        window.addEventListener('appinstalled', () => { document.querySelectorAll('.install-btn').forEach(b => b.remove()); });
+        document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { if (!window.matchMedia('(display-mode: standalone)').matches) showInstallButton(); }, 3000); });
     </script>
 </body>
 </html>
