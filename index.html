@@ -234,25 +234,27 @@
 </head>
 <body>
     
-    <header class="app-header">
-        <div class="logo">
-            <div class="logo-text">
-                <span class="logo-title">📊 Flash Lab Uni</span>
-                <a href="https://tesiflash.help/" target="_blank" rel="noopener" class="logo-subtitle">
-                    <span class="by">by </span><span class="tesi">Tesi</span><span class="flash">Flash</span>
-                </a>
-                <span class="logo-tagline">La tua tesi senza ansia · senza foglio bianco · senza scuse</span>
-            </div>
-            <div class="profile-pic-header" onclick="cambiaFoto()" id="profile-pic-header" title="Cambia foto">
-                <span id="profile-pic-placeholder">👤</span>
-                <img id="profile-pic-img" style="display:none;" alt="Profilo">
-            </div>
+<header class="app-header">
+    <div class="logo">
+        <div class="logo-text">
+            <span class="logo-title">📊 Tesi Flash Uni</span>
+            <a href="https://tesiflash.help/" target="_blank" rel="noopener" class="logo-subtitle" style="text-decoration: none;">
+                <span class="logo-pill" style="display: inline-block; background: #FACC15; color: #000000; font-weight: 800; font-size: 0.7rem; padding: 4px 12px; border-radius: 20px; margin-top: 4px; letter-spacing: -0.2px;">
+                    by TesiFlash
+                </span>
+            </a>
+            <span class="logo-tagline">La tua tesi senza ansia · senza foglio bianco · senza scuse</span>
         </div>
-        <div style="display:flex; gap:6px; flex-shrink:0; margin-left:6px;">
-            <button class="header-btn" onclick="resetTutto()">🔄</button>
-            <button class="header-btn" onclick="openSettings()">⚙️</button>
+        <div class="profile-pic-header" onclick="cambiaFoto()" id="profile-pic-header" title="Cambia foto">
+            <span id="profile-pic-placeholder">👤</span>
+            <img id="profile-pic-img" style="display:none;" alt="Profilo">
         </div>
-    </header>
+    </div>
+    <div style="display:flex; gap:6px; flex-shrink:0; margin-left:6px;">
+        <button class="header-btn" onclick="resetTutto()">🔄</button>
+        <button class="header-btn" onclick="openSettings()">⚙️</button>
+    </div>
+</header>
     
     <main class="main-content">
         
