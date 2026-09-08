@@ -234,67 +234,74 @@
 </head>
 <body>
 
-     <!-- ==================== COOKIE BANNER HTML ==================== -->
-    <div id="cookie-banner" style="
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #121212;
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding: 20px 16px;
-        z-index: 99999;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        display: none;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-    ">
-        <div style="max-width: 700px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; justify-content: space-between;">
-            
-            <div style="flex: 1; min-width: 200px;">
-                <p style="color: #e5e5e5; font-size: 0.85rem; margin: 0; line-height: 1.5;">
-                    🍪 <strong style="color: #ffffff;">Cookie e Privacy</strong><br>
-                    Usiamo cookie tecnici e, <strong>solo dopo il tuo consenso</strong>, attiviamo il pixel per migliorare l'esperienza.
-                    <br>
-                    <a href="https://app.tesiflash.help/cookie.html" target="_blank" style="color: #FACC15; text-decoration: underline; font-size: 0.8rem;">Cookie Policy</a>
-                    <span style="color: #404040;">•</span>
-                    <a href="https://app.tesiflash.help/privacy.html" target="_blank" style="color: #FACC15; text-decoration: underline; font-size: 0.8rem;">Privacy Policy</a>
-                </p>
-            </div>
-            
-            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
-                <button onclick="accettaCookie()" style="
-                    background: #22c55e;
-                    color: #ffffff;
-                    border: none;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    font-weight: 700;
-                    font-size: 0.85rem;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                    -webkit-tap-highlight-color: transparent;
-                " onmouseover="this.style.background='#16a34a'" onmouseout="this.style.background='#22c55e'">
-                    ✅ Accetta
-                </button>
-                
-                <button onclick="rifiutaCookie()" style="
-                    background: none;
-                    border: none;
-                    color: #a3a3a3;
-                    font-size: 0.8rem;
-                    font-weight: 500;
-                    cursor: pointer;
-                    text-decoration: underline;
-                    padding: 8px;
-                    -webkit-tap-highlight-color: transparent;
-                " onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#a3a3a3'">
-                    Continua senza accettare
-                </button>
-            </div>
-            
-        </div>
+    <!-- ==================== COOKIE BANNER HTML ==================== -->
+<div id="cookie-banner" style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #121212;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 25px 20px;
+    z-index: 99999;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: none;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+">
+    <div style="max-width: 500px; margin: 0 auto;">
+        
+        <!-- TESTO CENTRATO -->
+        <p style="color: #e5e5e5; font-size: 0.9rem; margin: 0 0 20px 0; line-height: 1.6; text-align: center;">
+            🍪 <strong style="color: #ffffff;">Cookie e Privacy</strong><br>
+            Usiamo cookie tecnici e, <strong>solo dopo il tuo consenso</strong>, attiviamo il pixel per migliorare l'esperienza.
+            <br><br>
+            <a href="https://app.tesiflash.help/cookie.html" target="_blank" style="color: #FACC15; text-decoration: underline; font-size: 0.8rem;">Cookie Policy</a>
+            <span style="color: #404040;">•</span>
+            <a href="https://app.tesiflash.help/privacy.html" target="_blank" style="color: #FACC15; text-decoration: underline; font-size: 0.8rem;">Privacy Policy</a>
+        </p>
+        
+        <!-- PULSANTE ACCETTA GRANDE -->
+        <button onclick="accettaCookie()" style="
+            background: #22c55e;
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 12px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        " onmouseover="this.style.background='#16a34a'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#22c55e'; this.style.transform='translateY(0)'">
+            ✅ Accetta
+        </button>
+        
+        <!-- CONTINUA SENZA ACCETTARE (SOTTO, PIÙ SCURO) -->
+        <button onclick="rifiutaCookie()" style="
+            background: none;
+            border: none;
+            color: #737373;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 8px;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+            margin: 0 auto;
+        " onmouseover="this.style.color='#a3a3a3'" onmouseout="this.style.color='#737373'">
+            Continua senza accettare
+        </button>
+        
     </div>
-
+</div>
+    
     <!-- ==================== GESTIONE COOKIE + META PIXEL ==================== -->
 <script>
     // Controlla se il consenso è già stato dato
